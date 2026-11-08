@@ -1,0 +1,31 @@
+<script>
+    import { StarMark } from "./starMark.pierrot";
+    let label: string;
+</script>
+
+<span class="badge">
+    <StarMark size="20" />
+    <span>${label}</span>
+</span>
+
+<style>
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 34px;
+        justify-content: center;
+        padding: 0 16px;
+        border-radius: 17px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg));
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-image: var(--m-noise), linear-gradient(90deg, rgb(var(--m-fg) / 0.38), rgba(153, 153, 153, 0.38));
+    }
+
+    :root[data-theme="light"] .badge {
+        text-shadow: none;
+        background-image: var(--m-noise), linear-gradient(90deg, rgb(var(--m-fg) / 0.08), rgb(var(--m-fg) / 0.16));
+    }
+</style>

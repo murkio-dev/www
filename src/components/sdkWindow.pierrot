@@ -1,0 +1,123 @@
+<div class="sw" aria-hidden="true">
+    <div class="sw-tabs">
+        <span class="sw-tab sw-tab-on">${i18n.sdk.l11}</span>
+        <span class="sw-tab">${i18n.sdk.l12}</span>
+        <span class="sw-tab">${i18n.sdk.l2}</span>
+        <span class="sw-tab">${i18n.sdk.l1}</span>
+        <span class="sw-tab">${i18n.sdk.l5}</span>
+        <span class="sw-tab sw-tab-more">+7</span>
+    </div>
+
+    <div class="sw-editor">
+        <div class="sw-gutter">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+            <span>6</span>
+            <span>7</span>
+            <span>8</span>
+        </div>
+        <div class="sw-code">
+            <div class="sw-line"><span class="sw-kw">import</span><span class="sw-p"> { </span><span class="sw-id">Murkio</span><span class="sw-p"> } </span><span class="sw-kw">from</span><span class="sw-p"> </span><span class="sw-str">"@murkio/sdk"</span><span class="sw-p">;</span></div>
+            <div class="sw-line sw-blank"></div>
+            <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> murkio = </span><span class="sw-kw">new</span><span class="sw-p"> </span><span class="sw-id">Murkio</span><span class="sw-p">({ token: process.env.MURKIO_TOKEN });</span></div>
+            <div class="sw-line sw-blank"></div>
+            <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.identity.</span><span class="sw-fn">login</span><span class="sw-p">({ email, password });</span></div>
+            <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> url = </span><span class="sw-kw">await</span><span class="sw-p"> murkio.vault.</span><span class="sw-fn">get</span><span class="sw-p">(</span><span class="sw-str">"DATABASE_URL"</span><span class="sw-p">);</span></div>
+            <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.payments.</span><span class="sw-fn">charge</span><span class="sw-p">({ amount: 4900 });</span></div>
+            <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.messaging.</span><span class="sw-fn">send</span><span class="sw-p">({ user, type: </span><span class="sw-str">"welcome"</span><span class="sw-p"> });</span></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .sw {
+        overflow: hidden;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.92);
+    }
+
+    .sw-tabs {
+        display: flex;
+        overflow-x: auto;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .sw-tab {
+        flex: none;
+        padding: 13px 18px;
+        border-right: 1px solid rgb(var(--m-fg) / 0.1);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    .sw-tab-on {
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.05);
+    }
+
+    .sw-tab-more {
+        border-right: 0;
+        color: rgb(var(--m-fg) / 0.35);
+    }
+
+    .sw-editor {
+        display: flex;
+        gap: 18px;
+        padding: 22px 20px 26px;
+        background: transparent;
+    }
+
+    .sw-gutter {
+        display: flex;
+        flex-direction: column;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.8;
+        text-align: right;
+        color: rgb(var(--m-fg) / 0.25);
+        user-select: none;
+        background: transparent;
+    }
+
+    .sw-gutter span {
+        background: transparent;
+    }
+
+    .sw-code {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow-x: auto;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.8;
+        background: transparent;
+    }
+
+    .sw-line {
+        white-space: pre;
+        background: transparent;
+    }
+
+    .sw-blank {
+        height: 1.8em;
+    }
+
+    .sw-line span {
+        background: transparent;
+    }
+
+    .sw-kw { color: rgb(var(--m-rose-lo)); }
+    .sw-id { color: rgb(var(--m-rose-hi)); }
+    .sw-fn { color: rgb(var(--m-rose-hi)); }
+    .sw-str { color: rgb(var(--m-str)); }
+    .sw-p { color: rgb(var(--m-fg) / 0.62); }
+</style>

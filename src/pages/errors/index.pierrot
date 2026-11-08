@@ -1,0 +1,9 @@
+<script>
+    import { ErrorView } from "../../components/errorView.pierrot";
+
+    let status = get.Status();
+
+    set.Title("Murkio");
+</script>
+
+<ErrorView code={status} />

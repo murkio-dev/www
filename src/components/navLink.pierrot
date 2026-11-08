@@ -1,0 +1,38 @@
+<script>
+    let href: string;
+    let label: string;
+    let arrow: boolean;
+    function goNav(url: string): void {
+        client.Redirect(url);
+    }
+</script>
+
+<button class="nav-link" @click={goNav(href)}>
+    ${label}
+    @if arrow
+        <img src="/assets/chevron.svg" alt="" width="10" height="5">
+    @end
+</button>
+
+<style>
+    .nav-link {
+        border: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 100%;
+        padding: 0 22px;
+        white-space: nowrap;
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        text-decoration: none;
+        background: transparent;
+    }
+
+    .nav-link:hover {
+        opacity: 0.75;
+    }
+</style>

@@ -1,0 +1,133 @@
+<script>
+    import { StarMark } from "./starMark.pierrot";
+</script>
+
+<div class="av">
+    <div class="av-stage">
+        <div class="av-circle av-circle-ai">
+            <span class="av-label">${i18n.ai.ai.label}</span>
+            <span class="av-name">${i18n.ai.ai.name}</span>
+        </div>
+
+        <div class="av-circle av-circle-hi">
+            <span class="av-label">${i18n.ai.hi.label}</span>
+            <span class="av-name">${i18n.ai.hi.name}</span>
+        </div>
+
+        <span class="av-core" aria-hidden="true"><StarMark size="30" /></span>
+    </div>
+
+    <div class="av-caps">
+        <p class="av-cap">${i18n.ai.ai.text}</p>
+        <p class="av-cap">${i18n.ai.hi.text}</p>
+    </div>
+</div>
+
+<style>
+    .av {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 36px;
+        background: transparent;
+    }
+
+    .av-stage {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        background: transparent;
+    }
+
+    .av-circle {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        box-sizing: border-box;
+        width: clamp(170px, 30vw, 340px);
+        aspect-ratio: 1;
+        border: 1px solid rgb(var(--m-fg) / 0.2);
+        border-radius: 50%;
+        mix-blend-mode: screen;
+    }
+
+    .av-circle-ai {
+        padding-right: 22%;
+        background-image: var(--m-noise), radial-gradient(circle at 34% 32%, rgba(222, 190, 190, 0.42) 0%, rgba(120, 90, 90, 0.18) 60%, rgba(40, 30, 30, 0.05) 100%);
+    }
+
+    .av-circle-hi {
+        margin-left: clamp(-90px, -7vw, -40px);
+        padding-left: 22%;
+        background-image: var(--m-noise), radial-gradient(circle at 66% 32%, rgba(238, 238, 238, 0.36) 0%, rgba(130, 120, 120, 0.16) 60%, rgba(40, 36, 36, 0.05) 100%);
+    }
+
+    .av-label {
+        font-family: "Roboto", sans-serif;
+        font-weight: 200;
+        font-size: clamp(44px, 7vw, 84px);
+        line-height: 1;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .av-name {
+        max-width: 140px;
+        text-align: center;
+        font-family: "Jaldi", sans-serif;
+        font-size: clamp(13px, 1.5vw, 17px);
+        line-height: 1.2;
+        color: rgb(var(--m-fg) / 0.75);
+        background: transparent;
+    }
+
+    .av-core {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 56px;
+        height: 56px;
+        margin: -28px 0 0 -28px;
+        border: 1px solid rgb(var(--m-fg) / 0.3);
+        border-radius: 50%;
+        box-shadow: 0 0 50px rgba(236, 213, 213, 0.55);
+        background-color: rgb(var(--m-well) / 0.85);
+    }
+
+    .av-caps {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        max-width: 760px;
+        background: transparent;
+    }
+
+    .av-cap {
+        text-align: center;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+
+    @media (max-width: 640px) {
+        .av-caps {
+            gap: 20px;
+        }
+
+        .av-cap {
+            font-size: 13px;
+        }
+    }
+
+    :root[data-theme="light"] .av-circle {
+        mix-blend-mode: multiply;
+    }
+</style>

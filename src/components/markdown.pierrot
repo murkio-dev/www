@@ -1,0 +1,132 @@
+<script>
+    import { mdBlocks } from "../scripts/logic/markdown.ts";
+
+    let source: string;
+</script>
+
+<div class="md">
+    @for block in mdBlocks(source)
+        @if block.type == "h"
+            <h4 class="md-h">
+                @for seg in block.segs
+                <span class="md-${seg.kind}">${seg.text}</span>
+                @end
+            </h4>
+        @end
+        @if block.type == "p"
+            <p class="md-p">
+                @for seg in block.segs
+                <span class="md-${seg.kind}">${seg.text}</span>
+                @end
+            </p>
+        @end
+        @if block.type == "ul"
+            <ul class="md-ul">
+                @for item in block.items
+                    <li class="md-li"><span class="md-tick" aria-hidden="true"></span><span class="md-text">
+                        @for seg in item
+                        <span class="md-${seg.kind}">${seg.text}</span>
+                        @end
+                    </span></li>
+                @end
+            </ul>
+        @end
+    @end
+</div>
+
+<style>
+    .md {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: transparent;
+    }
+
+    .md-h {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .md-p {
+        font-family: "Roboto", sans-serif;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+
+    .md-ul {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: transparent;
+    }
+
+    .md-li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14.5px;
+        line-height: 1.45;
+        color: rgb(var(--m-fg) / 0.8);
+        background: transparent;
+    }
+
+    .md-text {
+        background: transparent;
+    }
+
+    .md-tick {
+        position: relative;
+        flex: none;
+        width: 18px;
+        height: 18px;
+        margin-top: 1px;
+        border: 1px solid rgb(var(--m-rose) / 0.6);
+        border-radius: 50%;
+        background-color: rgb(var(--m-rose) / 0.08);
+    }
+
+    .md-tick::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 5.5px;
+        width: 4px;
+        height: 8px;
+        border-right: 1.5px solid rgb(var(--m-rose-hi));
+        border-bottom: 1.5px solid rgb(var(--m-rose-hi));
+        transform: rotate(45deg);
+    }
+
+    .md-b {
+        font-weight: 500;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .md-i {
+        font-style: italic;
+        background: transparent;
+    }
+
+    .md-c {
+        padding: 1px 6px;
+        border-radius: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12.5px;
+        color: rgb(var(--m-rose-hi));
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    .md-t {
+        background: transparent;
+    }
+</style>

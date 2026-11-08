@@ -1,0 +1,99 @@
+<script>
+    import { Logo } from "./logo.pierrot";
+    import { Navbar } from "./navbar.pierrot";
+    import { AccountButton } from "./accountButton.pierrot";
+    import { LoginButton } from "./loginButton.pierrot";
+    import { LangMenu } from "./langMenu.pierrot";
+    import { ThemeToggle } from "./themeToggle.pierrot";
+</script>
+
+<header class="header">
+    <div class="header-inner">
+        <div class="header-start"><Logo name={i18n.brand} /></div>
+        <Navbar />
+        <div class="header-end">
+            <LangMenu />
+            <ThemeToggle />
+            <LoginButton href="#login" label={i18n.header.login} />
+            <AccountButton href="#account" label={i18n.header.createAccount} />
+        </div>
+    </div>
+</header>
+
+<style>
+    :root {
+        --header-h: 56px;
+    }
+
+    body {
+        padding-top: var(--header-h);
+    }
+
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        box-sizing: border-box;
+        height: var(--header-h);
+        background-color: rgb(var(--m-page-rgb) / 0.7);
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 16px;
+        box-sizing: border-box;
+        max-width: 1314px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
+        background: transparent;
+    }
+
+    .header-start,
+    .header-end {
+        display: flex;
+        background: transparent;
+    }
+
+    .header-start {
+        justify-content: flex-start;
+    }
+
+    .header-end {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    @media (max-width: 560px) {
+        .header-end .login {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1180px) {
+        :root {
+            --header-h: 96px;
+        }
+
+        .header-inner {
+            grid-template-columns: 1fr auto;
+            grid-template-rows: 1fr 1fr;
+            padding: 0 16px;
+            gap: 0 16px;
+        }
+
+        .header-inner .navbar {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            justify-self: center;
+        }
+    }
+</style>

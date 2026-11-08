@@ -1,0 +1,49 @@
+<script>
+    let url: string;
+    let icon: string;
+    let label: string;
+
+    function goSocial(target: string): void {
+        client.Redirect(target).newTab();
+    }
+</script>
+
+<button class="fs" @click={goSocial(url)}>
+    <img src="${icon}" alt="" width="16" height="16">
+    <span>${label}</span>
+</button>
+
+<style>
+    .fs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        border: 0;
+        text-align: left;
+        cursor: pointer;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        color: rgb(var(--m-fg) / 0.6);
+        transition: color 0.15s ease;
+        background: transparent;
+    }
+
+    .fs img {
+        opacity: 0.6;
+        transition: opacity 0.15s ease;
+    }
+
+    .fs span {
+        background: transparent;
+    }
+
+    .fs:hover {
+        color: rgb(var(--m-fg));
+    }
+
+    .fs:hover img {
+        opacity: 1;
+    }
+</style>

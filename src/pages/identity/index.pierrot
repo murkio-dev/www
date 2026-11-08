@@ -1,0 +1,256 @@
+<script>
+    import "./styles.css";
+    import { HeroGlow } from "../../components/heroGlow.pierrot";
+    import { HeroLights } from "../../components/heroLights.pierrot";
+    import { StarMark } from "../../components/starMark.pierrot";
+    import { SectionHead } from "../../components/sectionHead.pierrot";
+    import { Button } from "../../components/button.pierrot";
+    import { IdnCap } from "../../components/idnCap.pierrot";
+    import { IdnSdk } from "../../components/idnSdk.pierrot";
+    import { IdnFaq } from "../../components/idnFaq.pierrot";
+    import { PlanCards } from "../../components/planCards.pierrot";
+
+    set.Title("Murkio Identity");
+
+    // GET https://api.murkio.com/v1/payments/plans?location=brazil&display=true
+    // content-type: "application/json"
+    // "X-application-id": "01a19d33-557d-77c0-a3a5-297106771a2c"
+    const priceMock = [{
+        "id": "01a19d31-6309-72ff-871d-8c1a6bbebc27",
+        "name": "free",
+        "description": "Para validar a sua ideia sem gastar nada.\n\n- E-mail e senha com verificação\n- Login social\n- 2FA por aplicação", // markdown, vem do arquivo .md
+        "discount": 0,
+        "price": 0,
+        "tags": ["free", "1000 users"]
+    },
+    {
+        "id": "01a19d31-6309-72ff-871d-8c1a6bbebc27",
+        "name": "pro",
+        "description": "Para produtos em crescimento.\n\n- Tudo do **Free**\n- Histórico e auditoria\n- Suporte por e-mail", // markdown, vem do arquivo .md
+        "discount": 0,
+        "price": 2999,     // moeda Brasileira, logo as 2 ultimas casas são os centavos
+        "tags": ["pro", "10000 users"]
+    },
+    {
+        "id": "01a19d31-6309-72ff-871d-8c1a6bbebc27",
+        "name": "max",
+        "description": "Para quem não pode parar.\n\n- Tudo do **Pro**\n- Tela de login personalizada\n- Suporte `prioritário`", // markdown, vem do arquivo .md
+        "discount": 0,
+        "price": 4999,     // moeda Brasileira, logo as 2 ultimas casas são os centavos
+        "tags": ["max", "1000 users"]
+    },
+    {
+        "id": "01a19d31-6309-72ff-871d-8c1a6bbebc27",
+        "name": "pro",
+        "description": "Para produtos em crescimento.\n\nTudo do **Free**\nHistórico e auditoria\nSuporte por e-mail", 
+        "discount": 0,
+        "price": 35988,     // R$ 359,88 (29,99 x 12 meses)
+        "tags": ["pro", "10000 users"]
+    },
+    {
+        "id": "01a19d31-6309-72ff-871d-8c1a6bbebc27",
+        "name": "max",
+        "description": "Para quem não pode parar.\n\nTudo do **Pro**\nTela de login personalizada\nSuporte `prioritário`", 
+        "discount": 0,
+        "price": 59988,     // R$ 599,88 (49,99 x 12 meses)
+        "tags": ["max", "1000 users"]
+    }];
+</script>
+
+<div class="idn-wrap">
+<HeroGlow />
+
+<main class="idn-hero">
+    <HeroLights />
+    <span class="idn-arc idn-arc-glow" aria-hidden="true"></span>
+    <span class="idn-arc idn-arc-line" aria-hidden="true"></span>
+
+    <div class="idn-hero-frame">
+        <span class="idn-hero-brand"><StarMark size="36" />${i18n.idn.hero.brand}</span>
+        <span class="idn-live"><span class="idn-live-dot"></span>${i18n.idn.hero.live}</span>
+        <h1 class="idn-hero-title">${i18n.idn.hero.title}</h1>
+        <p class="idn-hero-subtitle">${i18n.idn.hero.subtitle}</p>
+        <div class="idn-hero-actions">
+            <Button href="#account" label={i18n.idn.hero.primary} variant="primary" />
+            <Button href="#sdks" label={i18n.idn.hero.secondary} variant="secondary" />
+        </div>
+    </div>
+</main>
+
+<section class="idn-stats" aria-label="${i18n.idn.stats.label}">
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-globe.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s1Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s1Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-code.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s2Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s2Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s3Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s3Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-trash.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s4Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s4Label}</span></div></div>
+</section>
+
+<section class="idn-section" id="features">
+    <SectionHead badge={i18n.idn.caps.badge} title={i18n.idn.caps.title} subtitle={i18n.idn.caps.subtitle} />
+    <div class="idn-grid-3">
+        <IdnCap icon="/assets/icon-auth.svg" title={i18n.idn.caps.c1.title} text={i18n.idn.caps.c1.text} t1={i18n.idn.caps.c1.t1} t2={i18n.idn.caps.c1.t2} t3={i18n.idn.caps.c1.t3} />
+        <IdnCap icon="/assets/icon-rotate.svg" title={i18n.idn.caps.c2.title} text={i18n.idn.caps.c2.text} t1={i18n.idn.caps.c2.t1} t2={i18n.idn.caps.c2.t2} t3={i18n.idn.caps.c2.t3} />
+        <IdnCap icon="/assets/icon-globe.svg" title={i18n.idn.caps.c3.title} text={i18n.idn.caps.c3.text} t1={i18n.idn.caps.c3.t1} t2={i18n.idn.caps.c3.t2} t3={i18n.idn.caps.c3.t3} />
+        <IdnCap icon="/assets/icon-clock.svg" title={i18n.idn.caps.c4.title} text={i18n.idn.caps.c4.text} t1={i18n.idn.caps.c4.t1} t2={i18n.idn.caps.c4.t2} t3={i18n.idn.caps.c4.t3} />
+        <IdnCap icon="/assets/icon-vault.svg" title={i18n.idn.caps.c5.title} text={i18n.idn.caps.c5.text} t1={i18n.idn.caps.c5.t1} t2={i18n.idn.caps.c5.t2} t3={i18n.idn.caps.c5.t3} />
+        <IdnCap icon="/assets/icon-layers.svg" title={i18n.idn.caps.c6.title} text={i18n.idn.caps.c6.text} t1={i18n.idn.caps.c6.t1} t2={i18n.idn.caps.c6.t2} t3={i18n.idn.caps.c6.t3} />
+        <IdnCap icon="/assets/icon-inbox.svg" title={i18n.idn.caps.c7.title} text={i18n.idn.caps.c7.text} t1={i18n.idn.caps.c7.t1} t2={i18n.idn.caps.c7.t2} t3={i18n.idn.caps.c7.t3} />
+        <IdnCap icon="/assets/icon-search.svg" title={i18n.idn.caps.c8.title} text={i18n.idn.caps.c8.text} t1={i18n.idn.caps.c8.t1} t2={i18n.idn.caps.c8.t2} t3={i18n.idn.caps.c8.t3} />
+        <IdnCap icon="/assets/icon-trash.svg" title={i18n.idn.caps.c9.title} text={i18n.idn.caps.c9.text} t1={i18n.idn.caps.c9.t1} t2={i18n.idn.caps.c9.t2} t3={i18n.idn.caps.c9.t3} />
+    </div>
+</section>
+
+<section class="idn-section" id="social">
+    <SectionHead badge={i18n.idn.providers.badge} title={i18n.idn.providers.title} subtitle={i18n.idn.providers.subtitle} />
+    <ul class="idn-providers-list">
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-google.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p1}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-github.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p2}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-apple.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p3}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-facebook.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p4}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-x.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p5}</span></li>
+    </ul>
+</section>
+
+<section class="idn-section" id="how">
+    <SectionHead badge={i18n.idn.how.badge} title={i18n.idn.how.title} subtitle={i18n.idn.how.subtitle} />
+    <div class="idn-how">
+        <div class="idn-code" aria-hidden="true">
+            <div class="idn-code-bar">
+                <StarMark size="16" />
+                <span class="idn-code-file">${i18n.idn.how.file}</span>
+                <span class="idn-code-note">${i18n.idn.how.preview}</span>
+            </div>
+            <div class="idn-code-body">
+                <div class="idn-line"><span class="idn-kw">import</span><span class="idn-p"> { </span><span class="idn-id">Identity</span><span class="idn-p"> } </span><span class="idn-kw">from</span><span class="idn-p"> </span><span class="idn-str">"@murkio/identity"</span><span class="idn-p">;</span></div>
+                <div class="idn-line idn-blank"></div>
+                <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> identity = </span><span class="idn-kw">new</span><span class="idn-p"> </span><span class="idn-id">Identity</span><span class="idn-p">({ publicKey: </span><span class="idn-str">"pk_…"</span><span class="idn-p"> });</span></div>
+                <div class="idn-line idn-blank"></div>
+                <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> session = </span><span class="idn-kw">await</span><span class="idn-p"> identity.</span><span class="idn-fn">login</span><span class="idn-p">({ email, password });</span></div>
+                <div class="idn-line idn-blank"></div>
+                <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> me = </span><span class="idn-kw">await</span><span class="idn-p"> identity.</span><span class="idn-fn">me</span><span class="idn-p">();</span></div>
+            </div>
+        </div>
+
+        <ol class="idn-steps">
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-plus.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s1Title}</h3><p class="idn-step-body">${i18n.idn.how.s1Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-code.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s2Title}</h3><p class="idn-step-body">${i18n.idn.how.s2Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s3Title}</h3><p class="idn-step-body">${i18n.idn.how.s3Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-search.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s4Title}</h3><p class="idn-step-body">${i18n.idn.how.s4Text}</p></div></li>
+        </ol>
+    </div>
+</section>
+
+<section class="idn-section" id="mcp">
+    <SectionHead badge={i18n.idn.mcp.badge} title={i18n.idn.mcp.title} subtitle={i18n.idn.mcp.subtitle} />
+    <div class="idn-mcp">
+        <div class="idn-mcp-card idn-panel">
+            <h3 class="idn-mcp-title">${i18n.idn.mcp.promptsTitle}</h3>
+            <ul class="idn-prompts">
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p1}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p2}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p3}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p4}</li>
+            </ul>
+            <ul class="idn-checks">
+                <li class="idn-check"><span class="idn-tick"></span>${i18n.idn.mcp.c1}</li>
+                <li class="idn-check"><span class="idn-tick"></span>${i18n.idn.mcp.c2}</li>
+            </ul>
+        </div>
+
+        <div class="idn-mcp-card idn-panel">
+            <h3 class="idn-mcp-title">${i18n.idn.mcp.connectTitle}</h3>
+            <p class="idn-mcp-text">${i18n.idn.mcp.connectText}</p>
+            <div class="idn-code" aria-hidden="true">
+                <div class="idn-code-bar">
+                    <StarMark size="16" />
+                    <span class="idn-code-file">${i18n.idn.mcp.file}</span>
+                </div>
+                <div class="idn-code-body">
+                    <div class="idn-line"><span class="idn-p">{</span></div>
+                    <div class="idn-line"><span class="idn-p">  </span><span class="idn-str">"mcpServers"</span><span class="idn-p">: {</span></div>
+                    <div class="idn-line"><span class="idn-p">    </span><span class="idn-str">"murkio-identity"</span><span class="idn-p">: {</span></div>
+                    <div class="idn-line"><span class="idn-p">      </span><span class="idn-id">"url"</span><span class="idn-p">: </span><span class="idn-str">"https://mcp.murkio.com/identity"</span></div>
+                    <div class="idn-line"><span class="idn-p">    }</span></div>
+                    <div class="idn-line"><span class="idn-p">  }</span></div>
+                    <div class="idn-line"><span class="idn-p">}</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="idn-section" id="security">
+    <SectionHead badge={i18n.idn.sec.badge} title={i18n.idn.sec.title} subtitle={i18n.idn.sec.subtitle} />
+    <div class="idn-sec-grid">
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i1Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i1Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-vault.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i2Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i2Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-layers.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i3Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i3Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-alert.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i4Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i4Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-search.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i5Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i5Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-rotate.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i6Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i6Text}</p></div>
+    </div>
+</section>
+
+<section class="idn-section" id="login-screen">
+    <div class="idn-canvas">
+        <div class="idn-canvas-text">
+            <SectionHead badge={i18n.idn.canvas.badge} title={i18n.idn.canvas.title} subtitle={i18n.idn.canvas.subtitle} />
+            <ul class="idn-chips">
+                <li class="idn-chip">${i18n.idn.canvas.c1}</li>
+                <li class="idn-chip">${i18n.idn.canvas.c2}</li>
+                <li class="idn-chip">${i18n.idn.canvas.c3}</li>
+                <li class="idn-chip">${i18n.idn.canvas.c4}</li>
+            </ul>
+        </div>
+
+        <div class="idn-mock" aria-hidden="true">
+            <div class="idn-mock-card">
+                <span class="idn-mock-brand"><StarMark size="28" />${i18n.brand}</span>
+                <span class="idn-mock-title">${i18n.idn.canvas.mockTitle}</span>
+                <span class="idn-mock-field">${i18n.idn.canvas.mockEmail}</span>
+                <span class="idn-mock-field">${i18n.idn.canvas.mockPassword}</span>
+                <span class="idn-mock-btn">${i18n.idn.canvas.mockButton}</span>
+                <span class="idn-mock-or">${i18n.idn.canvas.mockOr}</span>
+                <span class="idn-mock-social"><span><img src="/assets/icon-google.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-github.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-apple.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-facebook.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-x.svg" alt="" width="16" height="16"></span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="idn-section" id="sdks">
+    <SectionHead badge={i18n.idn.sdks.badge} title={i18n.idn.sdks.title} subtitle={i18n.idn.sdks.subtitle} />
+    <div class="idn-sdk-grid">
+        <IdnSdk logo="/assets/sdk/typescript.svg" name={i18n.sdk.l11} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/javascript.svg" name={i18n.sdk.l12} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/java.svg" name={i18n.sdk.l1} command="dev.murkio:identity" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/go.svg" name={i18n.sdk.l2} command="go get github.com/murkio-dev/identity-go" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/react.svg" name={i18n.sdk.l3} command="npm install @murkio/identity-react" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/svelte.svg" name={i18n.sdk.l4} command="npm install @murkio/identity-svelte" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/kotlin.svg" name={i18n.sdk.l5} command="dev.murkio:identity-kotlin" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/swift.svg" name={i18n.sdk.l6} command="murkio-dev/identity-swift" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/elixir.svg" name={i18n.sdk.l7} command="{:murkio_identity, &quot;~> 0.1&quot;}" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/ruby.svg" name={i18n.sdk.l8} command="gem install murkio-identity" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/php.svg" name={i18n.sdk.l9} command="composer require murkio/identity" soon={i18n.header.services.soon} />
+        <IdnSdk logo="/assets/sdk/csharp.svg" name={i18n.sdk.l10} command="dotnet add package Murkio.Identity" soon={i18n.header.services.soon} />
+    </div>
+    <p class="idn-sdk-note">${i18n.idn.sdks.note}</p>
+</section>
+
+<section class="idn-section" id="pricing">
+    <SectionHead badge={i18n.idn.pricing.badge} title={i18n.idn.pricing.title} subtitle={i18n.idn.pricing.subtitle} />
+    <PlanCards plans={priceMock} currency={i18n.idn.pricing.currency} />
+    <p class="idn-fine">${i18n.idn.pricing.noPlan} <a class="idn-fine-link" href="/support">${i18n.idn.pricing.noPlanLink}</a></p>
+</section>
+
+<section class="idn-section" id="faq">
+    <SectionHead badge={i18n.idn.faq.badge} title={i18n.idn.faq.title} subtitle="" />
+    <div class="idn-faq-list">
+        <IdnFaq question={i18n.idn.faq.q1} answer={i18n.idn.faq.a1} />
+        <IdnFaq question={i18n.idn.faq.q2} answer={i18n.idn.faq.a2} />
+        <IdnFaq question={i18n.idn.faq.q3} answer={i18n.idn.faq.a3} />
+        <IdnFaq question={i18n.idn.faq.q4} answer={i18n.idn.faq.a4} />
+        <IdnFaq question={i18n.idn.faq.q5} answer={i18n.idn.faq.a5} />
+        <IdnFaq question={i18n.idn.faq.q6} answer={i18n.idn.faq.a6} />
+        <IdnFaq question={i18n.idn.faq.q7} answer={i18n.idn.faq.a7} />
+    </div>
+</section>
+</div>

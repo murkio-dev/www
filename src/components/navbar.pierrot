@@ -1,0 +1,37 @@
+<script>
+    import { NavLink } from "./navLink.pierrot";
+    import { ServicesMenu } from "./servicesMenu.pierrot";
+</script>
+
+<nav class="navbar" aria-label="${i18n.header.nav.label}">
+    <NavLink href="/" label={i18n.header.nav.home} arrow={false} />
+    <span class="navbar-divider"></span>
+    <ServicesMenu />
+    <span class="navbar-divider"></span>
+    <NavLink href="#pricing" label={i18n.header.nav.pricing} arrow={false} />
+    <span class="navbar-divider"></span>
+    <NavLink href="#documentation" label={i18n.header.nav.documentation} arrow={false} />
+    <span class="navbar-divider"></span>
+    <NavLink href="#faq" label={i18n.header.nav.faq} arrow={false} />
+</nav>
+
+<style>
+    .navbar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+        height: 36px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .navbar-divider {
+        width: 1px;
+        height: 18px;
+        background-color: rgb(var(--m-fg) / 0.35);
+    }
+
+</style>

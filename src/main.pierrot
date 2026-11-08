@@ -1,0 +1,20 @@
+<script>
+    import "./styles.css";
+    import { Header } from "./components/header.pierrot";
+    import { Footer } from "./components/footer.pierrot";
+    import { Home } from "./pages/home/index.pierrot";
+	import { Errors } from "./pages/errors/index.pierrot";
+
+	set.Icon("./assets/logo-solo.svg")
+    set.Title("Murkio");
+	set.Description("My pierrot project");
+	set.Charset("UTF-8");
+	set.Robots("./assets/robots.txt");
+	set.Default(Home);
+	set.Fallback(Errors);
+	set.I18N("./i18n");
+</script>
+
+<Header />
+<Page />
+<Footer />

@@ -1,0 +1,66 @@
+<script>
+    let initial: string;
+    let name: string;
+</script>
+
+<div class="rg">
+    <span class="rg-initial">${initial}</span>
+    <span class="rg-name">${name}</span>
+</div>
+
+<style>
+    .rg {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-sizing: border-box;
+        height: 56px;
+        padding: 0 16px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+        transition: border-color 0.2s ease, transform 0.2s ease;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.1) 10.2%, rgba(113, 113, 113, 0.05) 92.6%);
+    }
+
+    .rg:hover {
+        border-color: rgb(var(--m-rose-2) / 0.5);
+        transform: translateX(3px);
+    }
+
+    .rg::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -5px;
+        width: 6px;
+        height: 6px;
+        margin-top: -4px;
+        border: 1.5px solid rgb(var(--m-rose) / 0.95);
+        border-radius: 50%;
+        background-color: color-mix(in srgb, #0a0a0a calc(var(--m-dark) * 100%), var(--m-l0));
+    }
+
+    .rg-initial {
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: 1px solid rgb(var(--m-fg) / 0.14);
+        border-radius: 8px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-rose-hi));
+        background: transparent;
+    }
+
+    .rg-name {
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+</style>

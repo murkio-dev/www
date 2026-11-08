@@ -1,0 +1,107 @@
+<script>
+    let icon: string;
+    let title: string;
+    let text: string;
+    let t1: string;
+    let t2: string;
+    let t3: string;
+</script>
+
+<article class="idn-cap">
+    <span class="idn-cap-icon"><img src="${icon}" alt="" width="20" height="20"></span>
+    <h3 class="idn-cap-title">${title}</h3>
+    <p class="idn-cap-text">${text}</p>
+    <ul class="idn-cap-tags">
+        <li class="idn-cap-tag">${t1}</li>
+        <li class="idn-cap-tag">${t2}</li>
+        <li class="idn-cap-tag">${t3}</li>
+    </ul>
+</article>
+
+<style>
+    .idn-cap {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-sizing: border-box;
+        padding: 26px;
+        border: 1px solid rgb(var(--m-fg) / 0.08);
+        border-radius: 22px;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+        background-image: var(--m-noise), linear-gradient(119.2deg, color-mix(in srgb, #0f0d0d calc(var(--m-dark) * 100%), var(--m-l0)) 0%, color-mix(in srgb, #241b1b calc(var(--m-dark) * 100%), var(--m-l1)) 100%);
+    }
+
+    .idn-cap::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        background: radial-gradient(closest-side, rgb(var(--m-rose) / 0.28), transparent);
+    }
+
+    .idn-cap:hover {
+        border-color: rgb(var(--m-rose) / 0.4);
+        transform: translateY(-2px);
+    }
+
+    .idn-cap:hover::before {
+        opacity: 1;
+    }
+
+    .idn-cap-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 8px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 12px;
+        background-color: rgb(var(--m-fg) / 0.05);
+    }
+
+    .idn-cap-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.2;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .idn-cap-text {
+        font-family: "Roboto", sans-serif;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+
+    .idn-cap-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: auto 0 0;
+        padding: 14px 0 0;
+        list-style: none;
+        background: transparent;
+    }
+
+    .idn-cap-tag {
+        padding: 4px 10px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-fg) / 0.7);
+        background-color: rgb(var(--m-fg) / 0.04);
+    }
+</style>

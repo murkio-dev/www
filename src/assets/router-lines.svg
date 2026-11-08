@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="266" viewBox="0 0 220 266" preserveAspectRatio="none" fill="none">
+<style>
+.flow{stroke-dasharray:2 16;stroke-linecap:round;animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:18}}
+@media (prefers-reduced-motion:reduce){.flow{animation:none}}
+</style>
+<g stroke="rgba(190,158,158,0.4)" stroke-width="1.2">
+<path d="M0 100C110 100 110 28 220 28" vector-effect="non-scaling-stroke"/>
+<path d="M0 122C110 122 110 98 220 98" vector-effect="non-scaling-stroke"/>
+<path d="M0 144C110 144 110 168 220 168" vector-effect="non-scaling-stroke"/>
+<path d="M0 166C110 166 110 238 220 238" vector-effect="non-scaling-stroke"/>
+</g>
+<g stroke="rgba(255,235,235,0.95)" stroke-width="2">
+<path class="flow" d="M0 100C110 100 110 28 220 28" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 122C110 122 110 98 220 98" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 144C110 144 110 168 220 168" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 166C110 166 110 238 220 238" vector-effect="non-scaling-stroke"/>
+</g>
+</svg>

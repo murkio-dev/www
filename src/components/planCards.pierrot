@@ -1,0 +1,161 @@
+<script>
+    import { Button } from "./button.pierrot";
+    import { Markdown } from "./markdown.pierrot";
+
+    // Cada plano segue o contrato de GET /v1/payments/plans:
+    // { id, name, description (markdown), discount (%), price (centavos), tags }
+    let plans: any;
+    let currency: string;
+
+    function money(symbol: string, cents: number): string {
+        return symbol + " " + (cents / 100).toFixed(2).replace(".", ",");
+    }
+
+    function finalPrice(price: number, discount: number): number {
+        return Math.round(price * (100 - discount) / 100);
+    }
+</script>
+
+<div class="plans">
+    @for plan in plans
+        <article class="plan">
+            <h3 class="plan-name">${plan.name}</h3>
+
+            <div class="plan-price">
+                @if plan.price == 0
+                    <span class="plan-value">${i18n.idn.pricing.free}</span>
+                @else
+                    <span class="plan-value">${money(currency, finalPrice(plan.price, plan.discount))}</span>
+                    <span class="plan-per">${i18n.idn.pricing.perMonth}</span>
+                @end
+                @if plan.discount > 0
+                    <span class="plan-old">${money(currency, plan.price)}</span>
+                    <span class="plan-off">-${plan.discount}%</span>
+                @end
+            </div>
+
+            <Markdown source={plan.description} />
+
+            <ul class="plan-tags">
+                @for tag in plan.tags
+                    <li class="plan-tag">${tag}</li>
+                @end
+            </ul>
+
+            <div class="plan-cta">
+                <Button href="#account" label={i18n.idn.pricing.cta} variant="primary" />
+            </div>
+        </article>
+    @end
+</div>
+
+<style>
+    .plans {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        background: transparent;
+    }
+
+    .plan {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-sizing: border-box;
+        padding: 30px;
+        border: 1px solid rgb(var(--m-fg) / 0.08);
+        border-radius: 24px;
+        transition: border-color 0.2s ease;
+        background-image: var(--m-noise), linear-gradient(119.2deg, color-mix(in srgb, #0f0d0d calc(var(--m-dark) * 100%), var(--m-l0)) 0%, color-mix(in srgb, #241b1b calc(var(--m-dark) * 100%), var(--m-l1)) 100%);
+    }
+
+    .plan:hover {
+        border-color: rgb(var(--m-rose) / 0.4);
+    }
+
+    .plan-name {
+        font-family: "Jaldi", sans-serif;
+        font-weight: 400;
+        font-size: 22px;
+        text-transform: capitalize;
+        color: rgb(var(--m-rose-hi));
+        background: transparent;
+    }
+
+    .plan-price {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 4px 8px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .plan-value {
+        font-family: "Roboto", sans-serif;
+        font-size: 38px;
+        line-height: 1;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .plan-per {
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.5);
+        background: transparent;
+    }
+
+    .plan-old {
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        text-decoration: line-through;
+        color: rgb(var(--m-fg) / 0.4);
+        background: transparent;
+    }
+
+    .plan-off {
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-ok));
+        background-color: rgb(var(--m-ok) / 0.12);
+    }
+
+    .plan-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: auto 0 0;
+        padding: 0;
+        list-style: none;
+        background: transparent;
+    }
+
+    .plan-tag {
+        padding: 4px 10px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-fg) / 0.7);
+        background-color: rgb(var(--m-fg) / 0.04);
+    }
+
+    .plan-cta {
+        display: flex;
+        background: transparent;
+    }
+
+    .plan-cta .button {
+        width: 100%;
+    }
+
+    @media (max-width: 960px) {
+        .plans {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -1,0 +1,134 @@
+<script>
+    import { ServiceItem } from "./serviceItem.pierrot";
+
+    function redirectTo(path: string):void {
+        client.Redirect(path)
+    }
+</script>
+
+<div class="services-menu">
+    <button class="services-trigger" aria-haspopup="true">
+        ${i18n.header.nav.services}
+        <img class="services-chevron" src="/assets/chevron.svg" alt="" width="10" height="5">
+    </button>
+
+    <div class="services-panel">
+        <div class="services-card">
+            <div class="services-col">
+                <p class="services-heading">${i18n.header.services.title}</p>
+                <ServiceItem href="/identity" icon="/assets/icon-auth.svg" title={i18n.header.services.auth.title} description={i18n.header.services.auth.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/messaging" icon="/assets/icon-messaging.svg" title={i18n.header.services.messaging.title} description={i18n.header.services.messaging.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/payments" icon="/assets/icon-payments.svg" title={i18n.header.services.payments.title} description={i18n.header.services.payments.description} status="active" statusLabel={i18n.header.services.active} />
+            </div>
+            <div class="services-col">
+                <p class="services-heading">${i18n.header.services.infraTitle}</p>
+                <ServiceItem href="/vault" icon="/assets/icon-vault.svg" title={i18n.header.services.vault.title} description={i18n.header.services.vault.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/lambda" icon="/assets/icon-lambda.svg" title={i18n.header.services.lambda.title} description={i18n.header.services.lambda.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem icon="/assets/icon-database.svg" title={i18n.header.services.database.title} description={i18n.header.services.database.description} status="soon" statusLabel={i18n.header.services.soon} />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .services-menu {
+        display: flex;
+        height: 100%;
+    }
+
+    .services-trigger {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 100%;
+        padding: 0 22px;
+        border: 0;
+        cursor: pointer;
+        white-space: nowrap;
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .services-trigger::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        height: 20px;
+    }
+
+    .services-chevron {
+        transition: transform 0.2s ease;
+    }
+
+    .services-menu:hover .services-chevron,
+    .services-menu:focus-within .services-chevron {
+        transform: rotate(180deg);
+    }
+
+    .services-panel {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        box-sizing: border-box;
+        padding-top: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .services-menu:hover .services-panel,
+    .services-menu:focus-within .services-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .services-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 18px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.96);
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.08) 10.2%, rgba(113, 113, 113, 0.04) 92.6%);
+    }
+
+    .services-col {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: transparent;
+    }
+
+    .services-heading {
+        padding: 6px 10px 8px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    @media (max-width: 720px) {
+        .services-card {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            max-height: calc(100vh - var(--header-h) - 24px);
+            overflow-y: auto;
+        }
+    }
+</style>

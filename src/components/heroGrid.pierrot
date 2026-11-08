@@ -1,0 +1,25 @@
+<script>
+    let position: string;
+</script>
+
+<img class="hero-grid hero-grid-${position}" src="/assets/grid.svg" alt="">
+
+<style>
+    .hero-grid {
+        position: absolute;
+        width: 502px;
+        height: 415px;
+        max-width: 45%;
+        pointer-events: none;
+    }
+
+    .hero-grid-top {
+        top: 0;
+        left: 0;
+    }
+
+    .hero-grid-bottom {
+        right: 0;
+        bottom: 0;
+    }
+</style>

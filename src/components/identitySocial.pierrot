@@ -1,0 +1,66 @@
+<div class="ids">
+    <span class="ids-bands" aria-hidden="true"></span>
+
+    <div class="ids-body">
+        <h3 class="id-title">${i18n.identity.social.title}</h3>
+        <p class="id-text">${i18n.identity.social.description}</p>
+
+        <div class="ids-chips">
+            <span class="ids-chip">${i18n.identity.social.p1}</span>
+            <span class="ids-chip">${i18n.identity.social.p2}</span>
+            <span class="ids-chip">${i18n.identity.social.p3}</span>
+            <span class="ids-chip">${i18n.identity.social.p4}</span>
+            <span class="ids-chip">${i18n.identity.social.p5}</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ids {
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        background: transparent;
+    }
+
+    .ids-bands {
+        position: absolute;
+        inset: -40px -20px;
+        filter: blur(10px);
+        opacity: 0.9;
+        background-image:
+            linear-gradient(90deg, transparent 12%, rgb(var(--m-rose-2) / 0.14) 14%, transparent 18%),
+            linear-gradient(90deg, transparent 33%, rgb(var(--m-rose) / 0.22) 35%, transparent 40%),
+            linear-gradient(90deg, transparent 58%, rgb(var(--m-rose-2) / 0.16) 60%, transparent 64%),
+            linear-gradient(90deg, transparent 80%, rgb(var(--m-rose) / 0.26) 82%, transparent 87%),
+            linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgb(var(--m-well) / 0.85) 100%);
+    }
+
+    .ids-body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        width: 100%;
+        background: transparent;
+    }
+
+    .ids-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+        background: transparent;
+    }
+
+    .ids-chip {
+        padding: 7px 14px;
+        border: 1px solid rgb(var(--m-fg) / 0.16);
+        border-radius: 999px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.06);
+    }
+</style>

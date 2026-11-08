@@ -1,0 +1,134 @@
+<script>
+    import { SectionHead } from "./sectionHead.pierrot";
+    import { SdkWindow } from "./sdkWindow.pierrot";
+    import { SdkStrip } from "./sdkStrip.pierrot";
+</script>
+
+<section class="sdks" id="sdks">
+    <SectionHead badge={i18n.sdks.badge} title={i18n.sdks.title} subtitle={i18n.sdks.subtitle} />
+
+    <div class="sdks-main">
+        <ul class="sdks-list">
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b1Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b1Text}</p>
+                </div>
+            </li>
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b2Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b2Text}</p>
+                </div>
+            </li>
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b3Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b3Text}</p>
+                </div>
+            </li>
+        </ul>
+
+        <SdkWindow />
+    </div>
+
+    <div class="sdks-strip"><SdkStrip label={i18n.sdk.title} /></div>
+</section>
+
+<style>
+    .sdks {
+        box-sizing: border-box;
+        max-width: 1340px;
+        margin: 0 auto;
+        padding: 40px 20px 120px;
+        scroll-margin-top: var(--header-h);
+    }
+
+    .sdks-main {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 56px;
+        align-items: center;
+        background: transparent;
+    }
+
+    .sdks-list {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid rgb(var(--m-fg) / 0.12);
+        background: transparent;
+    }
+
+    .sdks-item {
+        display: flex;
+        gap: 16px;
+        padding: 26px 0;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.12);
+        background: transparent;
+    }
+
+    .sdks-check {
+        position: relative;
+        flex: none;
+        width: 22px;
+        height: 22px;
+        margin-top: 1px;
+        border: 1px solid rgb(var(--m-rose) / 0.6);
+        border-radius: 50%;
+        background-color: rgb(var(--m-rose) / 0.08);
+    }
+
+    .sdks-check::after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 7px;
+        width: 5px;
+        height: 9px;
+        border-right: 1.5px solid rgb(var(--m-rose-hi));
+        border-bottom: 1.5px solid rgb(var(--m-rose-hi));
+        transform: rotate(45deg);
+    }
+
+    .sdks-text {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: transparent;
+    }
+
+    .sdks-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.25;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .sdks-body {
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .sdks-strip {
+        margin-top: 64px;
+        background: transparent;
+    }
+
+    @media (max-width: 960px) {
+        .sdks-main {
+            grid-template-columns: 1fr;
+            gap: 36px;
+        }
+    }
+</style>

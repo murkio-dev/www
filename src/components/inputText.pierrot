@@ -1,0 +1,36 @@
+<script>
+    let placeholder: string;
+    let type: string;
+    let classe: string;
+    let disable: boolean;
+    let erro: string;
+    let value: Ref<string>;
+</script>
+
+@if disable
+    <input @bind={value} class="${classe}" type="${type}" placeholder="${placeholder}" disabled>
+@else
+    <input @bind={value} class="${classe}" type="${type}" placeholder="${placeholder}">
+@end
+@if erro != ""
+    <p class="erro">${erro}</p>
+@end
+
+<style>
+    input {
+        background-color: yellowgreen;
+        }
+
+    input:focus {
+        outline: 2px solid green;
+        }
+
+    input:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+        }
+    
+    .erro {
+        color: red;
+        }
+</style>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="448" viewBox="0 0 220 448" preserveAspectRatio="none" fill="none">
+<style>
+.flow{stroke-dasharray:2 16;stroke-linecap:round;animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:18}}
+@media (prefers-reduced-motion:reduce){.flow{animation:none}}
+</style>
+<g stroke="rgba(190,158,158,0.4)" stroke-width="1.2" vector-effect="non-scaling-stroke">
+<path d="M0 169C110 169 110 28 220 28" vector-effect="non-scaling-stroke"/>
+<path d="M0 191C110 191 110 98 220 98" vector-effect="non-scaling-stroke"/>
+<path d="M0 213C110 213 110 168 220 168" vector-effect="non-scaling-stroke"/>
+<path d="M0 235C110 235 110 280 220 280" vector-effect="non-scaling-stroke"/>
+<path d="M0 257C110 257 110 350 220 350" vector-effect="non-scaling-stroke"/>
+<path d="M0 279C110 279 110 420 220 420" vector-effect="non-scaling-stroke"/>
+</g>
+<g stroke="rgba(255,235,235,0.95)" stroke-width="2">
+<path class="flow" d="M0 169C110 169 110 28 220 28" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 191C110 191 110 98 220 98" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 213C110 213 110 168 220 168" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 235C110 235 110 280 220 280" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 257C110 257 110 350 220 350" vector-effect="non-scaling-stroke"/>
+<path class="flow" d="M0 279C110 279 110 420 220 420" vector-effect="non-scaling-stroke"/>
+</g>
+</svg>

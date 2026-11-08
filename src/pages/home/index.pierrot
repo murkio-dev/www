@@ -1,0 +1,46 @@
+<script>
+    import "./styles.css";
+    import { HeroGlow } from "../../components/heroGlow.pierrot";
+    import { HeroLights } from "../../components/heroLights.pierrot";
+    import { HeroGrid } from "../../components/heroGrid.pierrot";
+    import { Badge } from "../../components/badge.pierrot";
+    import { InfraSection } from "../../components/infraSection.pierrot";
+    import { IdentitySection } from "../../components/identitySection.pierrot";
+    import { VaultSection } from "../../components/vaultSection.pierrot";
+    import { PaymentsSection } from "../../components/paymentsSection.pierrot";
+    import { MessagingSection } from "../../components/messagingSection.pierrot";
+    import { SdksSection } from "../../components/sdksSection.pierrot";
+    import { LambdaSection } from "../../components/lambdaSection.pierrot";
+    import { AiSection } from "../../components/aiSection.pierrot";
+    import { Button } from "../../components/button.pierrot";
+</script>
+
+<div class="hero-wrap">
+<HeroGlow />
+<main class="hero">
+    <HeroLights />
+    <HeroGrid position="top" />
+    <HeroGrid position="bottom" />
+
+    <div class="hero-content">
+        <Badge label={i18n.home.badge} />
+
+        <h1 class="hero-title">${i18n.home.title}</h1>
+        <p class="hero-subtitle">${i18n.home.subtitle}</p>
+
+        <div class="hero-actions">
+            <Button href="#services" label={i18n.home.viewServices} variant="secondary" />
+            <Button href="#pricing" label={i18n.home.explorePlans} variant="primary" />
+        </div>
+    </div>
+</main>
+</div>
+
+<InfraSection />
+<SdksSection />
+<AiSection />
+<IdentitySection />
+<VaultSection />
+<PaymentsSection />
+<MessagingSection />
+<LambdaSection />

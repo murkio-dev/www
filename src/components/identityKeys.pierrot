@@ -1,0 +1,61 @@
+<div class="idk">
+    <div class="idk-keys">
+        <div class="idk-key">
+            <span class="idk-label">${i18n.identity.keys.publicLabel}</span>
+            <code class="idk-code">${i18n.identity.keys.publicSample}</code>
+        </div>
+        <div class="idk-key">
+            <span class="idk-label">${i18n.identity.keys.secretLabel}</span>
+            <code class="idk-code idk-code-secret">${i18n.identity.keys.secretSample}</code>
+        </div>
+    </div>
+
+    <h3 class="id-title">${i18n.identity.keys.title}</h3>
+    <p class="id-text">${i18n.identity.keys.description}</p>
+</div>
+
+<style>
+    .idk {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        height: 100%;
+        background: transparent;
+    }
+
+    .idk-keys {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: auto;
+        background: transparent;
+    }
+
+    .idk-key {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px 12px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 10px;
+        background-color: rgb(var(--m-well) / 0.5);
+    }
+
+    .idk-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    .idk-code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .idk-code-secret {
+        color: rgb(var(--m-rose));
+    }
+</style>

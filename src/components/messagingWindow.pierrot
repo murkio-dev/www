@@ -1,0 +1,220 @@
+<div class="mw">
+    <div class="mw-pane mw-pane-code">
+        <div class="mw-tabs" aria-hidden="true">
+            <span class="mw-tab mw-tab-on">notification.send</span>
+            <span class="mw-tab">email.send</span>
+        </div>
+
+        <div class="mw-editor" aria-hidden="true">
+            <div class="mw-gutter">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+            </div>
+            <div class="mw-code">
+                <div class="mw-line"><span class="mw-fn">notification</span><span class="mw-p">.</span><span class="mw-fn">send</span><span class="mw-p">({</span></div>
+                <div class="mw-line mw-in"><span class="mw-key">user_id</span><span class="mw-p">: </span><span class="mw-str">"usr_8f21"</span><span class="mw-p">,</span></div>
+                <div class="mw-line mw-in"><span class="mw-key">type</span><span class="mw-p">: </span><span class="mw-str">"invoice.paid"</span><span class="mw-p">,</span></div>
+                <div class="mw-line mw-in"><span class="mw-key">data</span><span class="mw-p">: { </span><span class="mw-key">order_id</span><span class="mw-p">: </span><span class="mw-str">"8412"</span><span class="mw-p"> }</span></div>
+                <div class="mw-line"><span class="mw-p">})</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mw-pane mw-pane-log">
+        <div class="mw-head">
+            <span class="mw-head-title">${i18n.messaging.code.logTitle}</span>
+        </div>
+
+        <div class="mw-row">
+            <span class="mw-chan">${i18n.messaging.code.c1}</span>
+            <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
+        </div>
+        <div class="mw-row">
+            <span class="mw-chan">${i18n.messaging.code.c3}</span>
+            <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
+        </div>
+        <div class="mw-row mw-row-off">
+            <span class="mw-chan">${i18n.messaging.code.c2}</span>
+            <span class="mw-status"><span class="mw-skip"></span>${i18n.messaging.code.skipped}</span>
+        </div>
+        <p class="mw-note">${i18n.messaging.code.skippedNote}</p>
+    </div>
+</div>
+
+<style>
+    .mw {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        overflow: hidden;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.92);
+    }
+
+    .mw-pane {
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+    }
+
+    .mw-pane-log {
+        border-left: 1px solid rgb(var(--m-fg) / 0.1);
+    }
+
+    .mw-tabs {
+        display: flex;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .mw-tab {
+        padding: 13px 20px;
+        border-right: 1px solid rgb(var(--m-fg) / 0.1);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    .mw-tab-on {
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.05);
+    }
+
+    .mw-editor {
+        display: flex;
+        gap: 18px;
+        padding: 22px 20px 26px;
+        background: transparent;
+    }
+
+    .mw-gutter {
+        display: flex;
+        flex-direction: column;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.8;
+        text-align: right;
+        color: rgb(var(--m-fg) / 0.25);
+        user-select: none;
+        background: transparent;
+    }
+
+    .mw-gutter span {
+        background: transparent;
+    }
+
+    .mw-code {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        line-height: 1.8;
+        overflow-x: auto;
+        background: transparent;
+    }
+
+    .mw-line {
+        white-space: pre;
+        background: transparent;
+    }
+
+    .mw-in {
+        padding-left: 22px;
+    }
+
+    .mw-line span {
+        background: transparent;
+    }
+
+    .mw-fn { color: rgb(var(--m-rose-hi)); }
+    .mw-key { color: rgb(var(--m-rose-lo)); }
+    .mw-str { color: rgb(var(--m-str)); }
+    .mw-p { color: rgb(var(--m-fg) / 0.5); }
+
+    .mw-head {
+        display: flex;
+        align-items: center;
+        padding: 13px 20px;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .mw-head-title {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    .mw-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px 20px;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.07);
+        background: transparent;
+    }
+
+    .mw-chan {
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .mw-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.7);
+        background: transparent;
+    }
+
+    .mw-ok {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgb(var(--m-rose) / 0.8);
+        background-color: rgb(var(--m-rose));
+    }
+
+    .mw-skip {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: rgb(var(--m-fg) / 0.3);
+    }
+
+    .mw-row-off .mw-chan,
+    .mw-row-off .mw-status {
+        color: rgb(var(--m-fg) / 0.4);
+    }
+
+    .mw-note {
+        padding: 10px 20px 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-fg) / 0.35);
+        background: transparent;
+    }
+
+    @media (max-width: 900px) {
+        .mw {
+            grid-template-columns: 1fr;
+        }
+
+        .mw-pane-log {
+            border-left: 0;
+            border-top: 1px solid rgb(var(--m-fg) / 0.1);
+            padding-bottom: 14px;
+        }
+    }
+</style>

@@ -1,0 +1,29 @@
+<script>
+    let href: string;
+    let label: string;
+
+    function goFooter(url: string): void {
+        client.Redirect(url);
+    }
+</script>
+
+<button class="fl" @click={goFooter(href)}>${label}</button>
+
+<style>
+    .fl {
+        padding: 0;
+        border: 0;
+        text-align: left;
+        cursor: pointer;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        color: rgb(var(--m-fg) / 0.6);
+        transition: color 0.15s ease;
+        background: transparent;
+    }
+
+    .fl:hover {
+        color: rgb(var(--m-fg));
+    }
+</style>

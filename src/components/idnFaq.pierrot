@@ -1,0 +1,79 @@
+<script>
+    let question: string;
+    let answer: string;
+</script>
+
+<details class="idn-faq">
+    <summary class="idn-faq-q">
+        <span>${question}</span>
+        <span class="idn-faq-plus" aria-hidden="true"></span>
+    </summary>
+    <p class="idn-faq-a">${answer}</p>
+</details>
+
+<style>
+    .idn-faq {
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.12);
+        background: transparent;
+    }
+
+    .idn-faq-q {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 22px 0;
+        cursor: pointer;
+        list-style: none;
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .idn-faq-q::-webkit-details-marker {
+        display: none;
+    }
+
+    .idn-faq-q:hover {
+        color: rgb(var(--m-rose-hi));
+    }
+
+    .idn-faq-plus {
+        position: relative;
+        flex: none;
+        width: 14px;
+        height: 14px;
+        background: transparent;
+    }
+
+    .idn-faq-plus::before,
+    .idn-faq-plus::after {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 0;
+        width: 14px;
+        height: 1.5px;
+        transition: transform 0.2s ease;
+        background-color: rgb(var(--m-rose));
+    }
+
+    .idn-faq-plus::after {
+        transform: rotate(90deg);
+    }
+
+    .idn-faq[open] .idn-faq-plus::after {
+        transform: rotate(0deg);
+    }
+
+    .idn-faq-a {
+        max-width: 760px;
+        padding: 0 0 24px;
+        font-family: "Roboto", sans-serif;
+        font-size: 15.5px;
+        line-height: 1.6;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+</style>

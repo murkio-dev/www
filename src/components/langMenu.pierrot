@@ -1,0 +1,156 @@
+<script>
+    function goLang(lang: string): void {
+        const parts = location.pathname.split("/").filter(Boolean);
+        if (parts.length > 0 && (parts[0] === "pt-br" || parts[0] === "en-us")) {
+            parts.shift();
+        }
+        const rest = parts.length === 0 ? "/" : "";
+        client.Redirect("/" + [lang, ...parts].join("/") + rest + location.hash);
+    }
+</script>
+
+<div class="lm">
+    <button class="lm-trigger" aria-haspopup="true" aria-label="${i18n.header.lang.label}">
+        <img src="/assets/icon-globe.svg" alt="" width="16" height="16">
+        <span class="lm-current">${i18n.header.lang.current}</span>
+        <img class="lm-chevron" src="/assets/chevron.svg" alt="" width="10" height="5">
+    </button>
+
+    <div class="lm-panel">
+        <div class="lm-card">
+            <button class="lm-item" @click={goLang("pt-br")}>
+                <span class="lm-mark lm-mark-${i18n.header.lang.ptState}"></span>
+                <span>${i18n.header.lang.pt}</span>
+            </button>
+            <button class="lm-item" @click={goLang("en-us")}>
+                <span class="lm-mark lm-mark-${i18n.header.lang.enState}"></span>
+                <span>${i18n.header.lang.en}</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .lm {
+        position: relative;
+        display: flex;
+        background: transparent;
+    }
+
+    .lm-trigger {
+        flex: none;
+        white-space: nowrap;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        cursor: pointer;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .lm-trigger::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        height: 14px;
+    }
+
+    .lm-current {
+        background: transparent;
+    }
+
+    .lm-chevron {
+        transition: transform 0.2s ease;
+    }
+
+    .lm:hover .lm-chevron,
+    .lm:focus-within .lm-chevron {
+        transform: rotate(180deg);
+    }
+
+    .lm-panel {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 200;
+        min-width: 170px;
+        padding-top: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .lm:hover .lm-panel,
+    .lm:focus-within .lm-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .lm-card {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 6px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.96);
+        background-image: var(--m-noise);
+    }
+
+    .lm-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 9px;
+        cursor: pointer;
+        text-align: left;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .lm-item span {
+        background: transparent;
+    }
+
+    .lm-item:hover,
+    .lm-item:focus-visible {
+        background-color: rgb(var(--m-fg) / 0.07);
+        outline: none;
+    }
+
+    .lm-mark {
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+    }
+
+    .lm-mark-on {
+        box-shadow: 0 0 8px rgb(var(--m-rose) / 0.9);
+        background-color: rgb(var(--m-rose));
+    }
+
+    .lm-mark-off {
+        background-color: transparent;
+    }
+</style>

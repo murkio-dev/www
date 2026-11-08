@@ -1,0 +1,32 @@
+<script>
+    let size: string;
+</script>
+
+<span class="star" aria-hidden="true">
+    <img class="star-dark" src="/assets/logo-solo.svg" alt="" width="${size}" height="${size}">
+    <img class="star-light" src="/assets/logo-solo-light.svg" alt="" width="${size}" height="${size}">
+</span>
+
+<style>
+    .star {
+        display: inline-flex;
+        flex: none;
+        background: transparent;
+    }
+
+    .star img {
+        display: block;
+    }
+
+    .star .star-light {
+        display: none;
+    }
+
+    :root[data-theme="light"] .star .star-dark {
+        display: none;
+    }
+
+    :root[data-theme="light"] .star .star-light {
+        display: block;
+    }
+</style>

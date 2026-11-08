@@ -1,0 +1,52 @@
+<script>
+    let name: string;
+    function goLogo(url: string): void {
+        client.Redirect(url);
+    }
+</script>
+
+<button class="logo" @click={goLogo("/")}>
+    <img class="logo-image logo-dark" src="/assets/logo.svg" alt="${name}" width="36" height="36">
+    <img class="logo-image logo-light" src="/assets/logo-light.svg" alt="${name}" width="36" height="36">
+    <span class="logo-name">${name}</span>
+</button>
+
+<style>
+    .logo {
+        padding: 0;
+        border: 0;
+        cursor: pointer;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .logo-image {
+        flex: none;
+        width: 36px;
+        height: 36px;
+    }
+
+    .logo-light {
+        display: none;
+    }
+
+    :root[data-theme="light"] .logo-dark {
+        display: none;
+    }
+
+    :root[data-theme="light"] .logo-light {
+        display: block;
+    }
+
+    .logo-name {
+        font-family: "Jaldi", sans-serif;
+        font-size: 22px;
+        background-image: linear-gradient(104.5deg, rgb(var(--m-fg)) 1.4%, #999999 100.8%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+</style>

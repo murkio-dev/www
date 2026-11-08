@@ -1,0 +1,31 @@
+<script>
+    let label: string;
+</script>
+
+<span class="cs">
+    <span class="cs-dot"></span>
+    <span>${label}</span>
+</span>
+
+<style>
+    .cs {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 11px 4px 9px;
+        border: 1px solid rgb(var(--m-orange) / 0.5);
+        border-radius: 999px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-orange));
+        background-color: rgb(var(--m-orange) / 0.12);
+    }
+
+    .cs-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgb(var(--m-orange) / 0.9);
+        background-color: rgb(var(--m-orange));
+    }
+</style>

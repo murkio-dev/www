@@ -1,0 +1,146 @@
+<script>
+    import { SectionHead } from "./sectionHead.pierrot";
+    import { MessagingWindow } from "./messagingWindow.pierrot";
+    import { ComingSoonTag } from "./comingSoonTag.pierrot";
+</script>
+
+<section class="msg" id="messaging">
+    <SectionHead badge={i18n.messaging.badge} title={i18n.messaging.title} subtitle={i18n.messaging.subtitle} />
+
+    <MessagingWindow />
+
+    <div class="mc">
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icon-layers.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.channels.title}</h3>
+            <p class="mc-body">${i18n.messaging.channels.description}</p>
+            <div class="mc-soon">
+                <span class="mc-soon-names">${i18n.messaging.channels.sms} · ${i18n.messaging.channels.whatsapp} · ${i18n.messaging.channels.telegram}</span>
+                <ComingSoonTag label={i18n.messaging.channels.soon} />
+            </div>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icon-template.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.templates.title}</h3>
+            <p class="mc-body">${i18n.messaging.templates.description}</p>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icon-sliders.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.prefs.title}</h3>
+            <p class="mc-body">${i18n.messaging.prefs.description}</p>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icon-inbox.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.inbox.title}</h3>
+            <p class="mc-body">${i18n.messaging.inbox.description}</p>
+        </div>
+    </div>
+
+</section>
+
+<style>
+    .msg {
+        box-sizing: border-box;
+        max-width: 1340px;
+        margin: 0 auto;
+        padding: 40px 20px 120px;
+        scroll-margin-top: var(--header-h);
+    }
+
+    .mc {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 56px;
+        border-top: 1px solid rgb(var(--m-fg) / 0.12);
+        background: transparent;
+    }
+
+    .mc-col {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 30px 28px 6px;
+        border-left: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .mc-col:first-child {
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    .mc-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin-bottom: 8px;
+        border: 1px solid rgb(var(--m-fg) / 0.16);
+        border-radius: 12px;
+        background-color: rgb(var(--m-fg) / 0.04);
+    }
+
+    .mc-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.25;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .mc-body {
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .mc-soon {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-top: 6px;
+        background: transparent;
+    }
+
+    .mc-soon-names {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.55);
+        background: transparent;
+    }
+
+    @media (max-width: 1000px) {
+        .mc {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .mc-col:nth-child(3) {
+            padding-left: 0;
+            border-left: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .mc {
+            grid-template-columns: 1fr;
+        }
+
+        .mc-col {
+            padding: 26px 0 6px;
+            border-left: 0;
+            border-top: 1px solid rgb(var(--m-fg) / 0.1);
+        }
+
+        .mc-col:first-child {
+            border-top: 0;
+        }
+    }
+</style>

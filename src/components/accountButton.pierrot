@@ -1,0 +1,47 @@
+<script>
+    let href: string;
+    let label: string;
+    function goAccount(url: string): void {
+        client.Redirect(url);
+    }
+</script>
+
+<button class="account" @click={goAccount(href)}>
+    <img src="/assets/user.svg" alt="" width="20" height="22">
+    <span class="account-label">${label}</span>
+</button>
+
+<style>
+    .account {
+        flex: none;
+        white-space: nowrap;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 36px;
+        padding: 0 18px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        text-decoration: none;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .account img {
+        width: 16px;
+        height: auto;
+    }
+
+    .account:hover {
+        border-color: var(--m-edge-hover);
+    }
+
+    .account-label {
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+</style>

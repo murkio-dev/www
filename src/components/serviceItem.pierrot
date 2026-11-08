@@ -1,0 +1,125 @@
+<script>
+    let href: string;
+    let icon: string;
+    let title: string;
+    let description: string;
+    let status: string;
+    let statusLabel: string;
+
+    function goService(url: string): void {
+        client.Redirect(url);
+    }
+</script>
+
+<button class="service-item" @click={goService(href)}>
+    <span class="service-item-icon"><img src="${icon}" alt="" width="20" height="20"></span>
+    <span class="service-item-text">
+        <span class="service-item-head">
+            <span class="service-item-title">${title}</span>
+            <span class="service-flag service-flag-${status}"><span class="service-flag-dot"></span>${statusLabel}</span>
+        </span>
+        <span class="service-item-description">${description}</span>
+    </span>
+</button>
+
+<style>
+    .service-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        padding: 10px;
+        border: 0;
+        border-radius: 10px;
+        text-align: left;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .service-item:hover,
+    .service-item:focus-visible {
+        background-color: rgb(var(--m-fg) / 0.07);
+        outline: none;
+    }
+
+    .service-item-icon {
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 8px;
+        background-image: linear-gradient(243.8deg, rgb(var(--m-fg) / 0.16) 10.2%, rgba(113, 113, 113, 0.1) 92.6%);
+    }
+
+    .service-item-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: transparent;
+    }
+
+    .service-item-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 8px;
+        background: transparent;
+    }
+
+    .service-flag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 1px 9px 1px 8px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 13px;
+    }
+
+    .service-flag-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+
+    .service-flag-active {
+        color: rgb(var(--m-ok));
+        border-color: rgba(74, 222, 128, 0.45);
+        background-color: rgba(74, 222, 128, 0.1);
+    }
+
+    .service-flag-active .service-flag-dot {
+        box-shadow: 0 0 8px rgba(74, 222, 128, 0.9);
+        background-color: #4ade80;
+    }
+
+    .service-flag-soon {
+        color: rgb(var(--m-orange));
+        border-color: rgb(var(--m-orange) / 0.5);
+        background-color: rgb(var(--m-orange) / 0.12);
+    }
+
+    .service-flag-soon .service-flag-dot {
+        box-shadow: 0 0 8px rgb(var(--m-orange) / 0.9);
+        background-color: rgb(var(--m-orange));
+    }
+
+    .service-item-title {
+        font-family: "Jaldi", sans-serif;
+        font-size: 17px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .service-item-description {
+        font-family: "Roboto", sans-serif;
+        font-size: 13px;
+        line-height: 1.35;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+</style>

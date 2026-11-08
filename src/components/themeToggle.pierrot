@@ -1,0 +1,45 @@
+<script>
+    function flipTheme(): void {
+        const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("murkio-theme", next);
+    }
+</script>
+
+<button class="tt" @click={flipTheme} aria-label="${i18n.header.theme}">
+    <img class="tt-sun" src="/assets/icon-sun.svg" alt="" width="18" height="18">
+    <img class="tt-moon" src="/assets/icon-moon.svg" alt="" width="18" height="18">
+</button>
+
+<style>
+    .tt {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--m-edge);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .tt:hover {
+        border-color: var(--m-edge-hover);
+    }
+
+    .tt-moon {
+        display: none;
+    }
+
+    :root[data-theme="light"] .tt-sun {
+        display: none;
+    }
+
+    :root[data-theme="light"] .tt-moon {
+        display: block;
+    }
+</style>

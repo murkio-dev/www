@@ -1,0 +1,465 @@
+<div class="lc">
+    <div class="lc-titlebar" aria-hidden="true">
+        <span class="lc-dot"></span>
+        <span class="lc-dot"></span>
+        <span class="lc-dot"></span>
+        <span class="lc-window">${i18n.lambda.console.window}</span>
+    </div>
+
+    <div class="lc-body">
+        <nav class="lc-side" aria-hidden="true">
+            <span class="lc-nav lc-nav-on"><img src="/assets/icon-lambda.svg" alt="" width="18" height="18">${i18n.lambda.nav.n1}</span>
+            <span class="lc-nav"><img src="/assets/icon-rotate.svg" alt="" width="18" height="18">${i18n.lambda.nav.n2}</span>
+            <span class="lc-nav"><img src="/assets/icon-template.svg" alt="" width="18" height="18">${i18n.lambda.nav.n3}</span>
+            <span class="lc-nav"><img src="/assets/icon-sliders.svg" alt="" width="18" height="18">${i18n.lambda.nav.n4}</span>
+        </nav>
+
+        <div class="lc-main" aria-hidden="true">
+            <div class="lc-head">
+                <h3 class="lc-title">${i18n.lambda.console.pageTitle}</h3>
+                <div class="lc-stats">
+                    <div class="lc-stat">
+                        <span class="lc-stat-label">${i18n.lambda.console.s1Label}</span>
+                        <span class="lc-stat-value">${i18n.lambda.console.s1Value}</span>
+                    </div>
+                    <div class="lc-stat">
+                        <span class="lc-stat-label">${i18n.lambda.console.s2Label}</span>
+                        <span class="lc-stat-value">${i18n.lambda.console.s2Value}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lc-controls">
+                <span class="lc-search"><img src="/assets/icon-search.svg" alt="" width="16" height="16">${i18n.lambda.console.search}</span>
+                <span class="lc-toggle"><span class="lc-switch"></span>${i18n.lambda.console.onlyRunning}</span>
+                <span class="lc-new"><img src="/assets/icon-plus.svg" alt="" width="16" height="16">${i18n.lambda.console.newWorker}</span>
+            </div>
+
+            <div class="lc-scroll">
+                <div class="lc-table">
+                    <div class="lc-row lc-row-head">
+                        <span class="lc-check"></span>
+                        <span>${i18n.lambda.console.h1}</span>
+                        <span>${i18n.lambda.console.h2}</span>
+                        <span>${i18n.lambda.console.h3}</span>
+                        <span>${i18n.lambda.console.h4}</span>
+                        <span>${i18n.lambda.console.h5}</span>
+                        <span>${i18n.lambda.console.h6}</span>
+                        <span></span>
+                    </div>
+
+                    <div class="lc-row">
+                        <span class="lc-check"></span>
+                        <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r1Name}</span><span class="lc-name-id">${i18n.lambda.console.r1Id}</span></span>
+                        <span class="lc-type"><img src="/assets/icon-clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                        <span class="lc-lang">${i18n.lambda.console.r1Lang}</span>
+                        <span class="lc-mono">${i18n.lambda.console.r1When}</span>
+                        <span class="lc-muted">${i18n.lambda.console.r1Last}</span>
+                        <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
+                        <span class="lc-actions"><img src="/assets/icon-stop.svg" alt="" width="16" height="16"><img src="/assets/icon-more.svg" alt="" width="16" height="16"><img src="/assets/icon-trash.svg" alt="" width="16" height="16"></span>
+                    </div>
+
+                    <div class="lc-row">
+                        <span class="lc-check"></span>
+                        <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r2Name}</span><span class="lc-name-id">${i18n.lambda.console.r2Id}</span></span>
+                        <span class="lc-type"><img src="/assets/icon-clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                        <span class="lc-lang">${i18n.lambda.console.r2Lang}</span>
+                        <span class="lc-mono">${i18n.lambda.console.r2When}</span>
+                        <span class="lc-muted">${i18n.lambda.console.r2Last}</span>
+                        <span class="lc-status lc-status-stop"><span class="lc-status-dot"></span>${i18n.lambda.console.sStopped}</span>
+                        <span class="lc-actions"><img src="/assets/icon-play.svg" alt="" width="16" height="16"><img src="/assets/icon-more.svg" alt="" width="16" height="16"><img src="/assets/icon-trash.svg" alt="" width="16" height="16"></span>
+                    </div>
+
+                    <div class="lc-row">
+                        <span class="lc-check"></span>
+                        <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r3Name}</span><span class="lc-name-id">${i18n.lambda.console.r3Id}</span></span>
+                        <span class="lc-type"><img src="/assets/icon-bolt.svg" alt="" width="14" height="14">${i18n.lambda.console.tTrigger}</span>
+                        <span class="lc-lang">${i18n.lambda.console.r3Lang}</span>
+                        <span class="lc-mono">${i18n.lambda.console.r3When}</span>
+                        <span class="lc-muted">${i18n.lambda.console.r3Last}</span>
+                        <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
+                        <span class="lc-actions"><img src="/assets/icon-stop.svg" alt="" width="16" height="16"><img src="/assets/icon-more.svg" alt="" width="16" height="16"><img src="/assets/icon-trash.svg" alt="" width="16" height="16"></span>
+                    </div>
+
+                    <div class="lc-row">
+                        <span class="lc-check"></span>
+                        <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r4Name}</span><span class="lc-name-id">${i18n.lambda.console.r4Id}</span></span>
+                        <span class="lc-type"><img src="/assets/icon-clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                        <span class="lc-lang">${i18n.lambda.console.r4Lang}</span>
+                        <span class="lc-mono">${i18n.lambda.console.r4When}</span>
+                        <span class="lc-muted">${i18n.lambda.console.r4Last}</span>
+                        <span class="lc-status lc-status-fail"><span class="lc-status-dot"></span>${i18n.lambda.console.sFailed}</span>
+                        <span class="lc-actions"><img src="/assets/icon-play.svg" alt="" width="16" height="16"><img src="/assets/icon-more.svg" alt="" width="16" height="16"><img src="/assets/icon-trash.svg" alt="" width="16" height="16"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .lc {
+        overflow: hidden;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.92);
+    }
+
+    .lc-titlebar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 11px 16px;
+        border-bottom: 1px solid rgb(var(--m-fg) / 0.08);
+        background-color: rgb(var(--m-fg) / 0.03);
+    }
+
+    .lc-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background-color: rgb(var(--m-fg) / 0.2);
+    }
+
+    .lc-window {
+        margin-left: 10px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 15px;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .lc-body {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        background: transparent;
+    }
+
+    .lc-side {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 16px 12px;
+        border-right: 1px solid rgb(var(--m-fg) / 0.08);
+        background: transparent;
+    }
+
+    .lc-nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.55);
+        background: transparent;
+    }
+
+    .lc-nav img {
+        opacity: 0.6;
+    }
+
+    .lc-nav-on {
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    .lc-nav-on img {
+        opacity: 1;
+    }
+
+    .lc-main {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        min-width: 0;
+        padding: 22px 24px 8px;
+        background: transparent;
+    }
+
+    .lc-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        background: transparent;
+    }
+
+    .lc-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 24px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .lc-stats {
+        display: flex;
+        gap: 10px;
+        background: transparent;
+    }
+
+    .lc-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 130px;
+        padding: 10px 14px;
+        border: 1px solid rgb(var(--m-fg) / 0.1);
+        border-radius: 10px;
+        background-color: rgb(var(--m-fg) / 0.03);
+    }
+
+    .lc-stat-label {
+        font-family: "Roboto", sans-serif;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.5);
+        background: transparent;
+    }
+
+    .lc-stat-value {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .lc-controls {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        background: transparent;
+    }
+
+    .lc-search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 220px;
+        padding: 8px 12px;
+        border: 1px solid rgb(var(--m-fg) / 0.14);
+        border-radius: 8px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.45);
+        background-color: rgb(var(--m-fg) / 0.03);
+    }
+
+    .lc-search img {
+        opacity: 0.5;
+    }
+
+    .lc-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.7);
+        background: transparent;
+    }
+
+    .lc-switch {
+        position: relative;
+        width: 30px;
+        height: 17px;
+        border-radius: 999px;
+        background-color: rgb(var(--m-fg) / 0.16);
+    }
+
+    .lc-switch::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background-color: rgb(var(--m-fg));
+    }
+
+    .lc-new {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+        padding: 8px 14px;
+        border: 1px solid #c9c9c9;
+        border-radius: 8px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: #000000;
+        background-image: linear-gradient(180deg, #d9d9d9, #9e9e9e);
+    }
+
+    .lc-new img {
+        filter: brightness(0);
+    }
+
+    .lc-scroll {
+        overflow-x: auto;
+        background: transparent;
+    }
+
+    .lc-table {
+        display: flex;
+        flex-direction: column;
+        min-width: 860px;
+        background: transparent;
+    }
+
+    .lc-row {
+        display: grid;
+        grid-template-columns: 26px 2.1fr 0.9fr 1fr 1.3fr 1fr 1fr 96px;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 8px;
+        border-top: 1px solid rgb(var(--m-fg) / 0.07);
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.85);
+        background: transparent;
+    }
+
+    .lc-row span {
+        background: transparent;
+    }
+
+    .lc-row-head {
+        border-top: 0;
+        padding-top: 4px;
+        padding-bottom: 10px;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.4);
+    }
+
+    .lc-check {
+        width: 14px;
+        height: 14px;
+        border: 1px solid rgb(var(--m-fg) / 0.3);
+        border-radius: 4px;
+    }
+
+    .lc-name {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .lc-name-main {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        color: rgb(var(--m-fg));
+    }
+
+    .lc-name-id {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        color: rgb(var(--m-fg) / 0.35);
+    }
+
+    .lc-type {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        width: fit-content;
+        padding: 3px 9px;
+        border: 1px solid rgb(var(--m-fg) / 0.14);
+        border-radius: 999px;
+        font-size: 12px;
+    }
+
+    .lc-type img {
+        opacity: 0.8;
+    }
+
+    .lc-lang {
+        color: rgb(var(--m-fg) / 0.8);
+    }
+
+    .lc-mono {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        color: rgb(var(--m-fg) / 0.7);
+    }
+
+    .lc-muted {
+        color: rgb(var(--m-fg) / 0.5);
+    }
+
+    .lc-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgb(var(--m-fg) / 0.5);
+    }
+
+    .lc-status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: rgb(var(--m-fg) / 0.35);
+    }
+
+    .lc-status-run {
+        color: rgb(var(--m-ok));
+    }
+
+    .lc-status-run .lc-status-dot {
+        box-shadow: 0 0 8px rgb(var(--m-ok) / 0.9);
+        background-color: rgb(var(--m-ok));
+    }
+
+    .lc-status-stop {
+        color: rgb(var(--m-orange));
+    }
+
+    .lc-status-stop .lc-status-dot {
+        box-shadow: 0 0 8px rgb(var(--m-orange) / 0.8);
+        background-color: rgb(var(--m-orange));
+    }
+
+    .lc-status-fail {
+        color: rgb(var(--m-warn));
+    }
+
+    .lc-status-fail .lc-status-dot {
+        box-shadow: 0 0 8px rgba(200, 85, 61, 0.8);
+        background-color: #c8553d;
+    }
+
+    .lc-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    .lc-actions img {
+        opacity: 0.6;
+    }
+
+    @media (max-width: 800px) {
+        .lc-body {
+            grid-template-columns: 1fr;
+        }
+
+        .lc-side {
+            flex-direction: row;
+            overflow-x: auto;
+            border-right: 0;
+            border-bottom: 1px solid rgb(var(--m-fg) / 0.08);
+        }
+
+        .lc-nav {
+            flex: none;
+        }
+
+        .lc-new {
+            margin-left: 0;
+        }
+    }
+</style>

@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "entry": "./src/main.pierrot",
+        "port": "3000"
+    },
+    "prd": {
+        "build": "./build",
+        "minify": true
+    }
+}

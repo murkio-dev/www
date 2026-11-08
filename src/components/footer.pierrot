@@ -1,0 +1,312 @@
+<script>
+    import { Logo } from "./logo.pierrot";
+    import { Button } from "./button.pierrot";
+    import { FooterLink } from "./footerLink.pierrot";
+    import { FooterSocial } from "./footerSocial.pierrot";
+</script>
+
+<footer class="ft">
+    <span class="ft-ring" aria-hidden="true"></span>
+
+    <div class="ft-card">
+        <span class="ft-ribbon ft-ribbon-1" aria-hidden="true"></span>
+        <span class="ft-ribbon ft-ribbon-2" aria-hidden="true"></span>
+        <span class="ft-glow ft-glow-1" aria-hidden="true"></span>
+        <span class="ft-glow ft-glow-2" aria-hidden="true"></span>
+
+        <div class="ft-cta">
+            <div class="ft-cta-text">
+                <h2 class="ft-cta-title">${i18n.footer.ctaTitle}</h2>
+                <p class="ft-cta-body">${i18n.footer.ctaText}</p>
+            </div>
+            <Button href="#account" label={i18n.footer.ctaButton} variant="primary" />
+        </div>
+
+        <span class="ft-line" aria-hidden="true"></span>
+
+        <div class="ft-cols">
+            <div class="ft-brand">
+                <Logo name={i18n.brand} />
+                <p class="ft-tagline">${i18n.footer.tagline}</p>
+            </div>
+
+            <nav class="ft-col" aria-label="${i18n.footer.colServices}">
+                <h3 class="ft-heading">${i18n.footer.colServices}</h3>
+                <FooterLink href="#identity" label={i18n.header.services.auth.title} />
+                <FooterLink href="#messaging" label={i18n.header.services.messaging.title} />
+                <FooterLink href="#payments" label={i18n.header.services.payments.title} />
+                <FooterLink href="#vault" label={i18n.header.services.vault.title} />
+                <FooterLink href="#lambda" label={i18n.header.services.lambda.title} />
+            </nav>
+
+            <nav class="ft-col" aria-label="${i18n.footer.colResources}">
+                <h3 class="ft-heading">${i18n.footer.colResources}</h3>
+                <FooterLink href="#docs" label={i18n.footer.docs} />
+                <FooterLink href="#sdks" label={i18n.footer.sdks} />
+                <FooterLink href="#api" label={i18n.footer.api} />
+                <FooterLink href="#pricing" label={i18n.footer.pricing} />
+                <FooterLink href="#faq" label={i18n.footer.faq} />
+            </nav>
+
+            <nav class="ft-col" aria-label="${i18n.footer.colCompany}">
+                <h3 class="ft-heading">${i18n.footer.colCompany}</h3>
+                <FooterLink href="#about" label={i18n.footer.about} />
+                <FooterLink href="#careers" label={i18n.footer.careers} />
+                <FooterLink href="#contact" label={i18n.footer.contact} />
+            </nav>
+
+            <nav class="ft-col" aria-label="${i18n.footer.colSupport}">
+                <h3 class="ft-heading">${i18n.footer.colSupport}</h3>
+                <FooterLink href="#help" label={i18n.footer.help} />
+                <FooterLink href="#status" label={i18n.footer.status} />
+                <FooterLink href="#support" label={i18n.footer.talk} />
+            </nav>
+
+            <nav class="ft-col" aria-label="${i18n.footer.colSocial}">
+                <h3 class="ft-heading">${i18n.footer.colSocial}</h3>
+                <FooterSocial url="https://github.com/murkio-dev" icon="/assets/icon-github.svg" label={i18n.footer.github} />
+                <FooterSocial url="https://www.linkedin.com/company/murkio" icon="/assets/icon-linkedin.svg" label={i18n.footer.linkedin} />
+                <FooterSocial url="https://www.instagram.com/murkio" icon="/assets/icon-instagram.svg" label={i18n.footer.instagram} />
+            </nav>
+        </div>
+
+        <div class="ft-bottom">
+            <span class="ft-copy">${i18n.footer.copyright}</span>
+            <div class="ft-legal">
+                <FooterLink href="#terms" label={i18n.footer.terms} />
+                <FooterLink href="#privacy" label={i18n.footer.privacy} />
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .ft {
+        position: relative;
+        box-sizing: border-box;
+        max-width: 1380px;
+        margin: 80px auto 0;
+        padding: 130px 20px 24px;
+    }
+
+    .ft-ring {
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        width: 440px;
+        height: 440px;
+        margin-left: -60px;
+        border-radius: 50%;
+        opacity: 0.85;
+        filter: blur(0.6px);
+        background-image: conic-gradient(from 200deg, color-mix(in srgb, #1a1414 calc(var(--m-dark) * 100%), var(--m-l0)), rgb(var(--m-rose-hi)) 14%, #6b5353 32%, color-mix(in srgb, #1a1414 calc(var(--m-dark) * 100%), var(--m-l0)) 48%, #bda1a1 70%, #3d2f2f 86%, color-mix(in srgb, #1a1414 calc(var(--m-dark) * 100%), var(--m-l0)) 100%);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+        mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px));
+    }
+
+    .ft-card {
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        box-sizing: border-box;
+        padding: 56px 64px 30px;
+        border: 1px solid rgb(var(--m-fg) / 0.1);
+        border-radius: 28px;
+        box-shadow: 0 -20px 80px rgb(0 0 0 / calc(0.08 + var(--m-dark) * 0.52));
+        background-image: var(--m-noise), linear-gradient(135deg, color-mix(in srgb, #1b1414 calc(var(--m-dark) * 100%), var(--m-l0)) 0%, color-mix(in srgb, #0b0909 calc(var(--m-dark) * 100%), var(--m-l0)) 55%, color-mix(in srgb, #080707 calc(var(--m-dark) * 100%), var(--m-l0)) 100%);
+    }
+
+    .ft-ribbon {
+        position: absolute;
+        border: 2px solid rgb(var(--m-rose-2) / 0.32);
+        border-radius: 50%;
+        filter: blur(1.5px);
+        pointer-events: none;
+    }
+
+    .ft-ribbon-1 {
+        top: -40px;
+        right: -170px;
+        width: 640px;
+        height: 250px;
+        transform: rotate(-22deg);
+    }
+
+    .ft-ribbon-2 {
+        top: 120px;
+        right: -120px;
+        width: 520px;
+        height: 200px;
+        border-color: rgb(var(--m-rose-2) / 0.2);
+        transform: rotate(-12deg);
+    }
+
+    .ft-glow {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(56px);
+        pointer-events: none;
+    }
+
+    .ft-glow-1 {
+        top: -60px;
+        right: -80px;
+        width: 520px;
+        height: 300px;
+        background: radial-gradient(closest-side, rgb(var(--m-rose) / 0.4) 0%, rgba(150, 116, 116, 0.18) 55%, rgba(115, 86, 86, 0) 100%);
+    }
+
+    .ft-glow-2 {
+        top: 150px;
+        right: 90px;
+        width: 360px;
+        height: 200px;
+        background: radial-gradient(closest-side, rgba(176, 140, 140, 0.3) 0%, rgba(115, 86, 86, 0) 100%);
+    }
+
+    .ft-cta {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        background: transparent;
+    }
+
+    .ft-cta-text {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        max-width: 620px;
+        background: transparent;
+    }
+
+    .ft-cta-title {
+        font-family: "Roboto", sans-serif;
+        font-weight: 300;
+        font-size: clamp(30px, 3.6vw, 46px);
+        line-height: 1.15;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .ft-cta-body {
+        max-width: 520px;
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+
+    .ft-line {
+        position: relative;
+        display: block;
+        height: 1px;
+        margin: 48px 0;
+        background-image: linear-gradient(90deg, rgb(var(--m-fg) / 0) 0%, rgb(var(--m-fg) / 0.22) 50%, rgb(var(--m-fg) / 0) 100%);
+    }
+
+    .ft-cols {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1.4fr repeat(5, 1fr);
+        gap: 32px;
+        background: transparent;
+    }
+
+    .ft-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        max-width: 240px;
+        background: transparent;
+    }
+
+    .ft-tagline {
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        color: rgb(var(--m-fg) / 0.55);
+        background: transparent;
+    }
+
+    .ft-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        background: transparent;
+    }
+
+    .ft-heading {
+        margin-bottom: 6px;
+        font-family: "Jaldi", sans-serif;
+        font-weight: 400;
+        font-size: 17px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .ft-bottom {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 56px;
+        padding-top: 24px;
+        border-top: 1px solid rgb(var(--m-fg) / 0.1);
+        background: transparent;
+    }
+
+    .ft-copy {
+        font-family: "Roboto", sans-serif;
+        font-size: 13px;
+        color: rgb(var(--m-fg) / 0.5);
+        background: transparent;
+    }
+
+    .ft-legal {
+        display: flex;
+        gap: 24px;
+        background: transparent;
+    }
+
+    @media (max-width: 1100px) {
+        .ft-cols {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .ft-brand {
+            grid-column: 1 / -1;
+            max-width: none;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .ft {
+            padding-top: 90px;
+        }
+
+        .ft-ring {
+            width: 300px;
+            height: 300px;
+            margin-left: -150px;
+        }
+
+        .ft-card {
+            padding: 36px 24px 24px;
+        }
+
+        .ft-cta {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .ft-cols {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>

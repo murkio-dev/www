@@ -1,0 +1,54 @@
+<script>
+    let icon: string;
+    let label: string;
+    let description: string;
+</script>
+
+<div class="vf">
+    <span class="vf-icon"><img src="${icon}" alt="" width="22" height="22"></span>
+    <h3 class="vf-label">${label}</h3>
+    <p class="vf-description">${description}</p>
+</div>
+
+<style>
+    .vf {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-sizing: border-box;
+        min-height: 220px;
+        padding: 28px;
+        border: 1px solid rgb(var(--m-fg) / 0.08);
+        border-radius: 28px;
+        background-image: var(--m-noise), linear-gradient(119.2deg, color-mix(in srgb, #0f0d0d calc(var(--m-dark) * 100%), var(--m-l0)) 0%, color-mix(in srgb, #241b1b calc(var(--m-dark) * 100%), var(--m-l1)) 100%);
+    }
+
+    .vf-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        margin-bottom: auto;
+        border: 1px solid rgb(var(--m-fg) / 0.2);
+        border-radius: 12px;
+        background-image: linear-gradient(243.8deg, rgb(var(--m-fg) / 0.14) 10.2%, rgba(113, 113, 113, 0.08) 92.6%);
+    }
+
+    .vf-label {
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 1.2;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .vf-description {
+        font-family: "Roboto", sans-serif;
+        font-size: 15px;
+        line-height: 1.5;
+        color: rgb(var(--m-fg) / 0.62);
+        background: transparent;
+    }
+</style>

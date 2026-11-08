@@ -1,0 +1,680 @@
+{
+    "brand": "Murkio",
+    "header": {
+        "nav": {
+            "label": "Main navigation",
+            "home": "Home",
+            "services": "Services",
+            "pricing": "Pricing",
+            "documentation": "Documentation",
+            "faq": "FAQ"
+        },
+        "login": "Log in",
+        "createAccount": "Create account",
+        "services": {
+            "title": "SERVICES",
+            "infraTitle": "INFRASTRUCTURE",
+            "auth": {
+                "title": "Identity",
+                "description": "Sign-in, sessions and API keys for your tenants."
+            },
+            "messaging": {
+                "title": "Messaging",
+                "description": "Send e-mail and SMS with queued, reliable delivery."
+            },
+            "payments": {
+                "title": "Payments",
+                "description": "Process payments with built-in fraud analysis."
+            },
+            "vault": {
+                "title": "Vault",
+                "description": "Secrets and environment variables, stored securely and read at boot."
+            },
+            "lambda": {
+                "title": "Lambda",
+                "description": "Run your functions on demand, with no servers to manage."
+            },
+            "database": {
+                "title": "Database",
+                "description": "Managed Postgres for your data, with Redis caching when you need it."
+            },
+            "active": "Active",
+            "soon": "Coming soon"
+        },
+        "theme": "Toggle theme",
+        "lang": {
+            "label": "Language",
+            "current": "EN",
+            "pt": "Português",
+            "en": "English",
+            "ptState": "off",
+            "enState": "on"
+        }
+    },
+    "errors": {
+        "back": "Back to homepage →",
+        "badRequest": {
+            "title": "Oops, bad request",
+            "message": "The server could not understand the request. Check the address or the data sent and try again."
+        },
+        "unauthorized": {
+            "title": "Sign in required",
+            "message": "You need to be signed in to access this page. Log in and try again."
+        },
+        "forbidden": {
+            "title": "Access denied",
+            "message": "You don't have permission to access this page. If you think this is a mistake, contact support."
+        },
+        "notFound": {
+            "title": "Oops, page not found",
+            "message": "The page you are looking for doesn't exist, was moved, or hasn't been published yet."
+        },
+        "timeout": {
+            "title": "Request timed out",
+            "message": "The server took too long to receive the request. Check your connection and try again."
+        },
+        "tooManyRequests": {
+            "title": "Too many requests",
+            "message": "You've made too many requests in a short time. Wait a moment and try again."
+        },
+        "serverError": {
+            "title": "Something went wrong",
+            "message": "An unexpected error happened on our side. We're already working on it, please try again shortly."
+        },
+        "badGateway": {
+            "title": "Bad gateway",
+            "message": "One of our servers received an invalid response. Please try again in a few minutes."
+        },
+        "unavailable": {
+            "title": "Service unavailable",
+            "message": "We're temporarily down for maintenance or overloaded. Please come back soon."
+        },
+        "gatewayTimeout": {
+            "title": "Gateway timeout",
+            "message": "The server took too long to respond. Please try again in a few minutes."
+        },
+        "unknown": {
+            "title": "Something unexpected happened",
+            "message": "We couldn't complete your request. Please try again or go back to the homepage."
+        }
+    },
+    "home": {
+        "badge": "Unlock your potential",
+        "title": "Your app's entire foundation, simplified.",
+        "subtitle": "Equip your team with robust security, seamless integrations, and scalable architecture. Everything you need to deploy faster, without the operational overhead.",
+        "viewServices": "View services",
+        "explorePlans": "Explore Plans"
+    },
+    "infra": {
+        "badge": "One platform",
+        "title": "All of Murkio’s infrastructure, inside your software.",
+        "subtitle": "Plug authentication, messaging, payments, secrets, functions and databases into your own app, without building each piece from scratch.",
+        "hubTitle": "Your software",
+        "hubSubtitle": "Web, mobile or backend, in any stack.",
+        "groupServices": "Services",
+        "groupInfra": "Infrastructure"
+    },
+    "sdks": {
+        "badge": "SDKs",
+        "title": "Use Murkio in the language you already write.",
+        "subtitle": "Every service ships with official SDKs for TypeScript, JavaScript, Java, Go, React, Svelte, Kotlin, Swift, Elixir, Ruby, PHP and C#.",
+        "b1Title": "One client, every service",
+        "b1Text": "Authenticate once and call Identity, Vault, Payments and Messaging from the same place.",
+        "b2Title": "Native to your stack",
+        "b2Text": "A package for each ecosystem, following the conventions you already use there.",
+        "b3Title": "Ready in minutes",
+        "b3Text": "Install the package, set a token and start calling. No extra servers to run."
+    },
+    "ai": {
+        "badge": "AI + HI",
+        "title": "Artificial intelligence, guided by human intelligence.",
+        "subtitle": "AI is part of how we design, build and operate Murkio. People set the direction and review what matters.",
+        "ai": {
+            "label": "AI",
+            "name": "Artificial intelligence",
+            "text": "Speeds up what we build: code, reviews, documentation and support."
+        },
+        "hi": {
+            "label": "HI",
+            "name": "Human intelligence",
+            "text": "Brings judgment: people decide, review and take responsibility for the result."
+        },
+        "mcp": {
+            "title": "Every service has its own MCP",
+            "description": "Connect Identity, Messaging, Payments, Vault and Lambda to your AI assistant through the Model Context Protocol and let it work with them directly.",
+            "tag": "MCP"
+        },
+        "site": {
+            "title": "This site is made for AI too",
+            "description": "We publish an llms.txt, a plain-text summary of Murkio written for AI assistants, so they can understand our services and recommend us accurately. Every page is also plain, semantic HTML.",
+            "c1": "llms.txt available",
+            "c2": "Semantic HTML",
+            "c3": "All text in the page",
+            "c4": "Every language"
+        }
+    },
+    "identity": {
+        "badge": "Identity",
+        "title": "Authentication your users trust, without building it yourself.",
+        "subtitle": "Sign-up, login, sessions, two-factor, social sign-in and API keys in one service, with every application fully isolated.",
+        "login": {
+            "title": "E-mail and password, done right",
+            "description": "Sign-up with e-mail verification, passwords hashed with argon2id, disposable e-mail addresses blocked and brute-force protection from the first request.",
+            "spec1Label": "Access token",
+            "spec2Label": "Refresh token",
+            "spec3Label": "Password hash",
+            "spec4Label": "Lockout",
+            "spec1Value": "JWT/PASETO · 15 min",
+            "spec2Value": "30 days · rotated",
+            "spec3Value": "argon2id",
+            "spec4Value": "5 tries · 15 min"
+        },
+        "social": {
+            "title": "Social sign-in",
+            "description": "Let people sign in with the account they already have. PKCE is mandatory between your app and Identity.",
+            "p1": "Google",
+            "p2": "GitHub",
+            "p3": "Apple",
+            "p4": "Facebook",
+            "p5": "X"
+        },
+        "mfa": {
+            "title": "Two-factor authentication",
+            "description": "Authenticator apps (TOTP) plus 10 single-use recovery codes. Choose per application how it works.",
+            "modeOff": "off",
+            "modeOptional": "optional",
+            "modeRequired": "required"
+        },
+        "keys": {
+            "title": "Public and secret API keys",
+            "description": "Public keys for your frontend, secret keys for your backend. Only a SHA-256 hash is stored, and every key can be revoked or rotated.",
+            "publicLabel": "Public · frontend",
+            "secretLabel": "Secret · backend",
+            "publicSample": "pk_••••••••••••••••",
+            "secretSample": "sk_••••••••••••••••"
+        },
+        "privacy": {
+            "title": "Privacy and audit",
+            "description": "Export or erase any user’s data with a single call (LGPD) and keep an immutable log of every sensitive action.",
+            "log1": "login.succeeded",
+            "log2": "session.revoked",
+            "log3": "mfa.enrolled",
+            "log4": "user.exported"
+        }
+    },
+    "idn": {
+        "hero": {
+            "brand": "Murkio Identity",
+            "live": "Live · 5 social providers",
+            "title": "Identity for your app, without reinventing authentication.",
+            "subtitle": "Sign-up, login, social sign-in, 2FA and access keys in one service. Every application isolated, every action recorded, and SDKs for every stack.",
+            "primary": "Create account",
+            "secondary": "See SDKs"
+        },
+        "stats": {
+            "label": "Identity in numbers",
+            "s1Value": "5",
+            "s1Label": "social sign-in providers",
+            "s2Value": "12",
+            "s2Label": "languages with an SDK",
+            "s3Value": "2FA",
+            "s3Label": "off, optional or required",
+            "s4Value": "LGPD",
+            "s4Label": "export and erase any user’s data"
+        },
+        "caps": {
+            "badge": "Features",
+            "title": "Everything your product’s authentication needs.",
+            "subtitle": "From sign-up to the right to be forgotten, every piece is ready and isolated per application.",
+            "c1": {
+                "title": "E-mail and password",
+                "text": "Sign-up with e-mail verification and protection against mass attempts. Nobody can find out who has an account in your app.",
+                "t1": "Sign-up",
+                "t2": "Verification",
+                "t3": "Protection"
+            },
+            "c2": {
+                "title": "Sessions",
+                "text": "Secure sessions that renew themselves and can be ended at any time, on one device or on all of them.",
+                "t1": "Renewal",
+                "t2": "Revocation",
+                "t3": "Devices"
+            },
+            "c3": {
+                "title": "Social sign-in",
+                "text": "Google, GitHub, Apple, Facebook and X. Your users sign in with the account they already have, and you enable only the providers you want.",
+                "t1": "One click",
+                "t2": "Account linking",
+                "t3": "Per application"
+            },
+            "c4": {
+                "title": "Two-factor (2FA)",
+                "text": "Two-factor authentication with an authenticator app and recovery codes. You decide, per application, how it works.",
+                "t1": "Authenticator",
+                "t2": "Recovery",
+                "t3": "Per application"
+            },
+            "c5": {
+                "title": "API keys",
+                "text": "Public keys for your frontend and secret keys for your backend, with rotation that never breaks the integration.",
+                "t1": "Public",
+                "t2": "Secret",
+                "t3": "Rotation"
+            },
+            "c6": {
+                "title": "Roles",
+                "text": "Define who is an admin, who is a user and create whatever roles your product needs.",
+                "t1": "Admin",
+                "t2": "User",
+                "t3": "Custom"
+            },
+            "c7": {
+                "title": "Verification and reset",
+                "text": "Ready-made verification and password reset e-mails, with expiring codes that never reveal whether an account exists.",
+                "t1": "E-mail",
+                "t2": "Code",
+                "t3": "Expiry"
+            },
+            "c8": {
+                "title": "Audit",
+                "text": "An immutable history of everything sensitive: logins, failures, role changes, keys and sessions.",
+                "t1": "History",
+                "t2": "Immutable",
+                "t3": "Events"
+            },
+            "c9": {
+                "title": "Privacy and LGPD",
+                "text": "Export or erase a user’s data with one call, and ban or unban accounts whenever you need to.",
+                "t1": "LGPD",
+                "t2": "Export",
+                "t3": "Erase"
+            }
+        },
+        "providers": {
+            "badge": "Social sign-in",
+            "title": "Sign in with the account people already have.",
+            "subtitle": "Enable each provider per application, with your own credentials or Murkio’s. An existing account is never taken over on its own: the owner is notified and links the provider after signing in.",
+            "p1": "Google",
+            "p2": "GitHub",
+            "p3": "Apple",
+            "p4": "Facebook",
+            "p5": "X"
+        },
+        "how": {
+            "badge": "How it works",
+            "title": "From the first sign-up to a valid session, in four steps.",
+            "subtitle": "You choose what the application accepts and Identity handles the rest.",
+            "file": "login.ts",
+            "preview": "SDK preview",
+            "s1Title": "Create the application and keys",
+            "s1Text": "Every application is born isolated, with default roles, configuration with history and a pair of keys, public and secret.",
+            "s2Title": "Install the SDK",
+            "s2Text": "Use the package for your language. It reads the application’s configuration and draws the published login screen.",
+            "s3Title": "Authenticate the user",
+            "s3Text": "Sign-up, password, social sign-in or 2FA all end in a session ready to use.",
+            "s4Title": "Validate in your backend",
+            "s4Text": "The SDK checks the session without overloading your API, and you can check on the spot when you need immediate revocation."
+        },
+        "sec": {
+            "badge": "Security",
+            "title": "Secure by default, from the first request.",
+            "subtitle": "No setting up protection later: it comes switched on.",
+            "i1Title": "Protected passwords",
+            "i1Text": "Stored with modern algorithms, never in plain text, and upgraded automatically when the standard evolves.",
+            "i2Title": "Protected secrets",
+            "i2Text": "Keys, tokens and codes are not readable, not even by us. Whatever must be recovered is encrypted.",
+            "i3Title": "Isolated applications",
+            "i3Text": "One application’s data never shows up in another, and automated tests check it.",
+            "i4Title": "Attack protection",
+            "i4Text": "Excessive attempts are blocked and mass attacks trigger alerts.",
+            "i5Title": "Accounts don’t leak",
+            "i5Text": "Login, sign-up and reset answer the same, whether the account exists or not.",
+            "i6Title": "Stolen session, ended session",
+            "i6Text": "If a used token is presented again, the whole session ends immediately."
+        },
+        "canvas": {
+            "badge": "Login screen",
+            "title": "Design the login screen in the dashboard and publish it to the SDKs.",
+            "subtitle": "The design of your site’s login and sign-up screen, built in the dashboard editor. The SDKs show the published version, so you never write the form.",
+            "c1": "Draft",
+            "c2": "Versions",
+            "c3": "Restore",
+            "c4": "Desktop and mobile",
+            "mockTitle": "Sign in to your app",
+            "mockEmail": "you@email.com",
+            "mockPassword": "••••••••••",
+            "mockButton": "Sign in",
+            "mockOr": "or continue with"
+        },
+        "mcp": {
+            "badge": "MCP",
+            "title": "Set everything up with AI, no account needed.",
+            "subtitle": "Identity has its own MCP. Connect your AI assistant and ask for what you need: it builds everything for you.",
+            "promptsTitle": "Ask in plain language",
+            "p1": "Create an application with e-mail and Google login.",
+            "p2": "Make 2FA mandatory for all users.",
+            "p3": "Generate the keys and show me the integration code in Go.",
+            "p4": "Export the data of user ana@example.com.",
+            "connectTitle": "Connect in one line",
+            "connectText": "Add the server to your assistant and you’re done.",
+            "c1": "No sign-up and no dashboard",
+            "c2": "Any MCP-compatible assistant",
+            "file": "mcp.json"
+        },
+        "faq": {
+            "badge": "FAQ",
+            "title": "Common questions about Identity.",
+            "q1": "How are applications isolated?",
+            "a1": "Each application has its own keys, users, roles and configuration. A user in one application never sees another’s data.",
+            "q2": "How do I validate the user in my backend?",
+            "a2": "The SDK checks the session for you, without a call to Identity on every request. When you need immediate revocation, you can check on the spot.",
+            "q3": "Can I use social sign-in only?",
+            "a3": "Yes. Password login can be turned off in the application’s configuration, and you enable only the providers you want.",
+            "q4": "Is 2FA mandatory?",
+            "a4": "You choose per application: off, optional or required. When required, users without an authenticator enroll one before signing in.",
+            "q5": "What about LGPD?",
+            "a5": "You are the controller and Murkio is the processor. Identity exports a user’s data, erases it effectively on request and keeps the audit history.",
+            "q6": "Are the SDKs available yet?",
+            "a6": "Not yet. They are in the works for TypeScript, JavaScript, Java, Go, React, Svelte, Kotlin, Swift, Elixir, Ruby, PHP and C#.",
+            "q7": "Is the MCP available yet?",
+            "a7": "Yes. Just add the Identity MCP server to your AI assistant and ask for what you need, no account required."
+        },
+        "sdks": {
+            "badge": "SDKs",
+            "title": "One SDK for every language.",
+            "subtitle": "The Identity SDKs are still in the works. These are the 12 languages we will cover, one by one.",
+            "note": "Package names are provisional and may change at launch."
+        },
+        "pricing": {
+            "badge": "Pricing",
+            "title": "Plans for every stage of your app.",
+            "subtitle": "Start free and grow without switching services.",
+            "free": "Free",
+            "perMonth": "/mo",
+            "cta": "Get started",
+            "currency": "R$",
+            "noPlan": "No plan fits your product? We build a custom plan around your user volume and your needs, so you never have to squeeze into the plans above.",
+            "noPlanLink": "Request your custom plan"
+        }
+    },
+    "vault": {
+        "badge": "Vault",
+        "title": "Secrets without .env files.",
+        "description": "Store, reference and rotate every secret from one place, with an alert the moment one leaks.",
+        "panelTitle": "One URI and one token. Nothing else to ship.",
+        "panelText": "Manage every variable in a simple table in your panel. Your app fetches them at runtime, so there is no .env file to commit, leak or pass around the team.",
+        "uri": "VAULT_URI=<uri>",
+        "token": "VAULT_TOKEN=<token>",
+        "feat": {
+            "f1": "Typed secrets",
+            "f2": "Automatic rotation",
+            "f3": "Leak alerts",
+            "d1": "Database URLs, JWT and PASETO keys and tokens, each with its own type and rules.",
+            "d2": "Rotate secrets on a schedule, or right away when a leak is detected.",
+            "d3": "Get notified in your panel if a secret is printed to the console or its URI shows up online."
+        },
+        "env": {
+            "name1": "DATABASE_URL",
+            "name2": "JWT_PRIVATE_KEY",
+            "name3": "STRIPE_SECRET_KEY",
+            "value": "••••••••••••",
+            "rotative": "rotative"
+        },
+        "table": {
+            "h1": "Environment",
+            "h2": "Value",
+            "h3": "Rotative"
+        },
+        "term": {
+            "title": ".env",
+            "rm1": "DATABASE_URL=••••••••••••",
+            "rm2": "JWT_PRIVATE_KEY=••••••••••••",
+            "rm3": "STRIPE_SECRET_KEY=••••••••••••"
+        }
+    },
+    "payments": {
+        "badge": "Payments",
+        "title": "Receive, route and hold in one place.",
+        "subtitle": "Route payments between Stripe, AbacatePay, Asaas and Mercado Pago, keep the money in a single balance and, soon, spend it with a Murkio card.",
+        "card": {
+            "title": "Murkio card",
+            "description": "Get a card for your balance, just like a digital bank.",
+            "tag": "Coming soon",
+            "balanceLabel": "Current balance",
+            "balance": "$5,750.20",
+            "number": "•••• •••• •••• 2343",
+            "expiry": "08/30"
+        },
+        "wallet": {
+            "title": "Wallet",
+            "description": "Keep your balance in one place, including some cryptocurrencies, with every movement tracked.",
+            "totalLabel": "Total balance",
+            "total": "$12,480.50",
+            "a1Name": "Murkio balance",
+            "a1Ticker": "$",
+            "a1Amount": "$9,230.40",
+            "a2Name": "Bitcoin",
+            "a2Ticker": "BTC",
+            "a2Amount": "0.1842",
+            "a3Name": "Ethereum",
+            "a3Ticker": "ETH",
+            "a3Amount": "2.3140"
+        },
+        "fraud": {
+            "title": "Fraud analysis built in",
+            "description": "Every payment goes through Secure analysis before it is approved.",
+            "ok": "Approved",
+            "review": "In review",
+            "blocked": "Blocked"
+        },
+        "statement": {
+            "title": "Payments built for modern software.",
+            "description": "One API to charge, receive and hold money, from the first sale to the thousandth."
+        },
+        "usage": {
+            "title": "Usage-based billing",
+            "description": "Usage from your applications is metered and billed automatically, so you only pay for what you use."
+        }
+    },
+    "router": {
+        "title": "One router, every payment provider.",
+        "subtitle": "Murkio routes each payment between Stripe, AbacatePay, Asaas and Mercado Pago, and keeps the money in a single balance.",
+        "app": "Your software",
+        "hubTitle": "Murkio router",
+        "hubSubtitle": "Routes each payment between providers.",
+        "g1Initial": "S",
+        "g1Name": "Stripe",
+        "g2Initial": "A",
+        "g2Name": "AbacatePay",
+        "g3Initial": "A",
+        "g3Name": "Asaas",
+        "g4Initial": "M",
+        "g4Name": "Mercado Pago",
+        "balance": {
+            "title": "One balance, centralized in Murkio",
+            "description": "Whichever provider processes the payment, the money lands in a single Murkio balance, so you track everything in one place.",
+            "legend": "By provider"
+        },
+        "alert": {
+            "title": "Withdrawals depend on the providers",
+            "description": "The balance is centralized in Murkio, but withdrawal timelines and rules follow each provider: Stripe, AbacatePay, Asaas and Mercado Pago."
+        }
+    },
+    "messaging": {
+        "badge": "Messaging",
+        "title": "Every message, on the right channel.",
+        "subtitle": "E-mail, in-app and push notifications from one place. Say which user should know about which event, and Murkio picks the channels.",
+        "code": {
+            "title": "One call, every channel",
+            "description": "No addresses needed. Murkio picks the channels from the template, skips what the user turned off and delivers to each of their devices.",
+            "logTitle": "Deliveries",
+            "c1": "In-app",
+            "c2": "Push",
+            "c3": "E-mail",
+            "ok": "Delivered",
+            "skipped": "Skipped",
+            "skippedNote": "turned off by the user"
+        },
+        "channels": {
+            "title": "Channels",
+            "description": "Email is guaranteed. SMS, WhatsApp, and Telegram are on the way.",
+            "email": "E-mail",
+            "emailNote": "via Resend",
+            "inapp": "In-app",
+            "inappNote": "real time",
+            "push": "Push",
+            "pushNote": "FCM",
+            "sms": "SMS",
+            "whatsapp": "WhatsApp",
+            "telegram": "Telegram",
+            "live": "Live",
+            "soon": "Coming soon"
+        },
+        "templates": {
+            "title": "Templates by app, channel and language",
+            "description": "Write each message once per channel and language. When a language is missing, Murkio falls back to your app’s default.",
+            "t1": "email_verification",
+            "t2": "password_reset",
+            "t3": "account_exists",
+            "l1": "pt-BR",
+            "l2": "en",
+            "l3": "es"
+        },
+        "prefs": {
+            "title": "Preferences your users control",
+            "description": "Users choose by category and channel. Security and transactional messages can never be turned off.",
+            "security": "Security",
+            "transactional": "Transactional",
+            "updates": "Updates",
+            "marketing": "Marketing",
+            "always": "always on"
+        },
+        "inbox": {
+            "title": "A real-time inbox",
+            "description": "An in-app inbox for every user, updated live as new messages arrive.",
+            "header": "Inbox",
+            "live": "live",
+            "n1": "Your invoice was paid",
+            "n1Time": "now",
+            "n2": "New sign-in on a new device",
+            "n2Time": "2 min",
+            "n3": "Welcome to the app",
+            "n3Time": "1 h"
+        }
+    },
+    "lambda": {
+        "badge": "Lambda",
+        "title": "Your scripts, running on their own.",
+        "subtitle": "Write a Worker() function in your language and choose when it runs: on a timer or on a trigger. Made for the routine jobs that keep your database clean.",
+        "nav": {
+            "n1": "Workers",
+            "n2": "Runs",
+            "n3": "Logs",
+            "n4": "Settings"
+        },
+        "console": {
+            "window": "Murkio Lambda",
+            "pageTitle": "Workers",
+            "s1Label": "Runs today",
+            "s2Label": "Failures",
+            "search": "Search",
+            "onlyRunning": "Only show running workers",
+            "newWorker": "New worker",
+            "h1": "Name",
+            "h2": "Type",
+            "h3": "Language",
+            "h4": "When",
+            "h5": "Last run",
+            "h6": "Status",
+            "tTimer": "Timer",
+            "tTrigger": "Trigger",
+            "sRunning": "Running",
+            "sStopped": "Stopped",
+            "sFailed": "Failed",
+            "r1When": "every 1 h",
+            "r1Last": "12 min ago",
+            "r2When": "daily at 03:00",
+            "r2Last": "5 h ago",
+            "r3When": "on order.closed",
+            "r3Last": "2 min ago",
+            "r4When": "every 6 h",
+            "r4Last": "1 h ago",
+            "r1Name": "clean-expired-sessions",
+            "r1Id": "01a19cf7-b99b-747c-beda-c098f22617bf",
+            "r1Lang": "Go",
+            "r2Name": "purge-soft-deleted-users",
+            "r2Id": "01a19cf7-d027-7043-b8ca-d9dee3087443",
+            "r2Lang": "TypeScript",
+            "r3Name": "archive-closed-orders",
+            "r3Id": "01a19cf7-e813-76f4-a8ea-23d48585a7ca",
+            "r3Lang": "Python",
+            "r4Name": "remove-orphan-uploads",
+            "r4Id": "01a19cf7-fb22-77b1-a72e-464cf6d074a9",
+            "r4Lang": "Ruby",
+            "s1Value": "128",
+            "s2Value": "1"
+        },
+        "how": {
+            "b1Title": "Write one function",
+            "b1Text": "Create a function called Worker() in your own language. It runs the job and returns nothing.",
+            "b2Title": "Choose when it runs",
+            "b2Text": "Set the type in the worker’s panel: a timer, to run on a schedule, or a trigger, to run when an event happens.",
+            "b3Title": "Made for cleanup",
+            "b3Text": "Delete expired sessions, archive old records, remove orphan files: the routine jobs that keep a database healthy."
+        },
+        "worker": {
+            "settings": "Worker settings",
+            "nameLabel": "Name",
+            "typeLabel": "Type",
+            "whenLabel": "When",
+            "timer": "Timer",
+            "trigger": "Trigger",
+            "whenValue": "every 1 h",
+            "file": "worker.go",
+            "nameValue": "clean-expired-sessions"
+        }
+    },
+    "sdk": {
+        "title": "SDKs for every stack",
+        "l1": "Java",
+        "l2": "Go",
+        "l3": "React",
+        "l4": "Svelte",
+        "l5": "Kotlin",
+        "l6": "Swift",
+        "l7": "Elixir",
+        "l8": "Ruby",
+        "l9": "PHP",
+        "l10": "C#",
+        "l11": "TypeScript",
+        "l12": "JavaScript"
+    },
+    "footer": {
+        "ctaTitle": "Put Murkio’s infrastructure in your software, today.",
+        "ctaText": "Create your account and start with Identity, Vault, Payments, Messaging and Lambda.",
+        "ctaButton": "Create account →",
+        "tagline": "All the infrastructure your software needs, in one place.",
+        "colServices": "Services",
+        "colResources": "Resources",
+        "colCompany": "Company",
+        "colSupport": "Support",
+        "colSocial": "Social",
+        "docs": "Documentation",
+        "sdks": "SDKs",
+        "api": "API reference",
+        "pricing": "Pricing",
+        "faq": "FAQ",
+        "about": "About us",
+        "careers": "Careers",
+        "contact": "Contact",
+        "help": "Help center",
+        "status": "System status",
+        "talk": "Talk to support",
+        "github": "GitHub",
+        "linkedin": "LinkedIn",
+        "instagram": "Instagram",
+        "copyright": "© 2026 Murkio. All rights reserved.",
+        "terms": "Terms of use",
+        "privacy": "Privacy"
+    }
+}

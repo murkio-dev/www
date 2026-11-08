@@ -1,0 +1,39 @@
+<div class="glow" aria-hidden="true">
+    <span class="glow-blob glow-top"></span>
+    <span class="glow-blob glow-bottom"></span>
+</div>
+
+<style>
+    .glow {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: transparent;
+    }
+
+    .glow-blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(70px);
+    }
+
+    .glow-top {
+        top: -70px;
+        right: -110px;
+        width: min(520px, 45vw);
+        height: 420px;
+        background: radial-gradient(closest-side, rgb(var(--m-rose-2) / 0.34) 0%, rgba(150, 116, 116, 0.16) 55%, rgba(115, 86, 86, 0) 100%);
+    }
+
+    .glow-bottom {
+        bottom: 0;
+        left: -120px;
+        width: min(540px, 45vw);
+        height: 420px;
+        background: radial-gradient(closest-side, rgba(176, 144, 144, 0.3) 0%, rgba(130, 98, 98, 0.14) 55%, rgba(115, 86, 86, 0) 100%);
+    }
+
+    :root[data-theme="light"] .glow-blob {
+        opacity: 0.5;
+    }
+</style>
