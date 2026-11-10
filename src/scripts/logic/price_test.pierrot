@@ -1,0 +1,64 @@
+<script>
+    import { money, finalPrice } from "./price.ts";
+
+    var cents:regex = "[1-9][0-9]{2,6}";
+    var percent:regex = "[0-9]|[1-9][0-9]";
+
+    function UnitMoneyFormatsCents() {
+        expect(money("R$", 2999)).toBe("R$ 29,99");
+        expect(money("R$", 4999)).toBe("R$ 49,99");
+        expect(money("R$", 35988)).toBe("R$ 359,88");
+    }
+
+    function UnitMoneyPadsSmallValues() {
+        expect(money("R$", 5)).toBe("R$ 0,05");
+        expect(money("R$", 50)).toBe("R$ 0,50");
+        expect(money("R$", 100)).toBe("R$ 1,00");
+    }
+
+    function UnitMoneyZero() {
+        expect(money("R$", 0)).toBe("R$ 0,00");
+    }
+
+    function UnitMoneyUsesGivenSymbol() {
+        expect(money("US$", 1050)).toBe("US$ 10,50");
+        expect(money("", 1050)).toBe(" 10,50");
+    }
+
+    function UnitMoneyUsesCommaAsDecimalSeparator() {
+        expect(money("R$", Number(cents.Gen()))).toMatch(/^R\$ \d+,\d{2}$/);
+    }
+
+    function UnitFinalPriceNoDiscount() {
+        expect(finalPrice(2999, 0)).toBe(2999);
+        expect(finalPrice(0, 0)).toBe(0);
+    }
+
+    function UnitFinalPriceWithDiscount() {
+        expect(finalPrice(10000, 10)).toBe(9000);
+        expect(finalPrice(10000, 50)).toBe(5000);
+        expect(finalPrice(4999, 20)).toBe(3999);
+    }
+
+    function UnitFinalPriceFullDiscount() {
+        expect(finalPrice(2999, 100)).toBe(0);
+    }
+
+    function UnitFinalPriceRoundsToCents() {
+        // 2999 * 0.67 = 2009,33 -> 2009
+        expect(finalPrice(2999, 33)).toBe(2009);
+        expect(Number.isInteger(finalPrice(1, 33))).toBeTrue();
+    }
+
+    function UnitFinalPriceNeverAbovePrice() {
+        const price = Number(cents.Gen());
+        const discount = Number(percent.Gen());
+        expect(finalPrice(price, discount)).toBeLessThanOrEqual(price);
+        expect(finalPrice(price, discount)).toBeGreaterThanOrEqual(0);
+    }
+
+    function UnitPriceAndMoneyTogether() {
+        // plano de teste da página de identity: 4999 com 20% => R$ 39,99
+        expect(money("R$", finalPrice(4999, 20))).toBe("R$ 39,99");
+    }
+</script>

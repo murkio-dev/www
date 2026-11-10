@@ -1,0 +1,141 @@
+<script>
+    import en from "./en-us.json";
+    import pt from "./pt-br.json";
+
+    function _paths(value, prefix) {
+        const out = [];
+        if (value !== null && typeof value === "object") {
+            for (const key of Object.keys(value)) {
+                const next = prefix === "" ? key : prefix + "." + key;
+                if (value[key] !== null && typeof value[key] === "object") {
+                    for (const p of _paths(value[key], next)) out.push(p);
+                } else {
+                    out.push(next);
+                }
+            }
+        }
+        return out;
+    }
+
+    function _leaf(root, path) {
+        let cur = root;
+        for (const part of path.split(".")) cur = cur[part];
+        return cur;
+    }
+
+    function _placeholders(text) {
+        // conta as interpolações `${...}` e os marcadores `%s`
+        return String(text).split("$" + "{").length + ":" + String(text).split("%s").length;
+    }
+
+    function UnitI18nSameTopLevelSections() {
+        expect(Object.keys(pt).sort()).toEqual(Object.keys(en).sort());
+    }
+
+    function UnitI18nEveryKeyExistsInBothLanguages() {
+        const enPaths = _paths(en, "");
+        const ptPaths = _paths(pt, "");
+        const missingInPt = enPaths.filter(p => ptPaths.indexOf(p) === -1);
+        const missingInEn = ptPaths.filter(p => enPaths.indexOf(p) === -1);
+        expect(missingInPt).toEqual([]);
+        expect(missingInEn).toEqual([]);
+    }
+
+    function UnitI18nNoEmptyTranslations() {
+        // `idn.faq` usa subtitle="" na página, mas nenhuma chave do json deve ser vazia
+        const empty = [];
+        for (const p of _paths(en, "")) if (String(_leaf(en, p)).trim() === "") empty.push("en:" + p);
+        for (const p of _paths(pt, "")) if (String(_leaf(pt, p)).trim() === "") empty.push("pt:" + p);
+        expect(empty).toEqual([]);
+    }
+
+    function UnitI18nSameValueTypes() {
+        const wrong = _paths(en, "").filter(p => typeof _leaf(en, p) !== typeof _leaf(pt, p));
+        expect(wrong).toEqual([]);
+    }
+
+    function UnitI18nSamePlaceholders() {
+        const wrong = _paths(en, "").filter(p => _placeholders(_leaf(en, p)) !== _placeholders(_leaf(pt, p)));
+        expect(wrong).toEqual([]);
+    }
+
+    function UnitI18nLanguageSwitcherState() {
+        expect(en.header.lang.current).toBe("EN");
+        expect(en.header.lang.enState).toBe("on");
+        expect(en.header.lang.ptState).toBe("off");
+        expect(pt.header.lang.current).toBe("PT");
+        expect(pt.header.lang.ptState).toBe("on");
+        expect(pt.header.lang.enState).toBe("off");
+    }
+
+    function UnitI18nBrandIsNotTranslated() {
+        expect(en.brand).toBe("Murkio");
+        expect(pt.brand).toBe("Murkio");
+    }
+
+    function UnitI18nErrorMessagesCoverAllHandledStatus() {
+        const keys = ["badRequest", "unauthorized", "forbidden", "notFound", "timeout", "tooManyRequests",
+            "serverError", "badGateway", "unavailable", "gatewayTimeout", "unknown"];
+        for (const lang of [en, pt]) {
+            for (const key of keys) {
+                expect(lang.errors[key].title).toBeTruthy();
+                expect(lang.errors[key].message).toBeTruthy();
+            }
+            expect(lang.errors.back).toBeTruthy();
+        }
+    }
+
+    function UnitI18nPricingCurrency() {
+        expect(en.idn.pricing.currency).toBe("R$");
+        expect(pt.idn.pricing.currency).toBe("R$");
+    }
+
+    function UnitI18nSdkLanguagesAreTheSame() {
+        for (const key of Object.keys(en.sdk)) {
+            expect(pt.sdk[key]).toBeDefined();
+        }
+    }
+
+    // Nomes de serviço são nomes próprios: não se traduzem. Só o texto em volta é traduzido.
+    const SERVICES = ["auth", "messaging", "payments", "vault", "lambda", "database"];
+    const SERVICE_NAMES = ["Identity", "Messaging", "Payments", "Vault", "Lambda", "Database"];
+
+    function UnitI18nServiceNamesAreTheSameInEveryLanguage() {
+        for (const key of SERVICES) {
+            expect(pt.header.services[key].title).toBe(en.header.services[key].title);
+        }
+    }
+
+    function UnitI18nServiceNamesAreTheOnesTheSiteUses() {
+        expect(SERVICES.map(k => en.header.services[k].title)).toEqual(SERVICE_NAMES);
+        expect(SERVICES.map(k => pt.header.services[k].title)).toEqual(SERVICE_NAMES);
+    }
+
+    function UnitI18nSectionBadgesKeepTheServiceName() {
+        for (const [section, name] of [["identity", "Identity"], ["vault", "Vault"], ["lambda", "Lambda"], ["messaging", "Messaging"], ["payments", "Payments"]]) {
+            expect(en[section].badge).toBe(name);
+            expect(pt[section].badge).toBe(name);
+        }
+    }
+
+    function UnitI18nNoServiceNameIsTranslatedAsALabel() {
+        // traduções que já apareceram no lugar do nome: nenhum rótulo curto pode ser uma delas
+        const translated = ["Mensageria", "Pagamentos", "Pagamento", "Banco de dados", "Cofre", "Identidade", "Função", "Funções"];
+        const found = [];
+        for (const p of _paths(pt, "")) {
+            const value = String(_leaf(pt, p)).trim();
+            if (value.length <= 20 && translated.indexOf(value) !== -1) found.push(p + " = " + value);
+        }
+        expect(found).toEqual([]);
+    }
+
+    function UnitI18nNamesInsideSentencesAreKeptToo() {
+        // frases que listam os serviços pelo nome (com maiúscula) mantêm o nome em inglês
+        for (const text of [pt.sdks.b1Text, pt.ai.mcp.description, pt.footer.ctaText]) {
+            for (const translated of ["Mensageria", "Pagamentos", "Banco de dados", "Cofre"]) {
+                expect(text).not.toContain(translated);
+            }
+        }
+        expect(pt.footer.ctaText).toContain("Identity, Vault, Payments, Messaging e Lambda");
+    }
+</script>

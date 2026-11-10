@@ -1,0 +1,36 @@
+<script>
+    // Rota dinâmica /messaging/:id. O runner não abre sozinho uma rota com parâmetro: cada teste faz Goto.
+    // Ela ainda não mostra nada além do layout; o valor do :id não muda o resultado.
+    import en from "../../../i18n/en-us.json";
+    import pt from "../../../i18n/pt-br.json";
+
+    function ComponentDynamicRouteResolves(target) {
+        target.Goto("/messaging/42");
+        expect().toBeOnUrl(/\/en-us\/messaging\/42\/?$/);
+        expect().toBeVisible().onClass("header");
+        expect().toBeVisible().onClass("ft");
+        expect().toHaveCount(0).onClass("error-title");
+    }
+
+    function ComponentAnyIdIsAccepted(target) {
+        for (const id of ["1", "abc", "01a19d33-557d-77c0-a3a5-297106771a2c"]) {
+            target.Goto("/messaging/" + id);
+            expect().toBeOnUrl(new RegExp("/messaging/" + id + "/?$"));
+            expect().toHaveCount(0).onClass("error-title");
+            expect().toBeVisible().onClass("header");
+        }
+    }
+
+    function ComponentDynamicRouteInPortuguese(target) {
+        target.Goto("/pt-br/messaging/42");
+        expect().toHaveText(pt.header.lang.current).onClass("lm-current");
+        expect().toHaveCount(0).onClass("error-title");
+    }
+
+    function ComponentDynamicRouteKeepsTheLanguageSwitch(target) {
+        target.Goto("/messaging/42");
+        hover().OnClass("lm-trigger");
+        click().OnText(en.header.lang.pt);
+        expect().toBeOnUrl(/\/pt-br\/messaging\/42\/?$/);
+    }
+</script>
