@@ -4,15 +4,13 @@
     import { HeroLights } from "../../components/heroLights.pierrot";
     import { HeroGrid } from "../../components/heroGrid.pierrot";
     import { Badge } from "../../components/badge.pierrot";
-    import { InfraSection } from "../../components/infraSection.pierrot";
-    import { IdentitySection } from "../../components/identitySection.pierrot";
-    import { VaultSection } from "../../components/vaultSection.pierrot";
-    import { PaymentsSection } from "../../components/paymentsSection.pierrot";
-    import { MessagingSection } from "../../components/messagingSection.pierrot";
-    import { SdksSection } from "../../components/sdksSection.pierrot";
-    import { LambdaSection } from "../../components/lambdaSection.pierrot";
-    import { AiSection } from "../../components/aiSection.pierrot";
     import { Button } from "../../components/button.pierrot";
+    import { SectionHead } from "../../components/sectionHead.pierrot";
+    import { InfraCard } from "../../components/infraCard.pierrot";
+    import { StarMark } from "../../components/starMark.pierrot";
+    import { VaultFeature } from "../../components/vaultFeature.pierrot";
+    import { ComingSoonTag } from "../../components/comingSoonTag.pierrot";
+    import { RouterGateway } from "../../components/routerGateway.pierrot";
 </script>
 
 <div class="hero-wrap">
@@ -36,11 +34,819 @@
 </main>
 </div>
 
-<InfraSection />
-<SdksSection />
-<AiSection />
-<IdentitySection />
-<VaultSection />
-<PaymentsSection />
-<MessagingSection />
-<LambdaSection />
+<section class="infra" id="services">
+    <SectionHead badge={i18n.infra.badge} title={i18n.infra.title} subtitle={i18n.infra.subtitle} />
+
+    <div class="infra-diagram">
+        <div class="infra-hub">
+            <span class="hub-dot hub-dot-1"></span>
+            <span class="hub-dot hub-dot-2"></span>
+            <span class="hub-dot hub-dot-3"></span>
+            <span class="hub-dot hub-dot-4"></span>
+            <span class="hub-dot hub-dot-5"></span>
+            <span class="hub-dot hub-dot-6"></span>
+
+            <span class="infra-hub-icon"><img src="/assets/icons/ui/code.svg" alt="" width="22" height="22"></span>
+            <span class="infra-hub-title">${i18n.infra.hubTitle}</span>
+            <span class="infra-hub-subtitle">${i18n.infra.hubSubtitle}</span>
+        </div>
+
+        <img class="infra-lines" src="/assets/diagrams/connectors.svg" alt="" aria-hidden="true">
+
+        <div class="infra-groups">
+            <div class="infra-group">
+                <div class="infra-cards">
+                    <InfraCard icon="/assets/icons/services/auth.svg" title={i18n.header.services.auth.title} />
+                    <InfraCard icon="/assets/icons/services/messaging.svg" title={i18n.header.services.messaging.title} />
+                    <InfraCard icon="/assets/icons/services/payments.svg" title={i18n.header.services.payments.title} />
+                </div>
+                <span class="infra-bracket"></span>
+                <span class="infra-label">${i18n.infra.groupServices}</span>
+            </div>
+
+            <div class="infra-divider"></div>
+
+            <div class="infra-group">
+                <div class="infra-cards">
+                    <InfraCard icon="/assets/icons/services/vault.svg" title={i18n.header.services.vault.title} />
+                    <InfraCard icon="/assets/icons/services/lambda.svg" title={i18n.header.services.lambda.title} />
+                    <InfraCard icon="/assets/icons/services/database.svg" title={i18n.header.services.database.title} />
+                </div>
+                <span class="infra-bracket"></span>
+                <span class="infra-label">${i18n.infra.groupInfra}</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sdks" id="sdks">
+    <SectionHead badge={i18n.sdks.badge} title={i18n.sdks.title} subtitle={i18n.sdks.subtitle} />
+
+    <div class="sdks-main">
+        <ul class="sdks-list">
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b1Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b1Text}</p>
+                </div>
+            </li>
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b2Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b2Text}</p>
+                </div>
+            </li>
+            <li class="sdks-item">
+                <span class="sdks-check"></span>
+                <div class="sdks-text">
+                    <h3 class="sdks-title">${i18n.sdks.b3Title}</h3>
+                    <p class="sdks-body">${i18n.sdks.b3Text}</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="sw" aria-hidden="true">
+            <div class="sw-tabs">
+                <span class="sw-tab sw-tab-on">${i18n.sdk.l11}</span>
+                <span class="sw-tab">${i18n.sdk.l12}</span>
+                <span class="sw-tab">${i18n.sdk.l2}</span>
+                <span class="sw-tab">${i18n.sdk.l1}</span>
+                <span class="sw-tab">${i18n.sdk.l5}</span>
+                <span class="sw-tab sw-tab-more">+7</span>
+            </div>
+
+            <div class="sw-editor">
+                <div class="sw-gutter">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                    <span>6</span>
+                    <span>7</span>
+                    <span>8</span>
+                </div>
+                <div class="sw-code">
+                    <div class="sw-line"><span class="sw-kw">import</span><span class="sw-p"> { </span><span class="sw-id">Murkio</span><span class="sw-p"> } </span><span class="sw-kw">from</span><span class="sw-p"> </span><span class="sw-str">"@murkio/sdk"</span><span class="sw-p">;</span></div>
+                    <div class="sw-line sw-blank"></div>
+                    <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> murkio = </span><span class="sw-kw">new</span><span class="sw-p"> </span><span class="sw-id">Murkio</span><span class="sw-p">({ token: process.env.MURKIO_TOKEN });</span></div>
+                    <div class="sw-line sw-blank"></div>
+                    <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.identity.</span><span class="sw-fn">login</span><span class="sw-p">({ email, password });</span></div>
+                    <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> url = </span><span class="sw-kw">await</span><span class="sw-p"> murkio.vault.</span><span class="sw-fn">get</span><span class="sw-p">(</span><span class="sw-str">"DATABASE_URL"</span><span class="sw-p">);</span></div>
+                    <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.payments.</span><span class="sw-fn">charge</span><span class="sw-p">({ amount: 4900 });</span></div>
+                    <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.messaging.</span><span class="sw-fn">send</span><span class="sw-p">({ user, type: </span><span class="sw-str">"welcome"</span><span class="sw-p"> });</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sdks-strip">
+        <div class="sdk">
+            <span class="sdk-label">${i18n.sdk.title}</span>
+
+            <div class="sdk-viewport">
+                <ul class="sdk-track">
+                    <li class="sdk-item"><img src="/assets/sdk/typescript.svg" alt="" width="22" height="22"><span>${i18n.sdk.l11}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/javascript.svg" alt="" width="22" height="22"><span>${i18n.sdk.l12}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/java.svg" alt="" width="22" height="22"><span>${i18n.sdk.l1}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/go.svg" alt="" width="22" height="22"><span>${i18n.sdk.l2}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/react.svg" alt="" width="22" height="22"><span>${i18n.sdk.l3}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/svelte.svg" alt="" width="22" height="22"><span>${i18n.sdk.l4}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/kotlin.svg" alt="" width="22" height="22"><span>${i18n.sdk.l5}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/swift.svg" alt="" width="22" height="22"><span>${i18n.sdk.l6}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/elixir.svg" alt="" width="22" height="22"><span>${i18n.sdk.l7}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/ruby.svg" alt="" width="22" height="22"><span>${i18n.sdk.l8}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/php.svg" alt="" width="22" height="22"><span>${i18n.sdk.l9}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/csharp.svg" alt="" width="22" height="22"><span>${i18n.sdk.l10}</span></li>
+                </ul>
+                <ul class="sdk-track sdk-track-copy" aria-hidden="true">
+                    <li class="sdk-item"><img src="/assets/sdk/typescript.svg" alt="" width="22" height="22"><span>${i18n.sdk.l11}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/javascript.svg" alt="" width="22" height="22"><span>${i18n.sdk.l12}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/java.svg" alt="" width="22" height="22"><span>${i18n.sdk.l1}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/go.svg" alt="" width="22" height="22"><span>${i18n.sdk.l2}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/react.svg" alt="" width="22" height="22"><span>${i18n.sdk.l3}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/svelte.svg" alt="" width="22" height="22"><span>${i18n.sdk.l4}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/kotlin.svg" alt="" width="22" height="22"><span>${i18n.sdk.l5}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/swift.svg" alt="" width="22" height="22"><span>${i18n.sdk.l6}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/elixir.svg" alt="" width="22" height="22"><span>${i18n.sdk.l7}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/ruby.svg" alt="" width="22" height="22"><span>${i18n.sdk.l8}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/php.svg" alt="" width="22" height="22"><span>${i18n.sdk.l9}</span></li>
+                    <li class="sdk-item"><img src="/assets/sdk/csharp.svg" alt="" width="22" height="22"><span>${i18n.sdk.l10}</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ai" id="ai">
+    <SectionHead badge={i18n.ai.badge} title={i18n.ai.title} subtitle={i18n.ai.subtitle} />
+
+    <div class="av">
+        <div class="av-stage">
+            <div class="av-circle av-circle-ai">
+                <span class="av-label">${i18n.ai.ai.label}</span>
+                <span class="av-name">${i18n.ai.ai.name}</span>
+            </div>
+
+            <div class="av-circle av-circle-hi">
+                <span class="av-label">${i18n.ai.hi.label}</span>
+                <span class="av-name">${i18n.ai.hi.name}</span>
+            </div>
+
+            <span class="av-core" aria-hidden="true"><StarMark size="30" /></span>
+        </div>
+
+        <div class="av-caps">
+            <p class="av-cap">${i18n.ai.ai.text}</p>
+            <p class="av-cap">${i18n.ai.hi.text}</p>
+        </div>
+    </div>
+
+    <div class="ai-split">
+        <div class="ai-col">
+            <h3 class="ai-title">${i18n.ai.mcp.title}</h3>
+            <p class="ai-body">${i18n.ai.mcp.description}</p>
+
+            <ul class="ai-mcp">
+                <li class="ai-mcp-row">
+                    <img src="/assets/icons/services/auth.svg" alt="" width="18" height="18">
+                    <span class="ai-mcp-name">${i18n.header.services.auth.title}</span>
+                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
+                </li>
+                <li class="ai-mcp-row">
+                    <img src="/assets/icons/services/messaging.svg" alt="" width="18" height="18">
+                    <span class="ai-mcp-name">${i18n.header.services.messaging.title}</span>
+                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
+                </li>
+                <li class="ai-mcp-row">
+                    <img src="/assets/icons/services/payments.svg" alt="" width="18" height="18">
+                    <span class="ai-mcp-name">${i18n.header.services.payments.title}</span>
+                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
+                </li>
+                <li class="ai-mcp-row">
+                    <img src="/assets/icons/services/vault.svg" alt="" width="18" height="18">
+                    <span class="ai-mcp-name">${i18n.header.services.vault.title}</span>
+                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
+                </li>
+                <li class="ai-mcp-row">
+                    <img src="/assets/icons/services/lambda.svg" alt="" width="18" height="18">
+                    <span class="ai-mcp-name">${i18n.header.services.lambda.title}</span>
+                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="ai-col ai-col-site">
+            <h3 class="ai-title">${i18n.ai.site.title}</h3>
+            <p class="ai-body">${i18n.ai.site.description}</p>
+
+            <ul class="ai-checks">
+                <li class="ai-check"><span class="ai-tick"></span><span class="ai-file">${i18n.ai.site.c1}</span></li>
+                <li class="ai-check"><span class="ai-tick"></span>${i18n.ai.site.c2}</li>
+                <li class="ai-check"><span class="ai-tick"></span>${i18n.ai.site.c3}</li>
+                <li class="ai-check"><span class="ai-tick"></span>${i18n.ai.site.c4}</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="identity" id="identity">
+    <SectionHead badge={i18n.identity.badge} title={i18n.identity.title} subtitle={i18n.identity.subtitle} />
+
+    <div class="identity-top">
+        <div class="id-panel id-panel-a">
+            <div class="id-panel-body id-panel-body-a">
+                <div class="idl">
+                    <h3 class="id-title">${i18n.identity.login.title}</h3>
+                    <p class="id-text">${i18n.identity.login.description}</p>
+
+                    <dl class="idl-specs">
+                        <div class="idl-row">
+                            <dt>${i18n.identity.login.spec1Label}</dt>
+                            <dd>${i18n.identity.login.spec1Value}</dd>
+                        </div>
+                        <div class="idl-row">
+                            <dt>${i18n.identity.login.spec2Label}</dt>
+                            <dd>${i18n.identity.login.spec2Value}</dd>
+                        </div>
+                        <div class="idl-row">
+                            <dt>${i18n.identity.login.spec3Label}</dt>
+                            <dd>${i18n.identity.login.spec3Value}</dd>
+                        </div>
+                        <div class="idl-row">
+                            <dt>${i18n.identity.login.spec4Label}</dt>
+                            <dd>${i18n.identity.login.spec4Value}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="id-panel id-panel-b">
+            <div class="id-panel-body id-panel-body-b">
+                <div class="ids">
+                    <span class="ids-bands" aria-hidden="true"></span>
+
+                    <div class="ids-body">
+                        <h3 class="id-title">${i18n.identity.social.title}</h3>
+                        <p class="id-text">${i18n.identity.social.description}</p>
+
+                        <div class="ids-chips">
+                            <span class="ids-chip">${i18n.identity.social.p1}</span>
+                            <span class="ids-chip">${i18n.identity.social.p2}</span>
+                            <span class="ids-chip">${i18n.identity.social.p3}</span>
+                            <span class="ids-chip">${i18n.identity.social.p4}</span>
+                            <span class="ids-chip">${i18n.identity.social.p5}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="identity-bottom">
+        <div class="id-card">
+            <div class="idm">
+                <span class="idm-glow" aria-hidden="true"></span>
+
+                <div class="idm-code" aria-hidden="true">
+                    <span class="idm-digit">4</span>
+                    <span class="idm-digit">8</span>
+                    <span class="idm-digit">2</span>
+                    <span class="idm-sep"></span>
+                    <span class="idm-digit">1</span>
+                    <span class="idm-digit">9</span>
+                    <span class="idm-digit">6</span>
+                </div>
+
+                <div class="idm-modes">
+                    <span class="idm-mode">${i18n.identity.mfa.modeOff}</span>
+                    <span class="idm-mode idm-mode-active">${i18n.identity.mfa.modeOptional}</span>
+                    <span class="idm-mode">${i18n.identity.mfa.modeRequired}</span>
+                </div>
+
+                <h3 class="id-title">${i18n.identity.mfa.title}</h3>
+                <p class="id-text">${i18n.identity.mfa.description}</p>
+            </div>
+        </div>
+        <div class="id-card">
+            <div class="idk">
+                <div class="idk-keys">
+                    <div class="idk-key">
+                        <span class="idk-label">${i18n.identity.keys.publicLabel}</span>
+                        <code class="idk-code">${i18n.identity.keys.publicSample}</code>
+                    </div>
+                    <div class="idk-key">
+                        <span class="idk-label">${i18n.identity.keys.secretLabel}</span>
+                        <code class="idk-code idk-code-secret">${i18n.identity.keys.secretSample}</code>
+                    </div>
+                </div>
+
+                <h3 class="id-title">${i18n.identity.keys.title}</h3>
+                <p class="id-text">${i18n.identity.keys.description}</p>
+            </div>
+        </div>
+        <div class="id-card">
+            <div class="idp">
+                <ul class="idp-log" aria-hidden="true">
+                    <li class="idp-line"><span class="idp-dot"></span>${i18n.identity.privacy.log1}</li>
+                    <li class="idp-line"><span class="idp-dot"></span>${i18n.identity.privacy.log2}</li>
+                    <li class="idp-line"><span class="idp-dot"></span>${i18n.identity.privacy.log3}</li>
+                    <li class="idp-line"><span class="idp-dot idp-dot-hot"></span>${i18n.identity.privacy.log4}</li>
+                </ul>
+
+                <h3 class="id-title">${i18n.identity.privacy.title}</h3>
+                <p class="id-text">${i18n.identity.privacy.description}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="vault" id="vault">
+    <SectionHead badge={i18n.vault.badge} title={i18n.vault.title} subtitle={i18n.vault.description} />
+
+    <div class="vault-top">
+        <div class="vault-panel vault-panel-text">
+            <h3 class="vault-panel-title">${i18n.vault.panelTitle}</h3>
+            <p class="vault-panel-body">${i18n.vault.panelText}</p>
+
+            <div class="vault-table">
+                <div class="vt" aria-hidden="true">
+                    <div class="vt-row vt-head">
+                        <span>${i18n.vault.table.h1}</span>
+                        <span>${i18n.vault.table.h2}</span>
+                        <span>${i18n.vault.table.h3}</span>
+                    </div>
+                    <div class="vt-row">
+                        <span class="vt-name">${i18n.vault.env.name1}</span>
+                        <span class="vt-value">${i18n.vault.env.value}</span>
+                        <span class="vt-cell"><span class="vt-tag">${i18n.vault.env.rotative}</span></span>
+                    </div>
+                    <div class="vt-row">
+                        <span class="vt-name">${i18n.vault.env.name2}</span>
+                        <span class="vt-value">${i18n.vault.env.value}</span>
+                        <span class="vt-cell"><span class="vt-tag">${i18n.vault.env.rotative}</span></span>
+                    </div>
+                    <div class="vt-row">
+                        <span class="vt-name">${i18n.vault.env.name3}</span>
+                        <span class="vt-value">${i18n.vault.env.value}</span>
+                        <span class="vt-cell"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="vault-panel vault-panel-visual">
+            <div class="vm" aria-hidden="true">
+                <span class="vm-glow"></span>
+
+                <div class="vm-window">
+                    <div class="vm-bar">
+                        <span class="vm-dot"></span>
+                        <span class="vm-dot"></span>
+                        <span class="vm-dot"></span>
+                        <span class="vm-title">${i18n.vault.term.title}</span>
+                    </div>
+
+                    <div class="vm-body">
+                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm1}</span></div>
+                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm2}</span></div>
+                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm3}</span></div>
+                        <div class="vm-line vm-line-add"><span class="vm-sign">+</span><span class="vm-code">${i18n.vault.uri}</span></div>
+                        <div class="vm-line vm-line-add"><span class="vm-sign">+</span><span class="vm-code">${i18n.vault.token}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="vault-bottom">
+        <VaultFeature icon="/assets/icons/ui/braces.svg" label={i18n.vault.feat.f1} description={i18n.vault.feat.d1} />
+        <VaultFeature icon="/assets/icons/ui/rotate.svg" label={i18n.vault.feat.f2} description={i18n.vault.feat.d2} />
+        <VaultFeature icon="/assets/icons/ui/alert.svg" label={i18n.vault.feat.f3} description={i18n.vault.feat.d3} />
+    </div>
+</section>
+
+<section class="pay" id="payments">
+    <SectionHead badge={i18n.payments.badge} title={i18n.payments.title} subtitle={i18n.payments.subtitle} />
+
+    <div class="pay-top">
+        <div class="pay-panel pay-panel-card">
+            <div class="pay-card-wrap">
+                <div class="pc" aria-hidden="true">
+                    <span class="pc-stripes"></span>
+
+                    <div class="pc-top">
+                        <div class="pc-balance">
+                            <span class="pc-label">${i18n.payments.card.balanceLabel}</span>
+                            <span class="pc-amount">${i18n.payments.card.balance}</span>
+                        </div>
+                        <div class="pc-brand">
+                            <StarMark size="20" />
+                            <span>${i18n.brand}</span>
+                        </div>
+                    </div>
+
+                    <span class="pc-chip"></span>
+
+                    <div class="pc-bottom">
+                        <span class="pc-number">${i18n.payments.card.number}</span>
+                        <span class="pc-expiry">${i18n.payments.card.expiry}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pay-caption">
+                <div class="pay-caption-head">
+                    <h3 class="pay-title">${i18n.payments.card.title}</h3>
+                    <ComingSoonTag label={i18n.payments.card.tag} />
+                </div>
+                <p class="pay-text">${i18n.payments.card.description}</p>
+            </div>
+        </div>
+
+        <div class="pay-panel pay-panel-wallet">
+            <span class="pay-dots" aria-hidden="true"></span>
+            <div class="pay-wallet-text">
+                <h3 class="pay-title">${i18n.payments.wallet.title}</h3>
+                <p class="pay-text">${i18n.payments.wallet.description}</p>
+            </div>
+            <div class="pay-wallet-visual">
+                <div class="pw" aria-hidden="true">
+                    <div class="pw-total">
+                        <span class="pw-label">${i18n.payments.wallet.totalLabel}</span>
+                        <span class="pw-value">${i18n.payments.wallet.total}</span>
+                    </div>
+
+                    <div class="pw-row">
+                        <span class="pw-coin">${i18n.payments.wallet.a1Ticker}</span>
+                        <span class="pw-name">${i18n.payments.wallet.a1Name}</span>
+                        <span class="pw-amount">${i18n.payments.wallet.a1Amount}</span>
+                    </div>
+                    <div class="pw-row">
+                        <span class="pw-coin">${i18n.payments.wallet.a2Ticker}</span>
+                        <span class="pw-name">${i18n.payments.wallet.a2Name}</span>
+                        <span class="pw-amount">${i18n.payments.wallet.a2Amount}</span>
+                    </div>
+                    <div class="pw-row">
+                        <span class="pw-coin">${i18n.payments.wallet.a3Ticker}</span>
+                        <span class="pw-name">${i18n.payments.wallet.a3Name}</span>
+                        <span class="pw-amount">${i18n.payments.wallet.a3Amount}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pay-bottom">
+        <div class="pay-panel pay-panel-small">
+            <div class="pf" aria-hidden="true">
+                <span class="pf-chip pf-ok"><span class="pf-dot"></span>${i18n.payments.fraud.ok}</span>
+                <span class="pf-chip pf-review"><span class="pf-dot"></span>${i18n.payments.fraud.review}</span>
+                <span class="pf-chip pf-blocked"><span class="pf-dot"></span>${i18n.payments.fraud.blocked}</span>
+            </div>
+            <h3 class="pay-title">${i18n.payments.fraud.title}</h3>
+            <p class="pay-text">${i18n.payments.fraud.description}</p>
+        </div>
+
+        <div class="pay-panel pay-panel-small pay-panel-statement">
+            <span class="pay-dots pay-dots-left" aria-hidden="true"></span>
+            <h3 class="pay-statement">${i18n.payments.statement.title}</h3>
+            <p class="pay-text">${i18n.payments.statement.description}</p>
+            <div class="pay-brand">
+                <StarMark size="20" />
+                <span>${i18n.brand}</span>
+            </div>
+        </div>
+
+        <div class="pay-panel pay-panel-small">
+            <div class="pu" aria-hidden="true">
+                <span class="pu-bar pu-1"></span>
+                <span class="pu-bar pu-2"></span>
+                <span class="pu-bar pu-3"></span>
+                <span class="pu-bar pu-4"></span>
+                <span class="pu-bar pu-5"></span>
+                <span class="pu-bar pu-6"></span>
+                <span class="pu-bar pu-7 pu-bar-hot"></span>
+            </div>
+            <h3 class="pay-title">${i18n.payments.usage.title}</h3>
+            <p class="pay-text">${i18n.payments.usage.description}</p>
+        </div>
+    </div>
+
+    <div class="rt">
+        <div class="rt-intro">
+            <h3 class="rt-intro-title">${i18n.router.title}</h3>
+            <p class="rt-text">${i18n.router.subtitle}</p>
+        </div>
+
+        <div class="rt-diagram">
+            <div class="rt-app">
+                <span class="rt-app-icon"><img src="/assets/icons/ui/code.svg" alt="" width="22" height="22"></span>
+                <span class="rt-app-name">${i18n.router.app}</span>
+            </div>
+
+            <span class="rt-link" aria-hidden="true"></span>
+
+            <div class="rt-hub">
+                <span class="rt-dot rt-dot-1"></span>
+                <span class="rt-dot rt-dot-2"></span>
+                <span class="rt-dot rt-dot-3"></span>
+                <span class="rt-dot rt-dot-4"></span>
+
+                <img class="rt-hub-logo rt-logo-dark" src="/assets/logo/full.svg" alt="" width="44" height="44">
+                <img class="rt-hub-logo rt-logo-light" src="/assets/logo/full-light.svg" alt="" width="44" height="44">
+                <span class="rt-hub-title">${i18n.router.hubTitle}</span>
+                <span class="rt-hub-subtitle">${i18n.router.hubSubtitle}</span>
+            </div>
+
+            <img class="rt-lines" src="/assets/diagrams/router-lines.svg" alt="" aria-hidden="true">
+
+            <div class="rt-gateways">
+                <RouterGateway initial={i18n.router.g1Initial} name={i18n.router.g1Name} />
+                <RouterGateway initial={i18n.router.g2Initial} name={i18n.router.g2Name} />
+                <RouterGateway initial={i18n.router.g3Initial} name={i18n.router.g3Name} />
+                <RouterGateway initial={i18n.router.g4Initial} name={i18n.router.g4Name} />
+            </div>
+        </div>
+
+        <div class="rt-bottom">
+            <div class="rt-panel rt-balance">
+                <div class="rt-balance-text">
+                    <h3 class="rt-title">${i18n.router.balance.title}</h3>
+                    <p class="rt-text">${i18n.router.balance.description}</p>
+                </div>
+
+                <div class="rt-balance-visual">
+                    <div class="rt-bar" aria-hidden="true">
+                        <span class="rt-seg rt-seg-1"></span>
+                        <span class="rt-seg rt-seg-2"></span>
+                        <span class="rt-seg rt-seg-3"></span>
+                        <span class="rt-seg rt-seg-4"></span>
+                    </div>
+                    <ul class="rt-legend" aria-label="${i18n.router.balance.legend}">
+                        <li class="rt-key rt-key-1">${i18n.router.g1Name}</li>
+                        <li class="rt-key rt-key-2">${i18n.router.g2Name}</li>
+                        <li class="rt-key rt-key-3">${i18n.router.g3Name}</li>
+                        <li class="rt-key rt-key-4">${i18n.router.g4Name}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="rt-note" role="note"><span class="rt-note-title">${i18n.router.alert.title}.</span> ${i18n.router.alert.description}</p>
+    </div>
+</section>
+
+<section class="msg" id="messaging">
+    <SectionHead badge={i18n.messaging.badge} title={i18n.messaging.title} subtitle={i18n.messaging.subtitle} />
+
+    <div class="mw">
+        <div class="mw-pane mw-pane-code">
+            <div class="mw-tabs" aria-hidden="true">
+                <span class="mw-tab mw-tab-on">notification.send</span>
+                <span class="mw-tab">email.send</span>
+            </div>
+
+            <div class="mw-editor" aria-hidden="true">
+                <div class="mw-gutter">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>4</span>
+                    <span>5</span>
+                </div>
+                <div class="mw-code">
+                    <div class="mw-line"><span class="mw-fn">notification</span><span class="mw-p">.</span><span class="mw-fn">send</span><span class="mw-p">({</span></div>
+                    <div class="mw-line mw-in"><span class="mw-key">user_id</span><span class="mw-p">: </span><span class="mw-str">"usr_8f21"</span><span class="mw-p">,</span></div>
+                    <div class="mw-line mw-in"><span class="mw-key">type</span><span class="mw-p">: </span><span class="mw-str">"invoice.paid"</span><span class="mw-p">,</span></div>
+                    <div class="mw-line mw-in"><span class="mw-key">data</span><span class="mw-p">: { </span><span class="mw-key">order_id</span><span class="mw-p">: </span><span class="mw-str">"8412"</span><span class="mw-p"> }</span></div>
+                    <div class="mw-line"><span class="mw-p">})</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mw-pane mw-pane-log">
+            <div class="mw-head">
+                <span class="mw-head-title">${i18n.messaging.code.logTitle}</span>
+            </div>
+
+            <div class="mw-row">
+                <span class="mw-chan">${i18n.messaging.code.c1}</span>
+                <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
+            </div>
+            <div class="mw-row">
+                <span class="mw-chan">${i18n.messaging.code.c3}</span>
+                <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
+            </div>
+            <div class="mw-row mw-row-off">
+                <span class="mw-chan">${i18n.messaging.code.c2}</span>
+                <span class="mw-status"><span class="mw-skip"></span>${i18n.messaging.code.skipped}</span>
+            </div>
+            <p class="mw-note">${i18n.messaging.code.skippedNote}</p>
+        </div>
+    </div>
+
+    <div class="mc">
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icons/ui/layers.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.channels.title}</h3>
+            <p class="mc-body">${i18n.messaging.channels.description}</p>
+            <div class="mc-soon">
+                <span class="mc-soon-names">${i18n.messaging.channels.sms} · ${i18n.messaging.channels.whatsapp} · ${i18n.messaging.channels.telegram}</span>
+                <ComingSoonTag label={i18n.messaging.channels.soon} />
+            </div>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icons/ui/template.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.templates.title}</h3>
+            <p class="mc-body">${i18n.messaging.templates.description}</p>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icons/ui/sliders.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.prefs.title}</h3>
+            <p class="mc-body">${i18n.messaging.prefs.description}</p>
+        </div>
+
+        <div class="mc-col">
+            <span class="mc-icon"><img src="/assets/icons/ui/inbox.svg" alt="" width="22" height="22"></span>
+            <h3 class="mc-title">${i18n.messaging.inbox.title}</h3>
+            <p class="mc-body">${i18n.messaging.inbox.description}</p>
+        </div>
+    </div>
+
+</section>
+
+<section class="lam" id="lambda">
+    <SectionHead badge={i18n.lambda.badge} title={i18n.lambda.title} subtitle={i18n.lambda.subtitle} />
+
+    <div class="lc">
+        <div class="lc-titlebar" aria-hidden="true">
+            <span class="lc-dot"></span>
+            <span class="lc-dot"></span>
+            <span class="lc-dot"></span>
+            <span class="lc-window">${i18n.lambda.console.window}</span>
+        </div>
+
+        <div class="lc-body">
+            <nav class="lc-side" aria-hidden="true">
+                <span class="lc-nav lc-nav-on"><img src="/assets/icons/services/lambda.svg" alt="" width="18" height="18">${i18n.lambda.nav.n1}</span>
+                <span class="lc-nav"><img src="/assets/icons/ui/rotate.svg" alt="" width="18" height="18">${i18n.lambda.nav.n2}</span>
+                <span class="lc-nav"><img src="/assets/icons/ui/template.svg" alt="" width="18" height="18">${i18n.lambda.nav.n3}</span>
+                <span class="lc-nav"><img src="/assets/icons/ui/sliders.svg" alt="" width="18" height="18">${i18n.lambda.nav.n4}</span>
+            </nav>
+
+            <div class="lc-main" aria-hidden="true">
+                <div class="lc-head">
+                    <h3 class="lc-title">${i18n.lambda.console.pageTitle}</h3>
+                    <div class="lc-stats">
+                        <div class="lc-stat">
+                            <span class="lc-stat-label">${i18n.lambda.console.s1Label}</span>
+                            <span class="lc-stat-value">${i18n.lambda.console.s1Value}</span>
+                        </div>
+                        <div class="lc-stat">
+                            <span class="lc-stat-label">${i18n.lambda.console.s2Label}</span>
+                            <span class="lc-stat-value">${i18n.lambda.console.s2Value}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lc-controls">
+                    <span class="lc-search"><img src="/assets/icons/ui/search.svg" alt="" width="16" height="16">${i18n.lambda.console.search}</span>
+                    <span class="lc-toggle"><span class="lc-switch"></span>${i18n.lambda.console.onlyRunning}</span>
+                    <span class="lc-new"><img src="/assets/icons/ui/plus.svg" alt="" width="16" height="16">${i18n.lambda.console.newWorker}</span>
+                </div>
+
+                <div class="lc-scroll">
+                    <div class="lc-table">
+                        <div class="lc-row lc-row-head">
+                            <span class="lc-check"></span>
+                            <span>${i18n.lambda.console.h1}</span>
+                            <span>${i18n.lambda.console.h2}</span>
+                            <span>${i18n.lambda.console.h3}</span>
+                            <span>${i18n.lambda.console.h4}</span>
+                            <span>${i18n.lambda.console.h5}</span>
+                            <span>${i18n.lambda.console.h6}</span>
+                            <span></span>
+                        </div>
+
+                        <div class="lc-row">
+                            <span class="lc-check"></span>
+                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r1Name}</span><span class="lc-name-id">${i18n.lambda.console.r1Id}</span></span>
+                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                            <span class="lc-lang">${i18n.lambda.console.r1Lang}</span>
+                            <span class="lc-mono">${i18n.lambda.console.r1When}</span>
+                            <span class="lc-muted">${i18n.lambda.console.r1Last}</span>
+                            <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
+                            <span class="lc-actions"><img src="/assets/icons/ui/stop.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
+                        </div>
+
+                        <div class="lc-row">
+                            <span class="lc-check"></span>
+                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r2Name}</span><span class="lc-name-id">${i18n.lambda.console.r2Id}</span></span>
+                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                            <span class="lc-lang">${i18n.lambda.console.r2Lang}</span>
+                            <span class="lc-mono">${i18n.lambda.console.r2When}</span>
+                            <span class="lc-muted">${i18n.lambda.console.r2Last}</span>
+                            <span class="lc-status lc-status-stop"><span class="lc-status-dot"></span>${i18n.lambda.console.sStopped}</span>
+                            <span class="lc-actions"><img src="/assets/icons/ui/play.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
+                        </div>
+
+                        <div class="lc-row">
+                            <span class="lc-check"></span>
+                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r3Name}</span><span class="lc-name-id">${i18n.lambda.console.r3Id}</span></span>
+                            <span class="lc-type"><img src="/assets/icons/ui/bolt.svg" alt="" width="14" height="14">${i18n.lambda.console.tTrigger}</span>
+                            <span class="lc-lang">${i18n.lambda.console.r3Lang}</span>
+                            <span class="lc-mono">${i18n.lambda.console.r3When}</span>
+                            <span class="lc-muted">${i18n.lambda.console.r3Last}</span>
+                            <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
+                            <span class="lc-actions"><img src="/assets/icons/ui/stop.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
+                        </div>
+
+                        <div class="lc-row">
+                            <span class="lc-check"></span>
+                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r4Name}</span><span class="lc-name-id">${i18n.lambda.console.r4Id}</span></span>
+                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
+                            <span class="lc-lang">${i18n.lambda.console.r4Lang}</span>
+                            <span class="lc-mono">${i18n.lambda.console.r4When}</span>
+                            <span class="lc-muted">${i18n.lambda.console.r4Last}</span>
+                            <span class="lc-status lc-status-fail"><span class="lc-status-dot"></span>${i18n.lambda.console.sFailed}</span>
+                            <span class="lc-actions"><img src="/assets/icons/ui/play.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lam-how">
+        <ul class="lam-list">
+            <li class="lam-item">
+                <span class="lam-num">01</span>
+                <div class="lam-text">
+                    <h3 class="lam-title">${i18n.lambda.how.b1Title}</h3>
+                    <p class="lam-body">${i18n.lambda.how.b1Text}</p>
+                </div>
+            </li>
+            <li class="lam-item">
+                <span class="lam-num">02</span>
+                <div class="lam-text">
+                    <h3 class="lam-title">${i18n.lambda.how.b2Title}</h3>
+                    <p class="lam-body">${i18n.lambda.how.b2Text}</p>
+                </div>
+            </li>
+            <li class="lam-item">
+                <span class="lam-num">03</span>
+                <div class="lam-text">
+                    <h3 class="lam-title">${i18n.lambda.how.b3Title}</h3>
+                    <p class="lam-body">${i18n.lambda.how.b3Text}</p>
+                </div>
+            </li>
+        </ul>
+
+        <div class="lw">
+            <div class="lw-pane lw-pane-code" aria-hidden="true">
+                <div class="lw-tabs">
+                    <span class="lw-tab">${i18n.lambda.worker.file}</span>
+                </div>
+
+                <div class="lw-editor">
+                    <div class="lw-gutter">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                    </div>
+                    <div class="lw-code">
+                        <div class="lw-line"><span class="lw-kw">func</span><span class="lw-p"> </span><span class="lw-fn">Worker</span><span class="lw-p">() {</span></div>
+                        <div class="lw-line lw-in"><span class="lw-p">db.</span><span class="lw-fn">Exec</span><span class="lw-p">(</span><span class="lw-str">"DELETE FROM sessions WHERE expires_at &lt; now()"</span><span class="lw-p">)</span></div>
+                        <div class="lw-line"><span class="lw-p">}</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lw-pane lw-pane-form" aria-hidden="true">
+                <div class="lw-head">${i18n.lambda.worker.settings}</div>
+
+                <div class="lw-field">
+                    <span class="lw-label">${i18n.lambda.worker.nameLabel}</span>
+                    <span class="lw-input">${i18n.lambda.worker.nameValue}</span>
+                </div>
+
+                <div class="lw-field">
+                    <span class="lw-label">${i18n.lambda.worker.typeLabel}</span>
+                    <span class="lw-seg">
+                        <span class="lw-seg-opt lw-seg-on"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.worker.timer}</span>
+                        <span class="lw-seg-opt"><img src="/assets/icons/ui/bolt.svg" alt="" width="14" height="14">${i18n.lambda.worker.trigger}</span>
+                    </span>
+                </div>
+
+                <div class="lw-field">
+                    <span class="lw-label">${i18n.lambda.worker.whenLabel}</span>
+                    <span class="lw-input lw-input-mono">${i18n.lambda.worker.whenValue}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -5,13 +5,13 @@
     import { Home } from "./pages/home/index.pierrot";
 	import { Errors } from "./pages/errors/index.pierrot";
 
-	set.Icon("./assets/logo-solo.svg")
-    set.Title("Murkio");
-	set.Description("My pierrot project");
-	set.Charset("UTF-8");
-	set.Robots("./assets/robots.txt");
 	set.Default(Home);
 	set.Fallback(Errors);
+	set.Icon("./assets/logo/mark.svg")
+    set.Title("Murkio");
+	set.Description("Murkio: Complete developer platform offering Identity, Vault, Payments, Serverless Lambda, and AI infrastructure.");
+	set.Charset("UTF-8");
+	set.Robots("./assets/robots.txt");
 	set.I18N("./i18n");
 </script>
 

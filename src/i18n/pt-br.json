@@ -19,11 +19,11 @@
                 "description": "Login, sessões e chaves de API para os seus tenants."
             },
             "messaging": {
-                "title": "Mensageria",
+                "title": "Messaging",
                 "description": "Envie e-mail e SMS com entrega confiável em fila."
             },
             "payments": {
-                "title": "Pagamentos",
+                "title": "Payments",
                 "description": "Processe pagamentos com análise antifraude integrada."
             },
             "vault": {
@@ -35,7 +35,7 @@
                 "description": "Execute suas funções sob demanda, sem gerenciar servidores."
             },
             "database": {
-                "title": "Banco de dados",
+                "title": "Database",
                 "description": "Postgres gerenciado para os seus dados, com cache Redis quando precisar."
             },
             "active": "Ativo",
