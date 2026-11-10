@@ -7,7 +7,7 @@
 </script>
 
 <button class="account" @click={goAccount(href)}>
-    <img src="/assets/user.svg" alt="" width="20" height="22">
+    <img src="/assets/icons/ui/user.svg" alt="" width="20" height="22">
     <span class="account-label">${label}</span>
 </button>
 

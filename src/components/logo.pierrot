@@ -6,8 +6,8 @@
 </script>
 
 <button class="logo" @click={goLogo("/")}>
-    <img class="logo-image logo-dark" src="/assets/logo.svg" alt="${name}" width="36" height="36">
-    <img class="logo-image logo-light" src="/assets/logo-light.svg" alt="${name}" width="36" height="36">
+    <img class="logo-image logo-dark" src="/assets/logo/full.svg" alt="${name}" width="36" height="36">
+    <img class="logo-image logo-light" src="/assets/logo/full-light.svg" alt="${name}" width="36" height="36">
     <span class="logo-name">${name}</span>
 </button>
 

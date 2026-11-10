@@ -22,7 +22,7 @@
     --m-l0: #FBF7EC;
     --m-l1: #F5F0E4;
     --m-l2: #EBE3D2;
-    --m-noise: url(/assets/noise.svg);
+    --m-noise: url(/assets/backgrounds/noise.svg);
     --m-icon: none;
     --m-edge: #3a3a3a;
     --m-edge-hover: #5a5a5a;
@@ -44,7 +44,7 @@
     --m-l0: #FFFFFF;
     --m-l1: #FCF4F4;
     --m-l2: #F6E6E6;
-    --m-noise: url(/assets/noise-light.svg);
+    --m-noise: url(/assets/backgrounds/noise-light.svg);
     --m-icon: invert(1);
     --m-edge: #e6dede;
     --m-edge-hover: #cbb8b8;
@@ -56,10 +56,13 @@ body {
 }
 
 
-:where(img[src*="/assets/icon-"], img[src$="/assets/chevron.svg"], img[src$="/assets/user.svg"], img[src$="/assets/grid.svg"]) {
+/* Tema claro: tudo em assets/icons/ (ui, services, brands) é desenhado para o fundo escuro e é
+   invertido pelo --m-icon. Ícone novo só precisa ficar nessa pasta; não há lista de nomes. */
+:where(img[src*="/assets/icons/"], img[src$="/assets/backgrounds/grid.svg"]) {
     filter: var(--m-icon);
 }
 
-:root[data-theme="light"] :where(img[src$="/assets/connectors.svg"], img[src$="/assets/router-lines.svg"]) {
+/* Diagramas coloridos (assets/diagrams/) precisam também girar o matiz para manter as cores. */
+:root[data-theme="light"] :where(img[src*="/assets/diagrams/"]) {
     filter: invert(1) hue-rotate(180deg);
 }

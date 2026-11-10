@@ -10,7 +10,7 @@
 <button class="nav-link" @click={goNav(href)}>
     ${label}
     @if arrow
-        <img src="/assets/chevron.svg" alt="" width="10" height="5">
+        <img src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
     @end
 </button>
 

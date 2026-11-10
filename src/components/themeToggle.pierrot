@@ -7,8 +7,8 @@
 </script>
 
 <button class="tt" @click={flipTheme} aria-label="${i18n.header.theme}">
-    <img class="tt-sun" src="/assets/icon-sun.svg" alt="" width="18" height="18">
-    <img class="tt-moon" src="/assets/icon-moon.svg" alt="" width="18" height="18">
+    <img class="tt-sun" src="/assets/icons/ui/sun.svg" alt="" width="18" height="18">
+    <img class="tt-moon" src="/assets/icons/ui/moon.svg" alt="" width="18" height="18">
 </button>
 
 <style>

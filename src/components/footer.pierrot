@@ -64,9 +64,9 @@
 
             <nav class="ft-col" aria-label="${i18n.footer.colSocial}">
                 <h3 class="ft-heading">${i18n.footer.colSocial}</h3>
-                <FooterSocial url="https://github.com/murkio-dev" icon="/assets/icon-github.svg" label={i18n.footer.github} />
-                <FooterSocial url="https://www.linkedin.com/company/murkio" icon="/assets/icon-linkedin.svg" label={i18n.footer.linkedin} />
-                <FooterSocial url="https://www.instagram.com/murkio" icon="/assets/icon-instagram.svg" label={i18n.footer.instagram} />
+                <FooterSocial url="https://github.com/murkio-dev" icon="/assets/icons/brands/github.svg" label={i18n.footer.github} />
+                <FooterSocial url="https://www.linkedin.com/company/murkio" icon="/assets/icons/brands/linkedin.svg" label={i18n.footer.linkedin} />
+                <FooterSocial url="https://www.instagram.com/murkio" icon="/assets/icons/brands/instagram.svg" label={i18n.footer.instagram} />
             </nav>
         </div>
 

@@ -78,35 +78,35 @@
 </main>
 
 <section class="idn-stats" aria-label="${i18n.idn.stats.label}">
-    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-globe.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s1Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s1Label}</span></div></div>
-    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-code.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s2Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s2Label}</span></div></div>
-    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s3Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s3Label}</span></div></div>
-    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icon-trash.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s4Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s4Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icons/ui/globe.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s1Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s1Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icons/ui/code.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s2Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s2Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icons/services/auth.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s3Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s3Label}</span></div></div>
+    <div class="idn-stat"><span class="idn-ico"><img src="/assets/icons/ui/trash.svg" alt="" width="20" height="20"></span><div class="idn-stat-text"><strong class="idn-stat-value">${i18n.idn.stats.s4Value}</strong><span class="idn-stat-label">${i18n.idn.stats.s4Label}</span></div></div>
 </section>
 
 <section class="idn-section" id="features">
     <SectionHead badge={i18n.idn.caps.badge} title={i18n.idn.caps.title} subtitle={i18n.idn.caps.subtitle} />
     <div class="idn-grid-3">
-        <IdnCap icon="/assets/icon-auth.svg" title={i18n.idn.caps.c1.title} text={i18n.idn.caps.c1.text} t1={i18n.idn.caps.c1.t1} t2={i18n.idn.caps.c1.t2} t3={i18n.idn.caps.c1.t3} />
-        <IdnCap icon="/assets/icon-rotate.svg" title={i18n.idn.caps.c2.title} text={i18n.idn.caps.c2.text} t1={i18n.idn.caps.c2.t1} t2={i18n.idn.caps.c2.t2} t3={i18n.idn.caps.c2.t3} />
-        <IdnCap icon="/assets/icon-globe.svg" title={i18n.idn.caps.c3.title} text={i18n.idn.caps.c3.text} t1={i18n.idn.caps.c3.t1} t2={i18n.idn.caps.c3.t2} t3={i18n.idn.caps.c3.t3} />
-        <IdnCap icon="/assets/icon-clock.svg" title={i18n.idn.caps.c4.title} text={i18n.idn.caps.c4.text} t1={i18n.idn.caps.c4.t1} t2={i18n.idn.caps.c4.t2} t3={i18n.idn.caps.c4.t3} />
-        <IdnCap icon="/assets/icon-vault.svg" title={i18n.idn.caps.c5.title} text={i18n.idn.caps.c5.text} t1={i18n.idn.caps.c5.t1} t2={i18n.idn.caps.c5.t2} t3={i18n.idn.caps.c5.t3} />
-        <IdnCap icon="/assets/icon-layers.svg" title={i18n.idn.caps.c6.title} text={i18n.idn.caps.c6.text} t1={i18n.idn.caps.c6.t1} t2={i18n.idn.caps.c6.t2} t3={i18n.idn.caps.c6.t3} />
-        <IdnCap icon="/assets/icon-inbox.svg" title={i18n.idn.caps.c7.title} text={i18n.idn.caps.c7.text} t1={i18n.idn.caps.c7.t1} t2={i18n.idn.caps.c7.t2} t3={i18n.idn.caps.c7.t3} />
-        <IdnCap icon="/assets/icon-search.svg" title={i18n.idn.caps.c8.title} text={i18n.idn.caps.c8.text} t1={i18n.idn.caps.c8.t1} t2={i18n.idn.caps.c8.t2} t3={i18n.idn.caps.c8.t3} />
-        <IdnCap icon="/assets/icon-trash.svg" title={i18n.idn.caps.c9.title} text={i18n.idn.caps.c9.text} t1={i18n.idn.caps.c9.t1} t2={i18n.idn.caps.c9.t2} t3={i18n.idn.caps.c9.t3} />
+        <IdnCap icon="/assets/icons/services/auth.svg" title={i18n.idn.caps.c1.title} text={i18n.idn.caps.c1.text} t1={i18n.idn.caps.c1.t1} t2={i18n.idn.caps.c1.t2} t3={i18n.idn.caps.c1.t3} />
+        <IdnCap icon="/assets/icons/ui/rotate.svg" title={i18n.idn.caps.c2.title} text={i18n.idn.caps.c2.text} t1={i18n.idn.caps.c2.t1} t2={i18n.idn.caps.c2.t2} t3={i18n.idn.caps.c2.t3} />
+        <IdnCap icon="/assets/icons/ui/globe.svg" title={i18n.idn.caps.c3.title} text={i18n.idn.caps.c3.text} t1={i18n.idn.caps.c3.t1} t2={i18n.idn.caps.c3.t2} t3={i18n.idn.caps.c3.t3} />
+        <IdnCap icon="/assets/icons/ui/clock.svg" title={i18n.idn.caps.c4.title} text={i18n.idn.caps.c4.text} t1={i18n.idn.caps.c4.t1} t2={i18n.idn.caps.c4.t2} t3={i18n.idn.caps.c4.t3} />
+        <IdnCap icon="/assets/icons/services/vault.svg" title={i18n.idn.caps.c5.title} text={i18n.idn.caps.c5.text} t1={i18n.idn.caps.c5.t1} t2={i18n.idn.caps.c5.t2} t3={i18n.idn.caps.c5.t3} />
+        <IdnCap icon="/assets/icons/ui/layers.svg" title={i18n.idn.caps.c6.title} text={i18n.idn.caps.c6.text} t1={i18n.idn.caps.c6.t1} t2={i18n.idn.caps.c6.t2} t3={i18n.idn.caps.c6.t3} />
+        <IdnCap icon="/assets/icons/ui/inbox.svg" title={i18n.idn.caps.c7.title} text={i18n.idn.caps.c7.text} t1={i18n.idn.caps.c7.t1} t2={i18n.idn.caps.c7.t2} t3={i18n.idn.caps.c7.t3} />
+        <IdnCap icon="/assets/icons/ui/search.svg" title={i18n.idn.caps.c8.title} text={i18n.idn.caps.c8.text} t1={i18n.idn.caps.c8.t1} t2={i18n.idn.caps.c8.t2} t3={i18n.idn.caps.c8.t3} />
+        <IdnCap icon="/assets/icons/ui/trash.svg" title={i18n.idn.caps.c9.title} text={i18n.idn.caps.c9.text} t1={i18n.idn.caps.c9.t1} t2={i18n.idn.caps.c9.t2} t3={i18n.idn.caps.c9.t3} />
     </div>
 </section>
 
 <section class="idn-section" id="social">
     <SectionHead badge={i18n.idn.providers.badge} title={i18n.idn.providers.title} subtitle={i18n.idn.providers.subtitle} />
     <ul class="idn-providers-list">
-        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-google.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p1}</span></li>
-        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-github.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p2}</span></li>
-        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-apple.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p3}</span></li>
-        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-facebook.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p4}</span></li>
-        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icon-x.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p5}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/google.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p1}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/github.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p2}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/apple.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p3}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/facebook.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p4}</span></li>
+        <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/x.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p5}</span></li>
     </ul>
 </section>
 
@@ -131,10 +131,10 @@
         </div>
 
         <ol class="idn-steps">
-            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-plus.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s1Title}</h3><p class="idn-step-body">${i18n.idn.how.s1Text}</p></div></li>
-            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-code.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s2Title}</h3><p class="idn-step-body">${i18n.idn.how.s2Text}</p></div></li>
-            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s3Title}</h3><p class="idn-step-body">${i18n.idn.how.s3Text}</p></div></li>
-            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icon-search.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s4Title}</h3><p class="idn-step-body">${i18n.idn.how.s4Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/plus.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s1Title}</h3><p class="idn-step-body">${i18n.idn.how.s1Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/code.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s2Title}</h3><p class="idn-step-body">${i18n.idn.how.s2Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icons/services/auth.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s3Title}</h3><p class="idn-step-body">${i18n.idn.how.s3Text}</p></div></li>
+            <li class="idn-step idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/search.svg" alt="" width="20" height="20"></span><div class="idn-step-text"><h3 class="idn-step-title">${i18n.idn.how.s4Title}</h3><p class="idn-step-body">${i18n.idn.how.s4Text}</p></div></li>
         </ol>
     </div>
 </section>
@@ -145,10 +145,10 @@
         <div class="idn-mcp-card idn-panel">
             <h3 class="idn-mcp-title">${i18n.idn.mcp.promptsTitle}</h3>
             <ul class="idn-prompts">
-                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p1}</li>
-                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p2}</li>
-                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p3}</li>
-                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p4}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/icons/ui/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p1}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/icons/ui/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p2}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/icons/ui/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p3}</li>
+                <li class="idn-prompt"><span class="idn-ico"><img src="/assets/icons/ui/user.svg" alt="" width="16" height="16"></span>${i18n.idn.mcp.p4}</li>
             </ul>
             <ul class="idn-checks">
                 <li class="idn-check"><span class="idn-tick"></span>${i18n.idn.mcp.c1}</li>
@@ -181,12 +181,12 @@
 <section class="idn-section" id="security">
     <SectionHead badge={i18n.idn.sec.badge} title={i18n.idn.sec.title} subtitle={i18n.idn.sec.subtitle} />
     <div class="idn-sec-grid">
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-auth.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i1Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i1Text}</p></div>
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-vault.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i2Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i2Text}</p></div>
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-layers.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i3Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i3Text}</p></div>
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-alert.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i4Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i4Text}</p></div>
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-search.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i5Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i5Text}</p></div>
-        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icon-rotate.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i6Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i6Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/services/auth.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i1Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i1Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/services/vault.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i2Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i2Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/layers.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i3Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i3Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/alert.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i4Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i4Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/search.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i5Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i5Text}</p></div>
+        <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/ui/rotate.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i6Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i6Text}</p></div>
     </div>
 </section>
 
@@ -210,7 +210,7 @@
                 <span class="idn-mock-field">${i18n.idn.canvas.mockPassword}</span>
                 <span class="idn-mock-btn">${i18n.idn.canvas.mockButton}</span>
                 <span class="idn-mock-or">${i18n.idn.canvas.mockOr}</span>
-                <span class="idn-mock-social"><span><img src="/assets/icon-google.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-github.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-apple.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-facebook.svg" alt="" width="16" height="16"></span><span><img src="/assets/icon-x.svg" alt="" width="16" height="16"></span></span>
+                <span class="idn-mock-social"><span><img src="/assets/icons/brands/google.svg" alt="" width="16" height="16"></span><span><img src="/assets/icons/brands/github.svg" alt="" width="16" height="16"></span><span><img src="/assets/icons/brands/apple.svg" alt="" width="16" height="16"></span><span><img src="/assets/icons/brands/facebook.svg" alt="" width="16" height="16"></span><span><img src="/assets/icons/brands/x.svg" alt="" width="16" height="16"></span></span>
             </div>
         </div>
     </div>
