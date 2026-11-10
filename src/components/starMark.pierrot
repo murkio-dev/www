@@ -3,8 +3,8 @@
 </script>
 
 <span class="star" aria-hidden="true">
-    <img class="star-dark" src="/assets/logo-solo.svg" alt="" width="${size}" height="${size}">
-    <img class="star-light" src="/assets/logo-solo-light.svg" alt="" width="${size}" height="${size}">
+    <img class="star-dark" src="/assets/logo/mark.svg" alt="" width="${size}" height="${size}">
+    <img class="star-light" src="/assets/logo/mark-light.svg" alt="" width="${size}" height="${size}">
 </span>
 
 <style>

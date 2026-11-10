@@ -2,7 +2,7 @@
     let position: string;
 </script>
 
-<img class="hero-grid hero-grid-${position}" src="/assets/grid.svg" alt="">
+<img class="hero-grid hero-grid-${position}" src="/assets/backgrounds/grid.svg" alt="">
 
 <style>
     .hero-grid {

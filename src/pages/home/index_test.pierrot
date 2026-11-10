@@ -1,0 +1,406 @@
+<script>
+    // Página inicial (/). Component* = estrutura/comportamento, Visual* = estilo calculado.
+    //   pierrot test src/pages/home -t "^Component"
+    //   pierrot test src/pages/home -t "^Visual"
+    import en from "../../i18n/en-us.json";
+    import pt from "../../i18n/pt-br.json";
+
+    // ---------- Página ----------
+
+    function ComponentHomeIsTheDefaultRoute(target) {
+        expect().toBeOnUrl("/en-us");
+        expect().toBeVisible().onClass("hero");
+        expect().toHaveText(en.home.title).onClass("hero-title");
+        expect().toHaveText(en.home.subtitle).onClass("hero-subtitle");
+    }
+
+    function ComponentHomeHasASingleH1(target) {
+        expect().toHaveCount(1).onTag("h1");
+    }
+
+    function ComponentHomeHasTheSectionsOfTheSite(target) {
+        for (const id of ["services", "sdks", "ai", "identity", "vault", "payments", "messaging", "lambda"]) {
+            expect().toExist().onSelector("section#" + id);
+        }
+    }
+
+    function ComponentHomeInPortuguese(target) {
+        target.Goto("/pt-br");
+        expect().toHaveText(pt.home.title).onClass("hero-title");
+        expect().toHaveText(pt.home.subtitle).onClass("hero-subtitle");
+        expect().toExist().onText(pt.home.viewServices);
+        expect().toExist().onText(pt.home.explorePlans);
+    }
+
+    // ---------- Componentes: Badge / StarMark ----------
+
+    function ComponentHeroBadge(target) {
+        expect().toHaveText(en.home.badge).onSelector(".hero .badge");
+        expect().toHaveCount(1).onSelector(".hero .badge .star");
+    }
+
+    function ComponentStarMarkHasBothThemeImages(target) {
+        expect().toHaveCount(1).onSelector(".hero .star-dark");
+        expect().toHaveCount(1).onSelector(".hero .star-light");
+        expect().toHaveAttribute("aria-hidden", "true").onSelector(".hero .star");
+    }
+
+    // ---------- Componentes: Button ----------
+
+    function ComponentHeroButtons(target) {
+        expect().toHaveText(en.home.viewServices).onSelector(".hero-actions .button-secondary");
+        expect().toHaveText(en.home.explorePlans).onSelector(".hero-actions .button-primary");
+        expect().toHaveCount(2).onSelector(".hero-actions .button");
+    }
+
+    function ComponentViewServicesButtonGoesToServices(target) {
+        click().OnSelector(".hero-actions .button-secondary");
+        expect().toBeOnUrl(/#services$/);
+    }
+
+    function ComponentExplorePlansButtonGoesToPricing(target) {
+        click().OnSelector(".hero-actions .button-primary");
+        expect().toBeOnUrl(/#pricing$/);
+    }
+
+    // ---------- Componentes: SectionHead ----------
+
+    function ComponentEverySectionHasAHead(target) {
+        expect().toHaveCount(8).onClass("sh");
+        expect().toHaveCount(8).onClass("sh-title");
+        expect().toHaveCount(8).onClass("sh-subtitle");
+    }
+
+    function ComponentSectionHeadTexts(target) {
+        expect().toHaveText(en.infra.title).onSelector("#services .sh-title");
+        expect().toHaveText(en.infra.subtitle).onSelector("#services .sh-subtitle");
+        expect().toHaveText(en.infra.badge).onSelector("#services .badge");
+        expect().toHaveText(en.sdks.title).onSelector("#sdks .sh-title");
+        expect().toHaveText(en.vault.title).onSelector("#vault .sh-title");
+        expect().toHaveText(en.payments.title).onSelector("#payments .sh-title");
+        expect().toHaveText(en.messaging.title).onSelector("#messaging .sh-title");
+        expect().toHaveText(en.lambda.title).onSelector("#lambda .sh-title");
+    }
+
+    // ---------- Componentes: InfraCard / diagrama ----------
+
+    function ComponentInfraDiagramHub(target) {
+        expect().toHaveText(en.infra.hubTitle).onClass("infra-hub-title");
+        expect().toHaveText(en.infra.hubSubtitle).onClass("infra-hub-subtitle");
+        expect().toHaveCount(6).onClass("hub-dot");
+    }
+
+    function ComponentInfraCardsListTheSixServices(target) {
+        expect().toHaveCount(6).onClass("infra-card");
+        const first = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title];
+        const second = [en.header.services.vault.title, en.header.services.lambda.title, en.header.services.database.title];
+        for (let i = 0; i < 3; i++) {
+            const n = i + 1;
+            expect().toHaveText(first[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + n + ") .infra-card-title");
+            expect().toHaveText(second[i]).onSelector("#services .infra-group:last-child .infra-card:nth-child(" + n + ") .infra-card-title");
+        }
+    }
+
+    function ComponentInfraGroups(target) {
+        expect().toHaveCount(2).onClass("infra-group");
+        expect().toHaveCount(3).onSelector(".infra-group:first-child .infra-card");
+        expect().toHaveCount(3).onSelector(".infra-group:last-child .infra-card");
+        expect().toExist().onText(en.infra.groupServices);
+        expect().toExist().onText(en.infra.groupInfra);
+    }
+
+    function ComponentInfraCardIconsHaveNoAlt(target) {
+        // ícones decorativos: alt vazio para leitores de tela
+        expect().toHaveAttribute("alt", "").onSelector(".infra-card-icon img");
+    }
+
+    // ---------- Componentes: ComingSoonTag ----------
+
+    function ComponentComingSoonTagsExist(target) {
+        expect().toExist().onClass("cs");
+        expect().toExist().onClass("cs-dot");
+    }
+
+    // ---------- Componentes: SDKs / editor ----------
+
+    function ComponentSdkCodeWindow(target) {
+        expect().toExist().onClass("sw");
+        expect().toHaveAttribute("aria-hidden", "true").onClass("sw");
+        expect().toHaveText(en.sdk.l11).onClass("sw-tab-on");
+        expect().toHaveCount(8).onSelector(".sw-gutter span");
+    }
+
+    function ComponentSdkBenefitsList(target) {
+        expect().toHaveCount(3).onClass("sdks-item");
+        expect().toHaveText(en.sdks.b1Title).onSelector(".sdks-item:first-child .sdks-title");
+        expect().toHaveText(en.sdks.b3Title).onSelector(".sdks-item:last-child .sdks-title");
+    }
+
+    function ComponentSdkStripTitle(target) {
+        expect().toHaveText(en.sdk.title).onClass("sdk-label");
+    }
+
+    // ---------- Visual: Hero ----------
+
+    function VisualHeroIsARoundedCard(target) {
+        expect().toHaveCSS("border-radius", "28px").onClass("hero");
+        expect().toHaveCSS("display", "flex").onClass("hero");
+        expect().toHaveCSS("justify-content", "center").onClass("hero");
+        expect().toHaveCSS("overflow", "hidden").onClass("hero");
+        expect().toHaveCSS("min-height", "480px").onClass("hero");
+    }
+
+    function VisualHeroContentIsCentered(target) {
+        expect().toHaveCSS("text-align", "center").onClass("hero-content");
+        expect().toHaveCSS("flex-direction", "column").onClass("hero-content");
+        expect().toHaveCSS("max-width", "840px").onClass("hero-content");
+    }
+
+    function VisualHeroTitleIsGradientText(target) {
+        expect().toHaveCSS("font-weight", "400").onClass("hero-title");
+        expect().toHaveCSS("color", "rgba(0, 0, 0, 0)").onClass("hero-title");
+        expect().toHaveCSS("background-clip", "text").onClass("hero-title");
+    }
+
+    function VisualHeroSubtitle(target) {
+        expect().toHaveCSS("font-size", "20px").onClass("hero-subtitle");
+        expect().toHaveCSS("max-width", "838px").onClass("hero-subtitle");
+        expect().toHaveCSS("color", "rgba(0, 0, 0, 0)").onClass("hero-subtitle");
+    }
+
+    function VisualHeroActionsRow(target) {
+        expect().toHaveCSS("display", "flex").onClass("hero-actions");
+        expect().toHaveCSS("justify-content", "center").onClass("hero-actions");
+        expect().toHaveCSS("gap", "8px").onClass("hero-actions");
+    }
+
+    // ---------- Visual: Button ----------
+
+    function VisualButtonShape(target) {
+        expect().toHaveCSS("height", "44px").onSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("min-width", "132px").onSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("border-radius", "64px").onSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("font-size", "18px").onSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("cursor", "pointer").onSelector(".hero-actions .button-primary");
+    }
+
+    function VisualPrimaryButtonIsDarkTextOnLightGradient(target) {
+        expect().toHaveCSS("color", "rgb(0, 0, 0)").onSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("border-top-color", "rgb(201, 201, 201)").onSelector(".hero-actions .button-primary");
+    }
+
+    function VisualSecondaryButtonIsLightTextOnTranslucentFill(target) {
+        expect().toHaveCSS("color", "rgb(255, 255, 255)").onSelector(".hero-actions .button-secondary");
+        expect().toHaveCSS("background-color", "rgba(217, 217, 217, 0.2)").onSelector(".hero-actions .button-secondary");
+        expect().toHaveCSS("border-top-width", "0px").onSelector(".hero-actions .button-secondary");
+    }
+
+    function VisualSecondaryButtonFollowsTheme(target) {
+        click().OnClass("tt");
+        expect().toHaveCSS("color", "rgb(24, 18, 18)").onSelector(".hero-actions .button-secondary");
+        // o primário não muda de cor com o tema
+        expect().toHaveCSS("color", "rgb(0, 0, 0)").onSelector(".hero-actions .button-primary");
+    }
+
+    // ---------- Visual: Badge / SectionHead ----------
+
+    function VisualBadgeIsAPill(target) {
+        expect().toHaveCSS("height", "34px").onSelector(".hero .badge");
+        expect().toHaveCSS("border-radius", "17px").onSelector(".hero .badge");
+        expect().toHaveCSS("font-size", "14px").onSelector(".hero .badge");
+        expect().toHaveCSS("display", "inline-flex").onSelector(".hero .badge");
+    }
+
+    function VisualBadgeDropsTextShadowInLightTheme(target) {
+        expect().toHaveCSS("text-shadow", "rgba(0, 0, 0, 0.25) 0px 4px 4px").onSelector(".hero .badge");
+        click().OnClass("tt");
+        expect().toHaveCSS("text-shadow", "none").onSelector(".hero .badge");
+    }
+
+    function VisualSectionHeadIsCentered(target) {
+        expect().toHaveCSS("text-align", "center").onSelector("#services .sh");
+        expect().toHaveCSS("flex-direction", "column").onSelector("#services .sh");
+        expect().toHaveCSS("margin-bottom", "56px").onSelector("#services .sh");
+        expect().toHaveCSS("max-width", "780px").onSelector("#services .sh-title");
+        expect().toHaveCSS("font-weight", "400").onSelector("#services .sh-title");
+        expect().toHaveCSS("color", "rgba(0, 0, 0, 0)").onSelector("#services .sh-title");
+    }
+
+    function VisualSectionSubtitleIsMuted(target) {
+        expect().toHaveCSS("font-size", "18px").onSelector("#services .sh-subtitle");
+        expect().toHaveCSS("color", "rgba(255, 255, 255, 0.6)").onSelector("#services .sh-subtitle");
+        click().OnClass("tt");
+        expect().toHaveCSS("color", "rgba(24, 18, 18, 0.6)").onSelector("#services .sh-subtitle");
+    }
+
+    // ---------- Visual: Diagrama de infraestrutura ----------
+
+    function VisualInfraDiagramIsAGrid(target) {
+        expect().toHaveCSS("display", "grid").onClass("infra-diagram");
+        expect().toHaveCSS("height", "448px").onClass("infra-diagram");
+        expect().toHaveCSS("display", "flex").onClass("infra-groups");
+        expect().toHaveCSS("flex-direction", "column").onClass("infra-groups");
+    }
+
+    function VisualInfraCardShape(target) {
+        expect().toHaveCSS("height", "56px").onSelector(".infra-card");
+        expect().toHaveCSS("border-radius", "12px").onSelector(".infra-card");
+        expect().toHaveCSS("display", "flex").onSelector(".infra-card");
+        expect().toHaveCSS("border-top-width", "1px").onSelector(".infra-card");
+    }
+
+    function VisualInfraCardIconBox(target) {
+        expect().toHaveCSS("width", "32px").onSelector(".infra-card-icon");
+        expect().toHaveCSS("height", "32px").onSelector(".infra-card-icon");
+        expect().toHaveCSS("border-radius", "8px").onSelector(".infra-card-icon");
+    }
+
+    // ---------- Visual: ComingSoonTag ----------
+
+    function VisualComingSoonTagIsOrangeInDark(target) {
+        expect().toHaveCSS("color", "rgb(255, 138, 31)").onSelector(".cs");
+        expect().toHaveCSS("border-radius", "999px").onSelector(".cs");
+        expect().toHaveCSS("font-size", "14px").onSelector(".cs");
+        expect().toHaveCSS("background-color", "rgba(255, 138, 31, 0.12)").onSelector(".cs");
+    }
+
+    function VisualComingSoonTagDarkensInLightTheme(target) {
+        click().OnClass("tt");
+        expect().toHaveCSS("color", "rgb(190, 90, 0)").onSelector(".cs");
+    }
+
+    function VisualComingSoonDotIsRound(target) {
+        expect().toHaveCSS("width", "6px").onSelector(".cs-dot");
+        expect().toHaveCSS("height", "6px").onSelector(".cs-dot");
+        expect().toHaveCSS("border-radius", "50%").onSelector(".cs-dot");
+    }
+
+    // ---------- Hover real ----------
+
+    function VisualButtonBrightensOnHover(target) {
+        expect().toHaveCSS("filter", "none").onSelector(".hero-actions .button-primary");
+        hover().OnSelector(".hero-actions .button-primary");
+        expect().toHaveCSS("filter", "brightness(1.15)").onSelector(".hero-actions .button-primary");
+        unhover();
+        expect().toHaveCSS("filter", "none").onSelector(".hero-actions .button-primary");
+    }
+
+    function VisualInfraCardSlidesOnHover(target) {
+        expect().toHaveCSS("transform", "none").onSelector(".infra-card");
+        hover().OnSelector(".infra-card");
+        expect().toHaveCSS("transform", "matrix(1, 0, 0, 1, 3, 0)").onSelector(".infra-card");
+    }
+
+    // ---------- Screenshots ----------
+
+    function VisualScreenshotHeroBadge(target) {
+        expect().toMatchScreenshot("hero-badge-dark").onSelector(".hero .badge");
+        click().OnClass("tt");
+        expect().toMatchScreenshot("hero-badge-light").onSelector(".hero .badge");
+    }
+
+    function VisualScreenshotHeroButtons(target) {
+        expect().toMatchScreenshot("button-primary").onSelector(".hero-actions .button-primary");
+        expect().toMatchScreenshot("button-secondary").onSelector(".hero-actions .button-secondary");
+        hover().OnSelector(".hero-actions .button-primary");
+        expect().toMatchScreenshot("button-primary-hover").onSelector(".hero-actions .button-primary");
+    }
+
+    function VisualScreenshotInfraCards(target) {
+        expect().toMatchScreenshot("infra-card").onSelector(".infra-card");
+        expect().toMatchScreenshot("infra-diagram").onClass("infra-groups");
+    }
+
+    function VisualScreenshotComingSoonTag(target) {
+        expect().toMatchScreenshot("coming-soon-dark").onSelector(".cs");
+        click().OnClass("tt");
+        expect().toMatchScreenshot("coming-soon-light").onSelector(".cs");
+    }
+
+    function VisualScreenshotHeroOnMobile(target) {
+        target.Resize(390, 844);
+        expect().toMatchScreenshot("hero-mobile").onClass("hero-content");
+    }
+
+    // ---------- Assets: nada quebrado e filtros por tema ----------
+
+    function ComponentHomeHasNoBrokenAssets(target) {
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function ComponentHomeHasNoBrokenAssetsInTheLightTheme(target) {
+        click().OnClass("tt");
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function ComponentHomeHasNoBrokenAssetsInPortuguese(target) {
+        target.Goto("/pt-br");
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function VisualInfraIconsAndHeroGridInvertInTheLightTheme(target) {
+        expect().toHaveCSS("filter", "none").onSelector(".infra-card-icon img");
+        expect().toHaveCSS("filter", "none").onClass("hero-grid-top");
+        click().OnClass("tt");
+        expect().toHaveCSS("filter", "invert(1)").onSelector(".infra-card-icon img");
+        expect().toHaveCSS("filter", "invert(1)").onClass("hero-grid-top");
+    }
+
+    function VisualDiagramLinesGetADifferentFilterInTheLightTheme(target) {
+        expect().toHaveCSS("filter", "none").onClass("infra-lines");
+        expect().toHaveCSS("filter", "none").onClass("rt-lines");
+        click().OnClass("tt");
+        expect().toHaveCSS("filter", "invert(1) hue-rotate(180deg)").onClass("infra-lines");
+        expect().toHaveCSS("filter", "invert(1) hue-rotate(180deg)").onClass("rt-lines");
+    }
+
+    function VisualSdkLogosKeepTheirOwnMonochromeFilter(target) {
+        // os logos de linguagem têm filtro próprio (monocromático por tema), não o dos ícones
+        expect().toHaveCSS("filter", "brightness(0) invert(1)").onSelector(".sdk-track img");
+        click().OnClass("tt");
+        expect().toHaveCSS("filter", "brightness(0) invert(0)").onSelector(".sdk-track img");
+    }
+
+    // ---------- Nomes de serviço não são traduzidos ----------
+
+    function ComponentServiceNamesStayInEnglishInPortuguese(target) {
+        target.Goto("/pt-br");
+        hover().OnClass("services-trigger");
+        expect().toHaveText(en.header.services.auth.title).onSelector(".services-col:first-child .service-item:nth-of-type(1) .service-item-title");
+        expect().toHaveText(en.header.services.messaging.title).onSelector(".services-col:first-child .service-item:nth-of-type(2) .service-item-title");
+        expect().toHaveText(en.header.services.payments.title).onSelector(".services-col:first-child .service-item:nth-of-type(3) .service-item-title");
+        expect().toHaveText(en.header.services.vault.title).onSelector(".services-col:last-child .service-item:nth-of-type(1) .service-item-title");
+        expect().toHaveText(en.header.services.lambda.title).onSelector(".services-col:last-child .service-item:nth-of-type(2) .service-item-title");
+        expect().toHaveText(en.header.services.database.title).onSelector(".services-col:last-child .service-item:nth-of-type(3) .service-item-title");
+    }
+
+    function ComponentServiceNamesStayInEnglishOnTheHomeCards(target) {
+        target.Goto("/pt-br");
+        const titles = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title];
+        const infra = [en.header.services.vault.title, en.header.services.lambda.title, en.header.services.database.title];
+        for (let i = 0; i < 3; i++) {
+            const n = i + 1;
+            expect().toHaveText(titles[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + n + ") .infra-card-title");
+            expect().toHaveText(infra[i]).onSelector("#services .infra-group:last-child .infra-card:nth-child(" + n + ") .infra-card-title");
+        }
+    }
+
+    function ComponentServiceNamesStayInEnglishInTheFooter(target) {
+        target.Goto("/pt-br");
+        expect().toHaveText(pt.footer.colServices).onSelector(".ft-col:nth-of-type(1) .ft-heading");
+        const names = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title,
+            en.header.services.vault.title, en.header.services.lambda.title];
+        for (let i = 0; i < names.length; i++) {
+            expect().toHaveText(names[i]).onSelector(".ft-col:nth-of-type(1) .fl:nth-of-type(" + (i + 1) + ")");
+        }
+    }
+
+    function ComponentSectionHeadsKeepTheServiceNameInPortuguese(target) {
+        target.Goto("/pt-br");
+        expect().toHaveText("Messaging").onSelector("#messaging .badge");
+        expect().toHaveText("Payments").onSelector("#payments .badge");
+        expect().toHaveText("Vault").onSelector("#vault .badge");
+        expect().toHaveText("Lambda").onSelector("#lambda .badge");
+        expect().toHaveText("Identity").onSelector("#identity .badge");
+    }
+</script>

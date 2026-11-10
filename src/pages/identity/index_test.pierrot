@@ -1,0 +1,313 @@
+<script>
+    // Página /identity. Component* = estrutura/comportamento, Visual* = estilo calculado.
+    //   pierrot test src/pages/identity -t "^Component"
+    //   pierrot test src/pages/identity -t "^Visual"
+    import en from "../../i18n/en-us.json";
+    import pt from "../../i18n/pt-br.json";
+
+    // ---------- Página ----------
+
+    function ComponentIdentityPageRenders(target) {
+        expect().toBeOnUrl("/en-us/identity");
+        expect().toHaveTitle("Murkio Identity");
+        expect().toHaveText(en.idn.hero.title).onClass("idn-hero-title");
+        expect().toHaveText(en.idn.hero.subtitle).onClass("idn-hero-subtitle");
+        expect().toHaveText(en.idn.hero.brand).onClass("idn-hero-brand");
+        expect().toHaveCount(1).onTag("h1");
+    }
+
+    function ComponentIdentityInPortuguese(target) {
+        target.Goto("/pt-br/identity");
+        expect().toHaveText(pt.idn.hero.title).onClass("idn-hero-title");
+        expect().toHaveText(pt.header.lang.current).onClass("lm-current");
+    }
+
+    function ComponentIdentityHeroButtons(target) {
+        expect().toHaveText(en.idn.hero.primary).onSelector(".idn-hero-actions .button-primary");
+        expect().toHaveText(en.idn.hero.secondary).onSelector(".idn-hero-actions .button-secondary");
+        click().OnSelector(".idn-hero-actions .button-secondary");
+        expect().toBeOnUrl(/#sdks$/);
+    }
+
+    function ComponentIdentityStats(target) {
+        expect().toHaveAttribute("aria-label", en.idn.stats.label).onClass("idn-stats");
+        expect().toHaveCount(4).onClass("idn-stat");
+        expect().toHaveText(en.idn.stats.s1Value).onSelector(".idn-stat:nth-child(1) .idn-stat-value");
+        expect().toHaveText(en.idn.stats.s3Value).onSelector(".idn-stat:nth-child(3) .idn-stat-value");
+        expect().toHaveText(en.idn.stats.s4Label).onSelector(".idn-stat:nth-child(4) .idn-stat-label");
+    }
+
+    function ComponentIdentityHasEverySection(target) {
+        for (const id of ["features", "social", "how", "mcp", "security", "login-screen", "sdks", "pricing", "faq"]) {
+            expect().toExist().onSelector("section#" + id);
+        }
+    }
+
+    // ---------- Componente: IdnCap ----------
+
+    function ComponentCapabilityCards(target) {
+        expect().toHaveCount(9).onClass("idn-cap");
+        expect().toHaveText(en.idn.caps.c1.title).onSelector(".idn-cap:nth-child(1) .idn-cap-title");
+        expect().toHaveText(en.idn.caps.c1.text).onSelector(".idn-cap:nth-child(1) .idn-cap-text");
+        expect().toHaveText(en.idn.caps.c9.title).onSelector(".idn-cap:nth-child(9) .idn-cap-title");
+    }
+
+    function ComponentCapabilityCardsHaveThreeTags(target) {
+        expect().toHaveCount(27).onClass("idn-cap-tag");
+        expect().toHaveText(en.idn.caps.c2.t1).onSelector(".idn-cap:nth-child(2) .idn-cap-tag:nth-child(1)");
+        expect().toHaveText(en.idn.caps.c2.t2).onSelector(".idn-cap:nth-child(2) .idn-cap-tag:nth-child(2)");
+        expect().toHaveText(en.idn.caps.c2.t3).onSelector(".idn-cap:nth-child(2) .idn-cap-tag:nth-child(3)");
+    }
+
+    // ---------- Seções estáticas ----------
+
+    function ComponentSocialProviders(target) {
+        expect().toHaveCount(5).onClass("idn-provider");
+        expect().toHaveText(en.idn.providers.p1).onSelector(".idn-provider:nth-child(1) .idn-provider-name");
+        expect().toHaveText(en.idn.providers.p5).onSelector(".idn-provider:nth-child(5) .idn-provider-name");
+    }
+
+    function ComponentHowItWorksSteps(target) {
+        expect().toHaveCount(4).onClass("idn-step");
+        expect().toHaveText(en.idn.how.s1Title).onSelector(".idn-step:nth-child(1) .idn-step-title");
+        expect().toHaveText(en.idn.how.s4Text).onSelector(".idn-step:nth-child(4) .idn-step-body");
+        expect().toHaveAttribute("aria-hidden", "true").onSelector("#how .idn-code");
+    }
+
+    function ComponentSecurityItems(target) {
+        expect().toHaveCount(6).onClass("idn-sec");
+        expect().toHaveText(en.idn.sec.i1Title).onSelector(".idn-sec:nth-child(1) .idn-sec-title");
+        expect().toHaveText(en.idn.sec.i6Title).onSelector(".idn-sec:nth-child(6) .idn-sec-title");
+    }
+
+    function ComponentMcpSection(target) {
+        expect().toHaveCount(4).onClass("idn-prompt");
+        expect().toHaveCount(2).onClass("idn-check");
+        expect().toHaveText(en.idn.mcp.promptsTitle).onSelector("#mcp .idn-mcp-card:nth-child(1) .idn-mcp-title");
+        expect().toHaveText(en.idn.mcp.connectTitle).onSelector("#mcp .idn-mcp-card:nth-child(2) .idn-mcp-title");
+    }
+
+    function ComponentLoginScreenMockup(target) {
+        expect().toHaveCount(4).onClass("idn-chip");
+        expect().toHaveAttribute("aria-hidden", "true").onClass("idn-mock");
+        expect().toHaveText(en.idn.canvas.mockTitle).onClass("idn-mock-title");
+        expect().toHaveCount(5).onSelector(".idn-mock-social > span");
+    }
+
+    // ---------- Componente: IdnSdk / ComingSoonTag ----------
+
+    function ComponentSdkCards(target) {
+        expect().toHaveCount(12).onClass("idn-sdk");
+        expect().toHaveCount(12).onSelector(".idn-sdk .cs");
+        expect().toHaveText(en.header.services.soon).onSelector(".idn-sdk:nth-child(1) .cs");
+        expect().toHaveText(en.sdk.l11).onSelector(".idn-sdk:nth-child(1) .idn-sdk-name");
+        expect().toHaveText("npm install @murkio/identity").onSelector(".idn-sdk:nth-child(1) .idn-sdk-cmd");
+        expect().toHaveText("go get github.com/murkio-dev/identity-go").onSelector(".idn-sdk:nth-child(4) .idn-sdk-cmd");
+        expect().toHaveText(en.idn.sdks.note).onClass("idn-sdk-note");
+    }
+
+    // ---------- Componentes: PlanCards / Markdown ----------
+
+    function ComponentPlanCardsRenderOnePerPlan(target) {
+        expect().toHaveCount(5).onClass("plan");
+        expect().toHaveText("free").onSelector(".plan:nth-child(1) .plan-name");
+        expect().toHaveText("pro").onSelector(".plan:nth-child(2) .plan-name");
+        expect().toHaveText("max").onSelector(".plan:nth-child(3) .plan-name");
+    }
+
+    function ComponentFreePlanShowsFreeLabel(target) {
+        expect().toHaveText(en.idn.pricing.free).onSelector(".plan:nth-child(1) .plan-value");
+        // plano grátis não mostra "/mês"
+        expect().toHaveCount(0).onSelector(".plan:nth-child(1) .plan-per");
+    }
+
+    function ComponentPaidPlansShowFormattedPrice(target) {
+        expect().toHaveText("R$ 29,99").onSelector(".plan:nth-child(2) .plan-value");
+        expect().toHaveText(en.idn.pricing.perMonth).onSelector(".plan:nth-child(2) .plan-per");
+        expect().toHaveText("R$ 49,99").onSelector(".plan:nth-child(3) .plan-value");
+        expect().toHaveText("R$ 359,88").onSelector(".plan:nth-child(4) .plan-value");
+        expect().toHaveText("R$ 599,88").onSelector(".plan:nth-child(5) .plan-value");
+    }
+
+    function ComponentPlansWithoutDiscountHideOldPrice(target) {
+        expect().toHaveCount(0).onClass("plan-old");
+        expect().toHaveCount(0).onClass("plan-off");
+    }
+
+    function ComponentPlanTags(target) {
+        expect().toHaveCount(2).onSelector(".plan:nth-child(1) .plan-tag");
+        expect().toHaveText("free").onSelector(".plan:nth-child(1) .plan-tag:nth-child(1)");
+        expect().toHaveText("1000 users").onSelector(".plan:nth-child(1) .plan-tag:nth-child(2)");
+        expect().toHaveText("10000 users").onSelector(".plan:nth-child(2) .plan-tag:nth-child(2)");
+    }
+
+    function ComponentPlanDescriptionIsRenderedAsMarkdown(target) {
+        // "- item" vira lista (só os 3 primeiros planos usam "- "); "**Free**" vira negrito
+        expect().toHaveCount(3).onSelector(".plan .md-ul");
+        expect().toHaveCount(3).onSelector(".plan:nth-child(1) .md-li");
+        expect().toHaveText("Para validar a sua ideia sem gastar nada.").onSelector(".plan:nth-child(1) .md-p");
+        expect().toHaveText("Free").onSelector(".plan:nth-child(2) .md-b");
+        expect().toHaveText("prioritário").onSelector(".plan:nth-child(3) .md-c");
+    }
+
+    function ComponentPlanWithoutBulletsStaysAParagraph(target) {
+        // os planos 4 e 5 (anuais) não usam "- " nas linhas: tudo vira um único parágrafo
+        expect().toHaveCount(0).onSelector(".plan:nth-child(4) .md-ul");
+        expect().toExist().onSelector(".plan:nth-child(4) .md-p");
+    }
+
+    function ComponentEveryPlanHasACallToAction(target) {
+        expect().toHaveCount(5).onClass("plan-cta");
+        expect().toHaveText(en.idn.pricing.cta).onSelector(".plan:nth-child(1) .button-primary");
+        click().OnSelector(".plan:nth-child(2) .button-primary");
+        expect().toBeOnUrl(/#account$/);
+    }
+
+    function ComponentCustomPlanLink(target) {
+        expect().toHaveText(en.idn.pricing.noPlanLink).onClass("idn-fine-link");
+        // o roteador de i18n prefixa o idioma atual nos links internos
+        expect().toHaveAttribute("href", "/en-us/support").onClass("idn-fine-link");
+    }
+
+    // ---------- Componente: IdnFaq ----------
+
+    function ComponentFaqListsEveryQuestion(target) {
+        expect().toHaveCount(7).onClass("idn-faq");
+        expect().toHaveText(en.idn.faq.q1).onSelector(".idn-faq:nth-child(1) .idn-faq-q span:first-child");
+        expect().toHaveText(en.idn.faq.q7).onSelector(".idn-faq:nth-child(7) .idn-faq-q span:first-child");
+    }
+
+    function ComponentFaqStartsCollapsed(target) {
+        expect().toHaveCount(0).onSelector(".idn-faq[open]");
+        expect().toHaveCount(7).onSelector(".idn-faq:not([open])");
+    }
+
+    function ComponentFaqOpensAndClosesOnClick(target) {
+        click().OnSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveAttribute("open").onSelector(".idn-faq:nth-child(1)");
+        expect().toHaveText(en.idn.faq.a1).onSelector(".idn-faq:nth-child(1) .idn-faq-a");
+        expect().toHaveCount(1).onSelector(".idn-faq[open]");
+        click().OnSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCount(0).onSelector(".idn-faq[open]");
+    }
+
+    function ComponentFaqQuestionsOpenIndependently(target) {
+        click().OnSelector(".idn-faq:nth-child(2) .idn-faq-q");
+        click().OnSelector(".idn-faq:nth-child(3) .idn-faq-q");
+        expect().toHaveCount(2).onSelector(".idn-faq[open]");
+    }
+
+    // ---------- Visual ----------
+
+    function VisualIdentityHeroTitle(target) {
+        expect().toHaveCSS("color", "rgba(0, 0, 0, 0)").onClass("idn-hero-title");
+        expect().toHaveCSS("background-clip", "text").onClass("idn-hero-title");
+    }
+
+    function VisualCapabilityGridIsThreeColumns(target) {
+        expect().toHaveCSS("display", "grid").onClass("idn-grid-3");
+    }
+
+    function VisualPlansGridIsThreeColumnsAndEvenlySpaced(target) {
+        expect().toHaveCSS("display", "grid").onClass("plans");
+        expect().toHaveCSS("gap", "14px").onClass("plans");
+    }
+
+    function VisualPlanCardShape(target) {
+        expect().toHaveCSS("display", "flex").onSelector(".plan:nth-child(1)");
+        expect().toHaveCSS("flex-direction", "column").onSelector(".plan:nth-child(1)");
+        expect().toHaveCSS("border-radius", "24px").onSelector(".plan:nth-child(1)");
+        expect().toHaveCSS("padding", "30px").onSelector(".plan:nth-child(1)");
+    }
+
+    function VisualPlanTypography(target) {
+        expect().toHaveCSS("text-transform", "capitalize").onSelector(".plan:nth-child(1) .plan-name");
+        expect().toHaveCSS("font-size", "22px").onSelector(".plan:nth-child(1) .plan-name");
+        expect().toHaveCSS("font-size", "38px").onSelector(".plan:nth-child(2) .plan-value");
+        expect().toHaveCSS("font-size", "14px").onSelector(".plan:nth-child(2) .plan-per");
+        expect().toHaveCSS("color", "rgba(255, 255, 255, 0.5)").onSelector(".plan:nth-child(2) .plan-per");
+    }
+
+    function VisualPlanPriceFollowsTheme(target) {
+        expect().toHaveCSS("color", "rgb(255, 255, 255)").onSelector(".plan:nth-child(2) .plan-value");
+        click().OnClass("tt");
+        expect().toHaveCSS("color", "rgb(24, 18, 18)").onSelector(".plan:nth-child(2) .plan-value");
+    }
+
+    function VisualPlanTagsAreMonospace(target) {
+        expect().toHaveCSS("border-radius", "8px").onSelector(".plan:nth-child(1) .plan-tag");
+        expect().toHaveCSS("display", "flex").onSelector(".plan:nth-child(1) .plan-tags");
+        expect().toHaveCSS("list-style-type", "none").onSelector(".plan:nth-child(1) .plan-tags");
+    }
+
+    function VisualFaqSummary(target) {
+        expect().toHaveCSS("cursor", "pointer").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCSS("font-size", "18px").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCSS("justify-content", "space-between").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCSS("list-style-type", "none").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+    }
+
+    function VisualFaqPlusIcon(target) {
+        expect().toHaveCSS("width", "14px").onSelector(".idn-faq:nth-child(1) .idn-faq-plus");
+        expect().toHaveCSS("height", "14px").onSelector(".idn-faq:nth-child(1) .idn-faq-plus");
+    }
+
+    function VisualFaqAnswerTypography(target) {
+        click().OnSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCSS("max-width", "760px").onSelector(".idn-faq:nth-child(1) .idn-faq-a");
+        expect().toHaveCSS("padding-bottom", "24px").onSelector(".idn-faq:nth-child(1) .idn-faq-a");
+    }
+
+    function VisualSdkCardsAreEvenlyStyled(target) {
+        expect().toHaveCSS("color", "rgb(255, 138, 31)").onSelector(".idn-sdk .cs");
+    }
+
+    // ---------- Hover real e screenshots ----------
+
+    function VisualPlanBorderHighlightsOnHover(target) {
+        expect().toHaveCSS("border-top-color", "rgba(255, 255, 255, 0.08)").onSelector(".plan:nth-child(2)");
+        hover().OnSelector(".plan:nth-child(2)");
+        expect().toHaveCSS("border-top-color", "rgba(226, 200, 200, 0.4)").onSelector(".plan:nth-child(2)");
+    }
+
+    function VisualFaqQuestionTurnsRoseOnHover(target) {
+        expect().toHaveCSS("color", "rgb(255, 255, 255)").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        hover().OnSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toHaveCSS("color", "rgb(236, 213, 213)").onSelector(".idn-faq:nth-child(1) .idn-faq-q");
+    }
+
+    function VisualScreenshotPlanCards(target) {
+        expect().toMatchScreenshot("plan-free").onSelector(".plan:nth-child(1)");
+        expect().toMatchScreenshot("plan-pro").onSelector(".plan:nth-child(2)");
+        click().OnClass("tt");
+        expect().toMatchScreenshot("plan-pro-light").onSelector(".plan:nth-child(2)");
+    }
+
+    function VisualScreenshotFaqOpen(target) {
+        click().OnSelector(".idn-faq:nth-child(1) .idn-faq-q");
+        expect().toMatchScreenshot("faq-open").onSelector(".idn-faq:nth-child(1)");
+    }
+
+    function VisualScreenshotCapabilityCard(target) {
+        expect().toMatchScreenshot("capability-card").onSelector(".idn-cap:nth-child(1)");
+    }
+
+    // ---------- Assets: nada quebrado e filtros por tema ----------
+
+    function ComponentIdentityHasNoBrokenAssets(target) {
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function ComponentIdentityHasNoBrokenAssetsInTheLightTheme(target) {
+        click().OnClass("tt");
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function VisualIdentityIconsInvertAndSdkLogosKeepTheirOwnFilter(target) {
+        expect().toHaveCSS("filter", "none").onSelector(".idn-ico img");
+        expect().toHaveCSS("filter", "brightness(0) invert(1)").onSelector(".idn-sdk-logo img");
+        click().OnClass("tt");
+        expect().toHaveCSS("filter", "invert(1)").onSelector(".idn-ico img");
+        expect().toHaveCSS("filter", "brightness(0) invert(0)").onSelector(".idn-sdk-logo img");
+    }
+</script>

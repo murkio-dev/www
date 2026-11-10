@@ -9,22 +9,22 @@
 <div class="services-menu">
     <button class="services-trigger" aria-haspopup="true">
         ${i18n.header.nav.services}
-        <img class="services-chevron" src="/assets/chevron.svg" alt="" width="10" height="5">
+        <img class="services-chevron" src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
     </button>
 
     <div class="services-panel">
         <div class="services-card">
             <div class="services-col">
                 <p class="services-heading">${i18n.header.services.title}</p>
-                <ServiceItem href="/identity" icon="/assets/icon-auth.svg" title={i18n.header.services.auth.title} description={i18n.header.services.auth.description} status="active" statusLabel={i18n.header.services.active} />
-                <ServiceItem href="/messaging" icon="/assets/icon-messaging.svg" title={i18n.header.services.messaging.title} description={i18n.header.services.messaging.description} status="active" statusLabel={i18n.header.services.active} />
-                <ServiceItem href="/payments" icon="/assets/icon-payments.svg" title={i18n.header.services.payments.title} description={i18n.header.services.payments.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/identity" icon="/assets/icons/services/auth.svg" title={i18n.header.services.auth.title} description={i18n.header.services.auth.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/messaging" icon="/assets/icons/services/messaging.svg" title={i18n.header.services.messaging.title} description={i18n.header.services.messaging.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/pay" icon="/assets/icons/services/payments.svg" title={i18n.header.services.payments.title} description={i18n.header.services.payments.description} status="active" statusLabel={i18n.header.services.active} />
             </div>
             <div class="services-col">
                 <p class="services-heading">${i18n.header.services.infraTitle}</p>
-                <ServiceItem href="/vault" icon="/assets/icon-vault.svg" title={i18n.header.services.vault.title} description={i18n.header.services.vault.description} status="active" statusLabel={i18n.header.services.active} />
-                <ServiceItem href="/lambda" icon="/assets/icon-lambda.svg" title={i18n.header.services.lambda.title} description={i18n.header.services.lambda.description} status="active" statusLabel={i18n.header.services.active} />
-                <ServiceItem icon="/assets/icon-database.svg" title={i18n.header.services.database.title} description={i18n.header.services.database.description} status="soon" statusLabel={i18n.header.services.soon} />
+                <ServiceItem href="/vault" icon="/assets/icons/services/vault.svg" title={i18n.header.services.vault.title} description={i18n.header.services.vault.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem href="/lambda" icon="/assets/icons/services/lambda.svg" title={i18n.header.services.lambda.title} description={i18n.header.services.lambda.description} status="active" statusLabel={i18n.header.services.active} />
+                <ServiceItem icon="/assets/icons/services/database.svg" title={i18n.header.services.database.title} description={i18n.header.services.database.description} status="soon" statusLabel={i18n.header.services.soon} />
             </div>
         </div>
     </div>

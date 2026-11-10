@@ -11,9 +11,9 @@
 
 <div class="lm">
     <button class="lm-trigger" aria-haspopup="true" aria-label="${i18n.header.lang.label}">
-        <img src="/assets/icon-globe.svg" alt="" width="16" height="16">
+        <img src="/assets/icons/ui/globe.svg" alt="" width="16" height="16">
         <span class="lm-current">${i18n.header.lang.current}</span>
-        <img class="lm-chevron" src="/assets/chevron.svg" alt="" width="10" height="5">
+        <img class="lm-chevron" src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
     </button>
 
     <div class="lm-panel">
@@ -132,10 +132,15 @@
         background: transparent;
     }
 
-    .lm-item:hover,
+    .lm-item:hover {
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    /* teclado: além do fundo, um contorno, que o fundo sozinho (7%) quase não se vê */
     .lm-item:focus-visible {
         background-color: rgb(var(--m-fg) / 0.07);
-        outline: none;
+        outline: 2px solid rgb(var(--m-rose) / 0.9);
+        outline-offset: -2px;
     }
 
     .lm-mark {

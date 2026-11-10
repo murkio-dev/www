@@ -36,10 +36,15 @@
         background: transparent;
     }
 
-    .service-item:hover,
+    .service-item:hover {
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    /* teclado: além do fundo, um contorno, que o fundo sozinho (7%) quase não se vê */
     .service-item:focus-visible {
         background-color: rgb(var(--m-fg) / 0.07);
-        outline: none;
+        outline: 2px solid rgb(var(--m-rose) / 0.9);
+        outline-offset: -2px;
     }
 
     .service-item-icon {

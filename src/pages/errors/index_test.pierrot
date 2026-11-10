@@ -1,0 +1,118 @@
+<script>
+    // Página de erro (fallback). Hoje só o 404 é alcançável: o runner abre rotas que não existem.
+    //   pierrot test src/pages/errors -t "^Component"
+    //   pierrot test src/pages/errors -t "^Visual"
+    import en from "../../i18n/en-us.json";
+    import pt from "../../i18n/pt-br.json";
+
+    // ---------- Componente: ErrorView ----------
+
+    function ComponentNotFoundPage(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveText(en.errors.notFound.title).onClass("error-title");
+        expect().toHaveText(en.errors.notFound.message).onClass("error-message");
+        expect().toHaveText("404").onClass("error-code");
+    }
+
+    function ComponentOnlyTheMatchingStatusIsRendered(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveCount(1).onTag("h1");
+        expect().toHaveCount(1).onClass("error-message");
+    }
+
+    function ComponentNotFoundInPortuguese(target) {
+        target.Goto("/pt-br/rota-que-nao-existe");
+        expect().toHaveText(pt.errors.notFound.title).onClass("error-title");
+        expect().toHaveText(pt.errors.notFound.message).onClass("error-message");
+        expect().toHaveText(pt.errors.back).onClass("error-button");
+    }
+
+    function ComponentErrorCodeIsDecorative(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveAttribute("aria-hidden", "true").onClass("error-code");
+    }
+
+    function ComponentBackButtonGoesHome(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveText(en.errors.back).onClass("error-button");
+        click().OnClass("error-button");
+        expect().toBeVisible().onClass("hero-title");
+        expect().toHaveText(en.home.title).onClass("hero-title");
+    }
+
+    function ComponentErrorPageKeepsHeaderAndFooter(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toBeVisible().onClass("header");
+        expect().toBeVisible().onClass("ft");
+    }
+
+    function ComponentNestedMissingRouteIsAlsoNotFound(target) {
+        target.Goto("/identity/nao/existe/mesmo");
+        expect().toHaveText(en.errors.notFound.title).onClass("error-title");
+    }
+
+    // ---------- Visual ----------
+
+    function VisualErrorIsACenteredRoundedCard(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveCSS("display", "flex").onClass("error");
+        expect().toHaveCSS("justify-content", "center").onClass("error");
+        expect().toHaveCSS("align-items", "center").onClass("error");
+        expect().toHaveCSS("border-radius", "28px").onClass("error");
+        expect().toHaveCSS("min-height", "560px").onClass("error");
+    }
+
+    function VisualErrorCodeIsHugeGradientText(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveCSS("font-weight", "200").onClass("error-code");
+        expect().toHaveCSS("color", "rgba(0, 0, 0, 0)").onClass("error-code");
+        expect().toHaveCSS("background-clip", "text").onClass("error-code");
+        expect().toHaveCSS("user-select", "none").onClass("error-code");
+    }
+
+    function VisualErrorCardOverlapsTheCode(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveCSS("border-radius", "24px").onClass("error-card");
+        expect().toHaveCSS("text-align", "center").onClass("error-card");
+        expect().toHaveCSS("flex-direction", "column").onClass("error-card");
+        expect().toHaveCSS("backdrop-filter", "blur(14px)").onClass("error-card");
+    }
+
+    function VisualErrorTexts(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toHaveCSS("font-weight", "400").onClass("error-title");
+        expect().toHaveCSS("font-size", "16px").onClass("error-message");
+        expect().toHaveCSS("max-width", "440px").onClass("error-message");
+        expect().toHaveCSS("color", "rgba(255, 255, 255, 0.65)").onClass("error-message");
+    }
+
+    function VisualErrorFollowsLightTheme(target) {
+        target.Goto("/rota-que-nao-existe");
+        click().OnClass("tt");
+        expect().toHaveCSS("color", "rgb(24, 18, 18)").onClass("error-title");
+        expect().toHaveCSS("color", "rgba(24, 18, 18, 0.65)").onClass("error-message");
+    }
+
+
+    function VisualScreenshotErrorCard(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toMatchScreenshot("error-card-404").onClass("error-card");
+    }
+
+    function VisualScreenshotErrorCardInPortuguese(target) {
+        target.Goto("/pt-br/rota-que-nao-existe");
+        expect().toMatchScreenshot("error-card-404-pt").onClass("error-card");
+    }
+
+    function ComponentErrorPageHasNoBrokenAssets(target) {
+        target.Goto("/rota-que-nao-existe");
+        expect().toBeVisible().onClass("error-card");
+        expect().toHaveNoBrokenAssets();
+    }
+
+    function ComponentErrorPageHasNoBrokenAssetsInTheLightTheme(target) {
+        target.Goto("/rota-que-nao-existe");
+        click().OnClass("tt");
+        expect().toHaveNoBrokenAssets();
+    }
+</script>

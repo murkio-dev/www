@@ -1,19 +1,12 @@
 <script>
     import { Button } from "./button.pierrot";
     import { Markdown } from "./markdown.pierrot";
+    import { money, finalPrice } from "../scripts/logic/price.ts";
 
     // Cada plano segue o contrato de GET /v1/payments/plans:
     // { id, name, description (markdown), discount (%), price (centavos), tags }
     let plans: any;
     let currency: string;
-
-    function money(symbol: string, cents: number): string {
-        return symbol + " " + (cents / 100).toFixed(2).replace(".", ",");
-    }
-
-    function finalPrice(price: number, discount: number): number {
-        return Math.round(price * (100 - discount) / 100);
-    }
 </script>
 
 <div class="plans">
