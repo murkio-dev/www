@@ -1,0 +1,90 @@
+<script>
+    // Página /authentication: entrar, criar conta e confirmar o e-mail. Sem o Identity no ar,
+    // só o que acontece antes da rede (validação, troca de abas) e a mensagem de rede.
+    //   pierrot test src/pages/authentication -t "^Component"
+    import en from "../../i18n/en-us.json";
+    import pt from "../../i18n/pt-br.json";
+
+    function ComponentPageRenders(target) {
+        expect().toBeOnUrl("/en-us/authentication");
+        expect().toHaveText(en.auth.asideTitle).onClass("au-aside-title");
+        expect().toHaveText(en.auth.login.title).onClass("au-title");
+        expect().toHaveCount(2).onClass("au-tab");
+        expect().toHaveCount(3).onClass("au-point");
+        expect().toHaveCount(0).onClass("error-title");
+    }
+
+    function ComponentInPortuguese(target) {
+        target.Goto("/pt-br/authentication");
+        expect().toHaveText(pt.auth.login.title).onClass("au-title");
+        expect().toHaveText(pt.auth.tabs.register).onSelector(".au-tab:nth-child(2)");
+    }
+
+    function ComponentTabsSwitchForms(target) {
+        click().OnSelector(".au-tab:nth-child(2)");
+        expect().toHaveText(en.auth.register.title).onClass("au-title");
+        expect().toHaveCount(3).onClass("au-rule");
+        expect().toHaveAttribute("autocomplete", "new-password").onId("au-password");
+        click().OnSelector(".au-tab:nth-child(1)");
+        expect().toHaveText(en.auth.login.title).onClass("au-title");
+        expect().toHaveAttribute("autocomplete", "current-password").onId("au-password");
+    }
+
+    function ComponentRegisterModeFromQuery(target) {
+        target.Goto("/authentication?mode=register");
+        expect().toHaveText(en.auth.register.title).onClass("au-title");
+    }
+
+    function ComponentLoginValidatesEmailBeforeTheApi(target) {
+        writte("nao-e-email").OnId("au-email");
+        click().OnSelector(".au-form .au-btn-primary");
+        expect().toHaveText(en.auth.errors.email).onClass("au-error");
+    }
+
+    function ComponentLoginWithoutPasswordShowsCredentialsError(target) {
+        writte("ana@empresa.com").OnId("au-email");
+        click().OnSelector(".au-form .au-btn-primary");
+        expect().toHaveText(en.auth.errors.credentials).onClass("au-error");
+    }
+
+    function ComponentPasswordToggleShowsAndHides(target) {
+        expect().toHaveAttribute("type", "password").onId("au-password");
+        expect().toHaveText(en.auth.password.show).onClass("au-pw-toggle");
+        click().OnClass("au-pw-toggle");
+        expect().toHaveAttribute("type", "text").onId("au-password");
+        expect().toHaveText(en.auth.password.hide).onClass("au-pw-toggle");
+    }
+
+    function ComponentRegisterRulesFollowThePassword(target) {
+        click().OnSelector(".au-tab:nth-child(2)");
+        expect().toHaveCount(0).onClass("au-rule-ok");
+        writte("1234567").OnId("au-password");
+        expect().toHaveCount(1).onClass("au-rule-bad");
+        expect().toHaveCount(1).onClass("au-rule-ok");
+        writte("minha senha forte").OnId("au-password");
+        expect().toHaveCount(2).onClass("au-rule-ok");
+        expect().toHaveCount(0).onClass("au-rule-bad");
+    }
+
+    function ComponentRegisterBlocksWeakPassword(target) {
+        click().OnSelector(".au-tab:nth-child(2)");
+        writte("ana@empresa.com").OnId("au-email");
+        writte("curta").OnId("au-password");
+        click().OnSelector(".au-form .au-btn-primary");
+        expect().toHaveText(en.auth.errors.password).onClass("au-error");
+    }
+
+    function ComponentLoginReachesTheNetwork(target) {
+        // o .env de teste aponta para uma porta sem servidor: a mensagem é a de rede (ou de .env ausente)
+        writte("ana@empresa.com").OnId("au-email");
+        writte("minha senha forte").OnId("au-password");
+        click().OnSelector(".au-form .au-btn-primary");
+        expect().toContainText(new RegExp("^(" + en.auth.errors.network + "|" + en.auth.errors.config + "|" + en.auth.errors.origin + "|" + en.auth.errors.key + ")$")).onClass("au-error");
+    }
+
+    function ComponentNoSiteHeaderIsStillShown(target) {
+        // a tela de conta é página do site (com header e footer), não tela de app
+        expect().toBeVisible().onClass("header");
+        expect().toBeVisible().onClass("ft");
+    }
+</script>
