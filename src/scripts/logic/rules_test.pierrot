@@ -1,0 +1,96 @@
+<script>
+    import { isEmail, isPasswordOk, passwordLengthOk, passwordEdgesOk, isCode, digitsOnly, isAppName, isSecretName, isTokenName, ruleClass, shortId, expiresFrom, queryParam, safeNext } from "./rules.ts";
+
+    var appName:regex = "/^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$/";
+    var secretName:regex = "/^[A-Z][A-Z0-9_]{0,40}$/";
+    var code:regex = "/^[0-9]{6}$/";
+
+    function UnitEmail() {
+        expect(isEmail("ana@empresa.com")).toBeTrue();
+        expect(isEmail("  ana@empresa.com ")).toBeTrue();
+        expect(isEmail("ana@empresa")).toBeFalse();
+        expect(isEmail("ana empresa.com")).toBeFalse();
+        expect(isEmail("")).toBeFalse();
+    }
+
+    function UnitPasswordPolicy() {
+        expect(isPasswordOk("minha senha forte")).toBeTrue();
+        expect(isPasswordOk("12345678")).toBeTrue();
+        expect(passwordLengthOk("1234567")).toBeFalse();
+        expect(passwordLengthOk("x".repeat(128))).toBeTrue();
+        expect(passwordLengthOk("x".repeat(129))).toBeFalse();
+        expect(passwordEdgesOk(" abcdefgh")).toBeFalse();
+        expect(passwordEdgesOk("abcdefgh ")).toBeFalse();
+        expect(passwordEdgesOk("")).toBeFalse();
+        expect(isPasswordOk(" abcdefgh")).toBeFalse();
+    }
+
+    function UnitVerificationCode() {
+        expect(isCode(code.Gen())).toBeTrue();
+        expect(isCode("12345")).toBeFalse();
+        expect(isCode("1234567")).toBeFalse();
+        expect(isCode("12a456")).toBeFalse();
+        expect(digitsOnly("12a4-56 78")).toBe("124567");
+        expect(digitsOnly("")).toBe("");
+    }
+
+    function UnitAppName() {
+        expect(isAppName(appName.Gen())).toBeTrue();
+        expect(isAppName("minha-app")).toBeTrue();
+        expect(isAppName("ab")).toBeFalse();
+        expect(isAppName("-app")).toBeFalse();
+        expect(isAppName("app-")).toBeFalse();
+        expect(isAppName("Minha-App")).toBeFalse();
+        expect(isAppName("a".repeat(51))).toBeFalse();
+    }
+
+    function UnitSecretName() {
+        expect(isSecretName(secretName.Gen())).toBeTrue();
+        expect(isSecretName("DATABASE_URL")).toBeTrue();
+        expect(isSecretName("A")).toBeTrue();
+        expect(isSecretName("1KEY")).toBeFalse();
+        expect(isSecretName("database_url")).toBeFalse();
+        expect(isSecretName("KEY-X")).toBeFalse();
+        expect(isSecretName("A" + "B".repeat(128))).toBeFalse();
+    }
+
+    function UnitTokenName() {
+        expect(isTokenName("producao")).toBeTrue();
+        expect(isTokenName("   ")).toBeFalse();
+        expect(isTokenName("x".repeat(101))).toBeFalse();
+    }
+
+    function UnitRuleClassStates() {
+        expect(ruleClass("", false, "au-rule")).toBe("au-rule");
+        expect(ruleClass("abc", true, "au-rule")).toBe("au-rule au-rule-ok");
+        expect(ruleClass("abc", false, "au-rule")).toBe("au-rule au-rule-bad");
+    }
+
+    function UnitShortId() {
+        expect(shortId("01a19d33-557d-77c0-a3a5-297106771a2c")).toBe("01a19d33…1a2c");
+        expect(shortId("abc")).toBe("abc");
+    }
+
+    function UnitExpiresFrom() {
+        const now = Date.UTC(2026, 0, 1);
+        expect(expiresFrom("", now)).toBeNull();
+        expect(expiresFrom("nunca", now)).toBeNull();
+        expect(expiresFrom("7d", now)).toBe("2026-01-08T00:00:00.000Z");
+        expect(expiresFrom("30d", now)).toBe("2026-01-31T00:00:00.000Z");
+        expect(expiresFrom("1y", now)).toBe("2027-01-01T00:00:00.000Z");
+    }
+
+    function UnitQueryParam() {
+        expect(queryParam("?invite=inv_abc&x=1", "invite")).toBe("inv_abc");
+        expect(queryParam("?mode=register", "mode")).toBe("register");
+        expect(queryParam("?mode=register", "next")).toBe("");
+        expect(queryParam("", "mode")).toBe("");
+    }
+
+    function UnitSafeNextOnlyAcceptsInternalPaths() {
+        expect(safeNext("/vault/42")).toBe("/vault/42");
+        expect(safeNext("//evil.com")).toBe("");
+        expect(safeNext("https://evil.com")).toBe("");
+        expect(safeNext("")).toBe("");
+    }
+</script>
