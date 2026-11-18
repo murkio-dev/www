@@ -1,27 +1,21 @@
 <script>
     import "./styles.css";
-    import { HeroGlow } from "../../components/heroGlow.pierrot";
-    import { HeroLights } from "../../components/heroLights.pierrot";
-    import { HeroGrid } from "../../components/heroGrid.pierrot";
-    import { Badge } from "../../components/badge.pierrot";
+    import { Card } from "../../components/card.pierrot";
+    import { Hero } from "../../components/hero.pierrot";
     import { Button } from "../../components/button.pierrot";
-    import { SectionHead } from "../../components/sectionHead.pierrot";
-    import { InfraCard } from "../../components/infraCard.pierrot";
-    import { StarMark } from "../../components/starMark.pierrot";
-    import { VaultFeature } from "../../components/vaultFeature.pierrot";
-    import { ComingSoonTag } from "../../components/comingSoonTag.pierrot";
-    import { RouterGateway } from "../../components/routerGateway.pierrot";
+    import { Header } from "../../components/header.pierrot";
+    import { Logo } from "../../components/logo.pierrot";
 </script>
 
 <div class="hero-wrap">
-<HeroGlow />
+<Hero type="glow" />
 <main class="hero">
-    <HeroLights />
-    <HeroGrid position="top" />
-    <HeroGrid position="bottom" />
+    <Hero type="lights" />
+    <img class="hero-grid hero-grid-top" src="/assets/backgrounds/grid.svg" alt="">
+    <img class="hero-grid hero-grid-bottom" src="/assets/backgrounds/grid.svg" alt="">
 
     <div class="hero-content">
-        <Badge label={i18n.home.badge} />
+        <Header type="badge" badge={i18n.home.badge} />
 
         <h1 class="hero-title">${i18n.home.title}</h1>
         <p class="hero-subtitle">${i18n.home.subtitle}</p>
@@ -35,7 +29,7 @@
 </div>
 
 <section class="infra" id="services">
-    <SectionHead badge={i18n.infra.badge} title={i18n.infra.title} subtitle={i18n.infra.subtitle} />
+    <Header type="section" badge={i18n.infra.badge} title={i18n.infra.title} subtitle={i18n.infra.subtitle} />
 
     <div class="infra-diagram">
         <div class="infra-hub">
@@ -56,9 +50,9 @@
         <div class="infra-groups">
             <div class="infra-group">
                 <div class="infra-cards">
-                    <InfraCard icon="/assets/icons/services/auth.svg" title={i18n.header.services.auth.title} />
-                    <InfraCard icon="/assets/icons/services/messaging.svg" title={i18n.header.services.messaging.title} />
-                    <InfraCard icon="/assets/icons/services/payments.svg" title={i18n.header.services.payments.title} />
+                    <Card type="infra" icon="/assets/icons/services/auth.svg" title={i18n.header.services.auth.title} />
+                    <Card type="infra" icon="/assets/icons/services/messaging.svg" title={i18n.header.services.messaging.title} />
+                    <Card type="infra" icon="/assets/icons/services/payments.svg" title={i18n.header.services.payments.title} />
                 </div>
                 <span class="infra-bracket"></span>
                 <span class="infra-label">${i18n.infra.groupServices}</span>
@@ -68,9 +62,9 @@
 
             <div class="infra-group">
                 <div class="infra-cards">
-                    <InfraCard icon="/assets/icons/services/vault.svg" title={i18n.header.services.vault.title} />
-                    <InfraCard icon="/assets/icons/services/lambda.svg" title={i18n.header.services.lambda.title} />
-                    <InfraCard icon="/assets/icons/services/database.svg" title={i18n.header.services.database.title} />
+                    <Card type="infra" icon="/assets/icons/services/vault.svg" title={i18n.header.services.vault.title} />
+                    <Card type="infra" icon="/assets/icons/services/lambda.svg" title={i18n.header.services.lambda.title} />
+                    <Card type="infra" icon="/assets/icons/services/database.svg" title={i18n.header.services.database.title} />
                 </div>
                 <span class="infra-bracket"></span>
                 <span class="infra-label">${i18n.infra.groupInfra}</span>
@@ -80,7 +74,7 @@
 </section>
 
 <section class="sdks" id="sdks">
-    <SectionHead badge={i18n.sdks.badge} title={i18n.sdks.title} subtitle={i18n.sdks.subtitle} />
+    <Header type="section" badge={i18n.sdks.badge} title={i18n.sdks.title} subtitle={i18n.sdks.subtitle} />
 
     <div class="sdks-main">
         <ul class="sdks-list">
@@ -181,7 +175,7 @@
 </section>
 
 <section class="ai" id="ai">
-    <SectionHead badge={i18n.ai.badge} title={i18n.ai.title} subtitle={i18n.ai.subtitle} />
+    <Header type="section" badge={i18n.ai.badge} title={i18n.ai.title} subtitle={i18n.ai.subtitle} />
 
     <div class="av">
         <div class="av-stage">
@@ -195,7 +189,7 @@
                 <span class="av-name">${i18n.ai.hi.name}</span>
             </div>
 
-            <span class="av-core" aria-hidden="true"><StarMark size="30" /></span>
+            <span class="av-core" aria-hidden="true"><Logo type="mark" size="30" /></span>
         </div>
 
         <div class="av-caps">
@@ -253,7 +247,7 @@
 </section>
 
 <section class="identity" id="identity">
-    <SectionHead badge={i18n.identity.badge} title={i18n.identity.title} subtitle={i18n.identity.subtitle} />
+    <Header type="section" badge={i18n.identity.badge} title={i18n.identity.title} subtitle={i18n.identity.subtitle} />
 
     <div class="identity-top">
         <div class="id-panel id-panel-a">
@@ -364,7 +358,7 @@
 </section>
 
 <section class="vault" id="vault">
-    <SectionHead badge={i18n.vault.badge} title={i18n.vault.title} subtitle={i18n.vault.description} />
+    <Header type="section" badge={i18n.vault.badge} title={i18n.vault.title} subtitle={i18n.vault.description} />
 
     <div class="vault-top">
         <div class="vault-panel vault-panel-text">
@@ -422,14 +416,14 @@
     </div>
 
     <div class="vault-bottom">
-        <VaultFeature icon="/assets/icons/ui/braces.svg" label={i18n.vault.feat.f1} description={i18n.vault.feat.d1} />
-        <VaultFeature icon="/assets/icons/ui/rotate.svg" label={i18n.vault.feat.f2} description={i18n.vault.feat.d2} />
-        <VaultFeature icon="/assets/icons/ui/alert.svg" label={i18n.vault.feat.f3} description={i18n.vault.feat.d3} />
+        <Card type="feature" icon="/assets/icons/ui/braces.svg" label={i18n.vault.feat.f1} description={i18n.vault.feat.d1} />
+        <Card type="feature" icon="/assets/icons/ui/rotate.svg" label={i18n.vault.feat.f2} description={i18n.vault.feat.d2} />
+        <Card type="feature" icon="/assets/icons/ui/alert.svg" label={i18n.vault.feat.f3} description={i18n.vault.feat.d3} />
     </div>
 </section>
 
 <section class="pay" id="payments">
-    <SectionHead badge={i18n.payments.badge} title={i18n.payments.title} subtitle={i18n.payments.subtitle} />
+    <Header type="section" badge={i18n.payments.badge} title={i18n.payments.title} subtitle={i18n.payments.subtitle} />
 
     <div class="pay-top">
         <div class="pay-panel pay-panel-card">
@@ -443,7 +437,7 @@
                             <span class="pc-amount">${i18n.payments.card.balance}</span>
                         </div>
                         <div class="pc-brand">
-                            <StarMark size="20" />
+                            <Logo type="mark" size="20" />
                             <span>${i18n.brand}</span>
                         </div>
                     </div>
@@ -459,7 +453,7 @@
             <div class="pay-caption">
                 <div class="pay-caption-head">
                     <h3 class="pay-title">${i18n.payments.card.title}</h3>
-                    <ComingSoonTag label={i18n.payments.card.tag} />
+                    <span class="cs"><span class="cs-dot"></span><span>${i18n.payments.card.tag}</span></span>
                 </div>
                 <p class="pay-text">${i18n.payments.card.description}</p>
             </div>
@@ -514,7 +508,7 @@
             <h3 class="pay-statement">${i18n.payments.statement.title}</h3>
             <p class="pay-text">${i18n.payments.statement.description}</p>
             <div class="pay-brand">
-                <StarMark size="20" />
+                <Logo type="mark" size="20" />
                 <span>${i18n.brand}</span>
             </div>
         </div>
@@ -563,10 +557,10 @@
             <img class="rt-lines" src="/assets/diagrams/router-lines.svg" alt="" aria-hidden="true">
 
             <div class="rt-gateways">
-                <RouterGateway initial={i18n.router.g1Initial} name={i18n.router.g1Name} />
-                <RouterGateway initial={i18n.router.g2Initial} name={i18n.router.g2Name} />
-                <RouterGateway initial={i18n.router.g3Initial} name={i18n.router.g3Name} />
-                <RouterGateway initial={i18n.router.g4Initial} name={i18n.router.g4Name} />
+                <Card type="gateway" initial={i18n.router.g1Initial} name={i18n.router.g1Name} />
+                <Card type="gateway" initial={i18n.router.g2Initial} name={i18n.router.g2Name} />
+                <Card type="gateway" initial={i18n.router.g3Initial} name={i18n.router.g3Name} />
+                <Card type="gateway" initial={i18n.router.g4Initial} name={i18n.router.g4Name} />
             </div>
         </div>
 
@@ -599,7 +593,7 @@
 </section>
 
 <section class="msg" id="messaging">
-    <SectionHead badge={i18n.messaging.badge} title={i18n.messaging.title} subtitle={i18n.messaging.subtitle} />
+    <Header type="section" badge={i18n.messaging.badge} title={i18n.messaging.title} subtitle={i18n.messaging.subtitle} />
 
     <div class="mw">
         <div class="mw-pane mw-pane-code">
@@ -654,7 +648,7 @@
             <p class="mc-body">${i18n.messaging.channels.description}</p>
             <div class="mc-soon">
                 <span class="mc-soon-names">${i18n.messaging.channels.sms} · ${i18n.messaging.channels.whatsapp} · ${i18n.messaging.channels.telegram}</span>
-                <ComingSoonTag label={i18n.messaging.channels.soon} />
+                <span class="cs"><span class="cs-dot"></span><span>${i18n.messaging.channels.soon}</span></span>
             </div>
         </div>
 
@@ -680,7 +674,7 @@
 </section>
 
 <section class="lam" id="lambda">
-    <SectionHead badge={i18n.lambda.badge} title={i18n.lambda.title} subtitle={i18n.lambda.subtitle} />
+    <Header type="section" badge={i18n.lambda.badge} title={i18n.lambda.title} subtitle={i18n.lambda.subtitle} />
 
     <div class="lc">
         <div class="lc-titlebar" aria-hidden="true">

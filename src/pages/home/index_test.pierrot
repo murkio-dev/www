@@ -32,14 +32,14 @@
         expect().toExist().onText(pt.home.explorePlans);
     }
 
-    // ---------- Componentes: Badge / StarMark ----------
+    // ---------- Componentes: Badge / Logo (tipo mark) ----------
 
     function ComponentHeroBadge(target) {
         expect().toHaveText(en.home.badge).onSelector(".hero .badge");
         expect().toHaveCount(1).onSelector(".hero .badge .star");
     }
 
-    function ComponentStarMarkHasBothThemeImages(target) {
+    function ComponentLogoMarkHasBothThemeImages(target) {
         expect().toHaveCount(1).onSelector(".hero .star-dark");
         expect().toHaveCount(1).onSelector(".hero .star-light");
         expect().toHaveAttribute("aria-hidden", "true").onSelector(".hero .star");
@@ -391,7 +391,7 @@
         const names = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title,
             en.header.services.vault.title, en.header.services.lambda.title];
         for (let i = 0; i < names.length; i++) {
-            expect().toHaveText(names[i]).onSelector(".ft-col:nth-of-type(1) .fl:nth-of-type(" + (i + 1) + ")");
+            expect().toHaveText(names[i]).onSelector(".ft-col:nth-of-type(1) .ft-link:nth-of-type(" + (i + 1) + ")");
         }
     }
 

@@ -1,0 +1,42 @@
+<script>
+    import { getSession, saveSession, clearSession, hasSession, accessExpired, panelPath } from "./session.ts";
+
+    function _sample() {
+        return { access_token: "at", refresh_token: "rt", expires_at: 1900000000000, user_id: "u1", email: "ana@empresa.com" };
+    }
+
+    function UnitEmptyByDefault() {
+        clearSession();
+        expect(getSession()).toBeNull();
+        expect(hasSession()).toBeFalse();
+        expect(panelPath()).toBe("");
+    }
+
+    function UnitSaveAndRead() {
+        saveSession(_sample());
+        expect(hasSession()).toBeTrue();
+        expect(getSession()).toEqual(_sample());
+        expect(panelPath()).toBe("/vault/u1");
+        clearSession();
+        expect(getSession()).toBeNull();
+    }
+
+    function UnitBrokenStorageIsIgnored() {
+        localStorage.setItem("murkio-session", "{nao é json");
+        expect(getSession()).toBeNull();
+        localStorage.setItem("murkio-session", JSON.stringify({ access_token: 1 }));
+        expect(getSession()).toBeNull();
+        clearSession();
+    }
+
+    function UnitAccessExpiredWithMargin() {
+        const s = _sample();
+        const now = 1000000;
+        s.expires_at = now + 60000;
+        expect(accessExpired(s, now)).toBeFalse();
+        s.expires_at = now + 20000;
+        expect(accessExpired(s, now)).toBeTrue();
+        s.expires_at = now - 1;
+        expect(accessExpired(s, now)).toBeTrue();
+    }
+</script>

@@ -1,8 +1,21 @@
 <script>
     import { Logo } from "./logo.pierrot";
     import { Button } from "./button.pierrot";
-    import { FooterLink } from "./footerLink.pierrot";
-    import { FooterSocial } from "./footerSocial.pierrot";
+
+    function goFooter(url: string): void {
+        client.Redirect(url);
+    }
+
+    function goSocial(url: string): void {
+        client.Redirect(url).newTab();
+    }
+
+    // Abre a IA numa nova aba com o prompt já preenchido. O Gemini não aceita prompt pela URL,
+    // então o botão do Google usa o Modo IA da busca.
+    function ask(base: string): void {
+        const prompt = document.querySelector(".ft-ask").getAttribute("data-prompt");
+        client.Redirect(base + encodeURIComponent(prompt)).newTab();
+    }
 </script>
 
 <footer class="ft">
@@ -19,62 +32,75 @@
                 <h2 class="ft-cta-title">${i18n.footer.ctaTitle}</h2>
                 <p class="ft-cta-body">${i18n.footer.ctaText}</p>
             </div>
-            <Button href="#account" label={i18n.footer.ctaButton} variant="primary" />
+            <Button href="/authentication?mode=register" label={i18n.footer.ctaButton} variant="primary" />
         </div>
 
         <span class="ft-line" aria-hidden="true"></span>
 
         <div class="ft-cols">
             <div class="ft-brand">
-                <Logo name={i18n.brand} />
+                <Logo type="full" name={i18n.brand} />
                 <p class="ft-tagline">${i18n.footer.tagline}</p>
             </div>
 
             <nav class="ft-col" aria-label="${i18n.footer.colServices}">
                 <h3 class="ft-heading">${i18n.footer.colServices}</h3>
-                <FooterLink href="#identity" label={i18n.header.services.auth.title} />
-                <FooterLink href="#messaging" label={i18n.header.services.messaging.title} />
-                <FooterLink href="#payments" label={i18n.header.services.payments.title} />
-                <FooterLink href="#vault" label={i18n.header.services.vault.title} />
-                <FooterLink href="#lambda" label={i18n.header.services.lambda.title} />
+                <button class="ft-link" @click={goFooter("#identity")}>${i18n.header.services.auth.title}</button>
+                <button class="ft-link" @click={goFooter("#messaging")}>${i18n.header.services.messaging.title}</button>
+                <button class="ft-link" @click={goFooter("#payments")}>${i18n.header.services.payments.title}</button>
+                <button class="ft-link" @click={goFooter("#vault")}>${i18n.header.services.vault.title}</button>
+                <button class="ft-link" @click={goFooter("#lambda")}>${i18n.header.services.lambda.title}</button>
             </nav>
 
             <nav class="ft-col" aria-label="${i18n.footer.colResources}">
                 <h3 class="ft-heading">${i18n.footer.colResources}</h3>
-                <FooterLink href="#docs" label={i18n.footer.docs} />
-                <FooterLink href="#sdks" label={i18n.footer.sdks} />
-                <FooterLink href="#api" label={i18n.footer.api} />
-                <FooterLink href="#pricing" label={i18n.footer.pricing} />
-                <FooterLink href="#faq" label={i18n.footer.faq} />
+                <button class="ft-link" @click={goFooter("#docs")}>${i18n.footer.docs}</button>
+                <button class="ft-link" @click={goFooter("#sdks")}>${i18n.footer.sdks}</button>
+                <button class="ft-link" @click={goFooter("#api")}>${i18n.footer.api}</button>
+                <button class="ft-link" @click={goFooter("#pricing")}>${i18n.footer.pricing}</button>
+                <button class="ft-link" @click={goFooter("#faq")}>${i18n.footer.faq}</button>
             </nav>
 
             <nav class="ft-col" aria-label="${i18n.footer.colCompany}">
                 <h3 class="ft-heading">${i18n.footer.colCompany}</h3>
-                <FooterLink href="#about" label={i18n.footer.about} />
-                <FooterLink href="#careers" label={i18n.footer.careers} />
-                <FooterLink href="#contact" label={i18n.footer.contact} />
+                <button class="ft-link" @click={goFooter("#about")}>${i18n.footer.about}</button>
+                <button class="ft-link" @click={goFooter("#careers")}>${i18n.footer.careers}</button>
+                <button class="ft-link" @click={goFooter("#contact")}>${i18n.footer.contact}</button>
             </nav>
 
             <nav class="ft-col" aria-label="${i18n.footer.colSupport}">
                 <h3 class="ft-heading">${i18n.footer.colSupport}</h3>
-                <FooterLink href="#help" label={i18n.footer.help} />
-                <FooterLink href="#status" label={i18n.footer.status} />
-                <FooterLink href="#support" label={i18n.footer.talk} />
+                <button class="ft-link" @click={goFooter("#help")}>${i18n.footer.help}</button>
+                <button class="ft-link" @click={goFooter("#status")}>${i18n.footer.status}</button>
+                <button class="ft-link" @click={goFooter("#support")}>${i18n.footer.talk}</button>
             </nav>
 
             <nav class="ft-col" aria-label="${i18n.footer.colSocial}">
                 <h3 class="ft-heading">${i18n.footer.colSocial}</h3>
-                <FooterSocial url="https://github.com/murkio-dev" icon="/assets/icons/brands/github.svg" label={i18n.footer.github} />
-                <FooterSocial url="https://www.linkedin.com/company/murkio" icon="/assets/icons/brands/linkedin.svg" label={i18n.footer.linkedin} />
-                <FooterSocial url="https://www.instagram.com/murkio" icon="/assets/icons/brands/instagram.svg" label={i18n.footer.instagram} />
+                <button class="ft-link ft-social" @click={goSocial("https://github.com/murkio-dev")}><img src="/assets/icons/brands/github.svg" alt="" width="16" height="16"><span>${i18n.footer.github}</span></button>
+                <button class="ft-link ft-social" @click={goSocial("https://www.linkedin.com/company/murkio")}><img src="/assets/icons/brands/linkedin.svg" alt="" width="16" height="16"><span>${i18n.footer.linkedin}</span></button>
+                <button class="ft-link ft-social" @click={goSocial("https://www.instagram.com/murkio")}><img src="/assets/icons/brands/instagram.svg" alt="" width="16" height="16"><span>${i18n.footer.instagram}</span></button>
             </nav>
+        </div>
+
+        <div class="ft-ask" data-prompt="${i18n.footer.askPrompt}">
+            <span class="ft-ask-line" aria-hidden="true"></span>
+            <div class="ft-ask-pill">
+                <span class="ft-ask-label"><Logo type="mark" size="16" />${i18n.footer.askLabel}</span>
+                <button class="ft-ask-btn" aria-label="${i18n.footer.askChatgpt}" title="${i18n.footer.askChatgpt}" @click={ask("https://chatgpt.com/?q=")}><img src="/assets/icons/brands/openai.svg" alt="" width="20" height="20"></button>
+                <button class="ft-ask-btn" aria-label="${i18n.footer.askClaude}" title="${i18n.footer.askClaude}" @click={ask("https://claude.ai/new?q=")}><img src="/assets/icons/brands/claude.svg" alt="" width="20" height="20"></button>
+                <button class="ft-ask-btn" aria-label="${i18n.footer.askGoogle}" title="${i18n.footer.askGoogle}" @click={ask("https://www.google.com/search?udm=50&q=")}><img src="/assets/icons/brands/gemini.svg" alt="" width="20" height="20"></button>
+                <button class="ft-ask-btn" aria-label="${i18n.footer.askPerplexity}" title="${i18n.footer.askPerplexity}" @click={ask("https://www.perplexity.ai/search?q=")}><img src="/assets/icons/brands/perplexity.svg" alt="" width="20" height="20"></button>
+                <button class="ft-ask-btn" aria-label="${i18n.footer.askGrok}" title="${i18n.footer.askGrok}" @click={ask("https://x.com/i/grok?text=")}><img src="/assets/icons/brands/x.svg" alt="" width="20" height="20"></button>
+            </div>
+            <span class="ft-ask-line" aria-hidden="true"></span>
         </div>
 
         <div class="ft-bottom">
             <span class="ft-copy">${i18n.footer.copyright}</span>
             <div class="ft-legal">
-                <FooterLink href="#terms" label={i18n.footer.terms} />
-                <FooterLink href="#privacy" label={i18n.footer.privacy} />
+                <button class="ft-link" @click={goFooter("#terms")}>${i18n.footer.terms}</button>
+                <button class="ft-link" @click={goFooter("#privacy")}>${i18n.footer.privacy}</button>
             </div>
         </div>
     </div>
@@ -239,6 +265,39 @@
         background: transparent;
     }
 
+    .ft-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        border: 0;
+        text-align: left;
+        cursor: pointer;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        color: rgb(var(--m-fg) / 0.6);
+        transition: color 0.15s ease;
+        background: transparent;
+    }
+
+    .ft-link:hover {
+        color: rgb(var(--m-fg));
+    }
+
+    .ft-social img {
+        opacity: 0.6;
+        transition: opacity 0.15s ease;
+    }
+
+    .ft-social span {
+        background: transparent;
+    }
+
+    .ft-social:hover img {
+        opacity: 1;
+    }
+
     .ft-heading {
         margin-bottom: 6px;
         font-family: "Jaldi", sans-serif;
@@ -248,6 +307,71 @@
         background: transparent;
     }
 
+    .ft-ask {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 56px;
+        background: transparent;
+    }
+
+    .ft-ask-line {
+        flex: 1;
+        height: 1px;
+        background-color: rgb(var(--m-fg) / 0.1);
+    }
+
+    .ft-ask-pill {
+        display: flex;
+        flex: none;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px 6px 18px;
+        border: 1px solid rgb(var(--m-fg) / 0.14);
+        border-radius: 999px;
+        background-color: rgb(var(--m-fg) / 0.04);
+    }
+
+    .ft-ask-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-right: 8px;
+        white-space: nowrap;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .ft-ask-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+        background: transparent;
+    }
+
+    .ft-ask-btn img {
+        opacity: 0.7;
+        transition: opacity 0.15s ease;
+    }
+
+    .ft-ask-btn:hover {
+        background-color: rgb(var(--m-fg) / 0.1);
+    }
+
+    .ft-ask-btn:hover img {
+        opacity: 1;
+    }
+
     .ft-bottom {
         position: relative;
         display: flex;
@@ -255,9 +379,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
         gap: 14px;
-        margin-top: 56px;
-        padding-top: 24px;
-        border-top: 1px solid rgb(var(--m-fg) / 0.1);
+        margin-top: 40px;
         background: transparent;
     }
 
@@ -307,6 +429,28 @@
 
         .ft-cols {
             grid-template-columns: repeat(2, 1fr);
+        }
+
+        .ft-ask {
+            margin-top: 40px;
+        }
+
+        .ft-ask-line {
+            display: none;
+        }
+
+        .ft-ask-pill {
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 24px;
+        }
+
+        .ft-ask-label {
+            width: 100%;
+            justify-content: center;
+            margin: 0 0 4px;
         }
     }
 </style>

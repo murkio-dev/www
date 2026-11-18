@@ -1,0 +1,67 @@
+<script>
+    // Só o que não depende do Identity no ar: configuração, locale e os erros antes da rede.
+    import { configureIdentity, identityConfigured, localeOf, login, ensureSession, signOut } from "./identity.ts";
+    import { saveSession, getSession, clearSession } from "./session.ts";
+
+    function UnitLocaleFromHtmlLang() {
+        expect(localeOf("pt-br")).toBe("pt-BR");
+        expect(localeOf("en-us")).toBe("en-US");
+        expect(localeOf("en")).toBe("en");
+        expect(localeOf("")).toBe("en");
+    }
+
+    function UnitConfiguredNeedsUrlAndPublishableKey() {
+        configureIdentity("", "");
+        expect(identityConfigured()).toBeFalse();
+        configureIdentity("http://localhost:8080/v1", "sk_id_nao_pode");
+        expect(identityConfigured()).toBeFalse();
+        configureIdentity("http://localhost:8080/v1/", "pk_id_ok");
+        expect(identityConfigured()).toBeTrue();
+    }
+
+    async function UnitCallWithoutConfigFailsAsConfig() {
+        configureIdentity("", "");
+        const r = await login("ana@empresa.com", "minha senha forte");
+        expect(r.ok).toBeFalse();
+        expect(r.status).toBe(0);
+        expect(r.code).toBe("config");
+    }
+
+    async function UnitCallWithApiDownFailsAsNetwork() {
+        configureIdentity("http://127.0.0.1:9/v1", "pk_id_ok");
+        const r = await login("ana@empresa.com", "minha senha forte");
+        expect(r.ok).toBeFalse();
+        expect(r.status).toBe(0);
+        expect(r.code).toBe("network");
+    }
+
+    async function UnitEnsureSessionWithoutSessionIsNull() {
+        clearSession();
+        expect(await ensureSession()).toBeNull();
+    }
+
+    async function UnitEnsureSessionKeepsFreshToken() {
+        configureIdentity("http://127.0.0.1:9/v1", "pk_id_ok");
+        saveSession({ access_token: "at", refresh_token: "rt", expires_at: Date.now() + 600000, user_id: "u1", email: "" });
+        const s = await ensureSession();
+        expect(s).not.toBeNull();
+        expect(s.access_token).toBe("at");
+        clearSession();
+    }
+
+    async function UnitEnsureSessionSurvivesNetworkFailureOnRefresh() {
+        configureIdentity("http://127.0.0.1:9/v1", "pk_id_ok");
+        saveSession({ access_token: "old", refresh_token: "rt", expires_at: Date.now() - 1, user_id: "u1", email: "" });
+        const s = await ensureSession();
+        expect(s).not.toBeNull();
+        expect(s.access_token).toBe("old");
+        clearSession();
+    }
+
+    async function UnitSignOutClearsEvenWithApiDown() {
+        configureIdentity("http://127.0.0.1:9/v1", "pk_id_ok");
+        saveSession({ access_token: "at", refresh_token: "rt", expires_at: Date.now() + 600000, user_id: "u1", email: "" });
+        await signOut();
+        expect(getSession()).toBeNull();
+    }
+</script>

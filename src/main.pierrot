@@ -12,9 +12,10 @@
 	set.Description("Murkio: Complete developer platform offering Identity, Vault, Payments, Serverless Lambda, and AI infrastructure.");
 	set.Charset("UTF-8");
 	set.Robots("./assets/robots.txt");
+	set.Sitemap("./assets/sitemap.xml");
 	set.I18N("./i18n");
 </script>
 
-<Header />
+<Header type="site" />
 <Page />
 <Footer />

@@ -49,7 +49,8 @@
             "en": "English",
             "ptState": "off",
             "enState": "on"
-        }
+        },
+        "panel": "Panel"
     },
     "errors": {
         "back": "Back to homepage →",
@@ -190,8 +191,8 @@
             "description": "Public keys for your frontend, secret keys for your backend. Only a SHA-256 hash is stored, and every key can be revoked or rotated.",
             "publicLabel": "Public · frontend",
             "secretLabel": "Secret · backend",
-            "publicSample": "pk_••••••••••••••••",
-            "secretSample": "sk_••••••••••••••••"
+            "publicSample": "pk_id_••••••••••••",
+            "secretSample": "sk_id_••••••••••••"
         },
         "privacy": {
             "title": "Privacy and audit",
@@ -431,6 +432,154 @@
             "rm2": "JWT_PRIVATE_KEY=••••••••••••",
             "rm3": "STRIPE_SECRET_KEY=••••••••••••"
         }
+    },
+    "vaultPage": {
+        "hero": {
+            "badge": "New: leak alerts are live",
+            "title": "Every secret in one place. None in your repo.",
+            "subtitle": "Store, type and rotate your secrets from the Murkio panel. Your app reads them at boot with one URI and one token, so there is no .env file left to leak.",
+            "primary": "Start building",
+            "secondary": "See how it works",
+            "cardEyebrow": "Typed and rotated secrets",
+            "cardTitle": "Rotate a secret without a redeploy.",
+            "cardText": "Change a value in the panel or on a schedule. Your app picks it up on the next boot, and a leaked secret is replaced the moment it is detected.",
+            "cardStatus": "STRIPE_SECRET_KEY rotated just now",
+            "stripLabel": "Built for the secrets you really have",
+            "t1": "DATABASE_URL",
+            "t2": "JWT keys",
+            "t3": "PASETO keys",
+            "t4": "API tokens",
+            "t5": "Webhook secrets"
+        },
+        "features": {
+            "badge": "Features",
+            "title": "Secrets that stay secret.",
+            "subtitle": "Typed, rotated and watched, so a leak becomes a notification instead of an incident."
+        },
+        "how": {
+            "badge": "How it works",
+            "title": "From .env to one URI in three steps.",
+            "subtitle": "No new config format and no agent to run. Move your variables once and keep shipping.",
+            "file": "diff .env",
+            "s1Title": "Add your variables",
+            "s1Text": "Create each secret in a simple table in the panel and pick its type, like a database URL or a signing key.",
+            "s2Title": "Swap the file for two lines",
+            "s2Text": "Remove the old .env and keep only VAULT_URI and VAULT_TOKEN in your environment.",
+            "s3Title": "Read them at runtime",
+            "s3Text": "Your app fetches each value when it boots. Rotate whenever you want, with nothing to redeploy."
+        },
+        "faq": {
+            "badge": "FAQ",
+            "title": "Questions about Vault",
+            "q1": "Where are my secrets stored?",
+            "a1": "Encrypted at rest, and only ever returned to an application holding a valid token for that vault.",
+            "q2": "What happens if I lose my token?",
+            "a2": "Create a new token in the panel and revoke the old one. The secrets themselves do not change.",
+            "q3": "Can I rotate a secret automatically?",
+            "a3": "Yes. Mark a secret as rotative and pick an interval, or rotate it right away when a leak alert fires.",
+            "q4": "How do leak alerts work?",
+            "a4": "We watch for your secrets being printed to the console and for your URI showing up online, and notify you in the panel.",
+            "q5": "Do I still need a .env file in development?",
+            "a5": "No. Use the same URI and a development token, so every environment reads from the same place."
+        }
+    },
+    "vaultNew": {
+        "eyebrow": "New application",
+        "subtitle": "An application groups the people and the secrets of one project. You become its admin.",
+        "name": {
+            "label": "Application name",
+            "placeholder": "my-app",
+            "hint": "Must be unique in Vault. You can rename it later."
+        },
+        "rules": {
+            "length": "3 to 50 characters",
+            "chars": "Lowercase letters, numbers and hyphens only",
+            "edges": "Starts and ends with a letter or a number"
+        },
+        "cancel": "Cancel",
+        "create": "Create application",
+        "nav": {
+            "apps": "Applications",
+            "sdks": "SDKs",
+            "mcp": "MCP"
+        },
+        "close": "Close",
+        "invite": {
+            "title": "Invite people",
+            "text": "Invites go out after the application is created. Each link is valid for 7 days.",
+            "placeholder": "name@company.com",
+            "emailLabel": "Email",
+            "roleLabel": "Role",
+            "add": "Add",
+            "roles": {
+                "developer": "Developer",
+                "admin": "Admin"
+            },
+            "empty": "No one added yet.",
+            "remove": "Remove",
+            "removeSelected": "Remove selected",
+            "selected": "selected",
+            "selectAll": "Select all",
+            "select": "Select",
+            "errors": {
+                "invalid": "Enter a valid email.",
+                "duplicate": "This email is already on the list."
+            },
+            "optional": "Optional"
+        },
+        "none": {
+            "title": "No applications yet",
+            "text": "Create your first application to start keeping secrets out of your repo."
+        },
+        "notice": {
+            "text": "Invites are not sent by email yet. After creating one, copy its link and share it yourself.",
+            "dismiss": "Dismiss"
+        },
+        "list": {
+            "search": "Search applications",
+            "noMatch": "No application matches your search.",
+            "id": "ID",
+            "created": "Created",
+            "copy": "Copy",
+            "copied": "Copied",
+            "all": "All",
+            "role": "Role"
+        },
+        "loading": "Loading…",
+        "loadError": "Could not load your applications.",
+        "retry": "Try again",
+        "creating": "Creating…",
+        "open": "Open",
+        "created": {
+            "title": "Application created",
+            "text": "Now create the secrets and a token for your app.",
+            "links": "Invite links (copy them now: shown only once)",
+            "failed": "Invite not generated for:",
+            "open": "Open application"
+        },
+        "accept": {
+            "title": "Have an invitation?",
+            "text": "Paste the invite link or token to join the application.",
+            "placeholder": "inv_… or the link",
+            "submit": "Join application",
+            "busy": "Joining…",
+            "invalid": "Invalid, used or expired invitation.",
+            "member": "You are already a member of this application.",
+            "done": "Invitation accepted."
+        },
+        "errors": {
+            "invalid": "Invalid name.",
+            "conflict": "An application with this name already exists.",
+            "generic": "Could not create the application.",
+            "session": "Your session ended. Sign in again."
+        }
+    },
+    "sidebar": {
+        "settings": "Settings",
+        "toggle": "Menu",
+        "resize": "Resize the sidebar",
+        "back": "Back to Murkio",
+        "logout": "Sign out"
     },
     "payments": {
         "badge": "Payments",
@@ -675,6 +824,254 @@
         "instagram": "Instagram",
         "copyright": "© 2026 Murkio. All rights reserved.",
         "terms": "Terms of use",
-        "privacy": "Privacy"
+        "privacy": "Privacy",
+        "askLabel": "Ask about Murkio:",
+        "askPrompt": "Explain what Murkio (murkio.com) is, the developer platform with Identity, Vault, Payments, Messaging and Lambda, and how it can help my project.",
+        "askChatgpt": "Ask ChatGPT",
+        "askClaude": "Ask Claude",
+        "askGoogle": "Ask Google AI Mode",
+        "askPerplexity": "Ask Perplexity",
+        "askGrok": "Ask Grok"
+    },
+    "auth": {
+        "title": "Sign in to Murkio",
+        "eyebrow": "Murkio panel",
+        "asideTitle": "One account for every service.",
+        "asideText": "Identity, Vault and whatever comes next share the same login. Sign in once and open any panel.",
+        "p1": "Short sessions, renewed on their own",
+        "p2": "Email verified before the first access",
+        "p3": "No secret stored in your browser",
+        "tabs": {
+            "login": "Sign in",
+            "register": "Create account"
+        },
+        "email": {
+            "label": "Email",
+            "placeholder": "you@company.com"
+        },
+        "password": {
+            "label": "Password",
+            "placeholder": "••••••••",
+            "show": "Show",
+            "hide": "Hide"
+        },
+        "rules": {
+            "length": "8 to 128 characters",
+            "edges": "No spaces at the start or end",
+            "common": "Avoid sequences and common passwords"
+        },
+        "login": {
+            "title": "Welcome back",
+            "subtitle": "Sign in to open your panel.",
+            "submit": "Sign in",
+            "busy": "Signing in…",
+            "noAccount": "No account yet?",
+            "go": "Create account"
+        },
+        "register": {
+            "title": "Create your account",
+            "subtitle": "Free to start. You confirm your email with a code.",
+            "submit": "Create account",
+            "busy": "Sending…",
+            "hasAccount": "Already have an account?",
+            "go": "Sign in"
+        },
+        "verify": {
+            "title": "Confirm your email",
+            "text": "We sent a 6-digit code to:",
+            "note": "The password you typed takes effect after confirmation.",
+            "codeLabel": "Code",
+            "codePlaceholder": "000000",
+            "submit": "Confirm",
+            "busy": "Confirming…",
+            "resend": "Resend code",
+            "resent": "If a pending account exists for this email, a new code was sent.",
+            "back": "Back",
+            "sent": "If the email is new, the code arrives in a moment. In development it sits in the Identity outbox."
+        },
+        "errors": {
+            "email": "Enter a valid email.",
+            "password": "The password does not meet the rules below.",
+            "credentials": "Invalid email or password.",
+            "tooMany": "Too many attempts. Wait a moment and try again.",
+            "notVerified": "This email is not confirmed yet. We sent a new code.",
+            "banned": "This account has been banned.",
+            "mfa": "This account requires 2FA, which the panel does not support yet.",
+            "disabled": "Password login is disabled for this application.",
+            "origin": "This origin is not allowed on the Identity application (CORS).",
+            "key": "The public key (pk_id_) in .env was rejected by Identity.",
+            "network": "Could not reach the API. Check that Identity is running.",
+            "config": "The site .env is missing (IDENTITY_URL and IDENTITY_PK).",
+            "code": "Invalid or expired code. Request a new one.",
+            "weak": "Password outside the policy:",
+            "unknown": "Something went wrong. Try again."
+        }
+    },
+    "vaultApp": {
+        "title": "Application",
+        "loading": "Loading…",
+        "loadError": "Could not load.",
+        "retry": "Try again",
+        "notFound": "Application not found or no access.",
+        "forbidden": "You do not have permission for this action.",
+        "sessionOver": "Your session ended. Sign in again.",
+        "network": "No response from the Vault API.",
+        "unknown": "Something went wrong. Try again.",
+        "copy": "Copy",
+        "copied": "Copied",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "close": "Close",
+        "save": "Save",
+        "saving": "Saving…",
+        "never": "never",
+        "you": "you",
+        "onlyAdmin": "Only admins can change this.",
+        "tabs": {
+            "secrets": "Secrets",
+            "tokens": "Tokens",
+            "members": "Members",
+            "settings": "Application"
+        },
+        "roles": {
+            "admin": "Admin",
+            "developer": "Developer"
+        },
+        "status": {
+            "active": "Active",
+            "suspended": "Suspended",
+            "revoked": "Revoked",
+            "pending": "Pending",
+            "accepted": "Accepted",
+            "expired": "Expired"
+        },
+        "secrets": {
+            "title": "Secrets",
+            "text": "Each member has their own table. The app reads it at boot with the URI and a token.",
+            "owner": "Table of",
+            "mine": "My secrets",
+            "empty": "No secrets yet.",
+            "emptyText": "Create the first secret and take the .env out of the repo.",
+            "create": "New secret",
+            "name": "Name",
+            "type": "Type",
+            "source": "Source",
+            "version": "Version",
+            "updated": "Updated",
+            "value": "Value",
+            "static": "Own",
+            "reference": "Reference",
+            "reveal": "Reveal",
+            "hide": "Hide",
+            "newVersion": "New version",
+            "rename": "Rename",
+            "delete": "Delete",
+            "deleteAsk": "Delete this secret? Versions stay encrypted for audit.",
+            "nameLabel": "Variable name",
+            "namePlaceholder": "DATABASE_URL",
+            "nameHint": "Uppercase, digits and _; starts with a letter. Unique in your table.",
+            "typeLabel": "Type",
+            "typeHint": "Each type validates the value format.",
+            "valueLabel": "Value",
+            "valuePlaceholder": "postgres://user:pass@host:5432/db",
+            "valueHint": "Up to 32 KiB. Never shown in metadata or audit.",
+            "sourceLabel": "Source",
+            "sourceStatic": "Own value",
+            "sourceReference": "Reference to a secret of this application",
+            "refLabel": "Source secret",
+            "refHint": "Must be an own secret of the same type that you can reveal.",
+            "renameLabel": "New name",
+            "versionLabel": "New value",
+            "versionHint": "Creates the next version; the previous one is kept.",
+            "types": {
+                "string": "Text",
+                "password": "Password",
+                "url": "URL",
+                "database_uri": "Database URI",
+                "api_key": "API key",
+                "jwt_key": "JWT key",
+                "paseto_key": "PASETO key"
+            },
+            "errors": {
+                "name": "Invalid name.",
+                "conflict": "A secret with this name already exists.",
+                "referenced": "Other secrets point to this one. Delete them first.",
+                "value": "The value does not match the type format.",
+                "reference": "Invalid reference."
+            }
+        },
+        "tokens": {
+            "title": "Tokens",
+            "text": "A token reads your table at runtime. Copy it on creation: it is shown only once.",
+            "empty": "No tokens yet.",
+            "emptyText": "Create a token so your app can read the secrets.",
+            "create": "New token",
+            "name": "Name",
+            "prefix": "Prefix",
+            "lastUsed": "Last used",
+            "expires": "Expires",
+            "status": "Status",
+            "revoke": "Revoke",
+            "revokeAsk": "Revoke this token? The app using it loses access immediately.",
+            "nameLabel": "Name",
+            "namePlaceholder": "production",
+            "nameHint": "Just so you recognize where the token lives.",
+            "expiresLabel": "Expires in",
+            "expiresNever": "Never",
+            "d7": "7 days",
+            "d30": "30 days",
+            "d90": "90 days",
+            "y1": "1 year",
+            "created": "Token created",
+            "once": "Copy it now: the token will not be shown again.",
+            "tokenLabel": "VAULT_TOKEN",
+            "uriLabel": "VAULT_URI"
+        },
+        "members": {
+            "title": "Members",
+            "text": "Admins manage everything; developers only their own table.",
+            "user": "User",
+            "role": "Role",
+            "status": "Status",
+            "since": "Since",
+            "makeAdmin": "Make admin",
+            "makeDev": "Make developer",
+            "suspend": "Suspend",
+            "activate": "Reactivate",
+            "remove": "Remove",
+            "removeAsk": "Remove this member? Their tokens are revoked and their secrets deleted.",
+            "lastAdmin": "The last admin cannot be demoted, suspended or removed.",
+            "invites": "Invitations",
+            "invitesText": "The link is valid for 7 days and is shown only once. Whoever opens it must be signed in to Murkio.",
+            "invite": "Invite",
+            "emailLabel": "Email",
+            "emailPlaceholder": "name@company.com",
+            "roleLabel": "Role",
+            "send": "Generate invite",
+            "link": "Invite link",
+            "once": "Copy it now: the link will not be shown again.",
+            "noInvites": "No invitations.",
+            "revoke": "Revoke",
+            "expires": "Expires",
+            "errors": {
+                "email": "Enter a valid email.",
+                "conflict": "This person is already a member."
+            }
+        },
+        "settings": {
+            "title": "Application",
+            "nameLabel": "Application name",
+            "nameHint": "Unique in Vault. Renaming does not change the URI or the tokens.",
+            "rename": "Rename",
+            "renamed": "Name updated.",
+            "danger": "Delete application",
+            "dangerText": "Deletes the secrets and revokes every token. Encrypted versions and the audit trail are kept.",
+            "confirmLabel": "Type the application name to confirm",
+            "delete": "Delete forever",
+            "errors": {
+                "name": "Invalid name.",
+                "conflict": "An application with this name already exists."
+            }
+        }
     }
 }

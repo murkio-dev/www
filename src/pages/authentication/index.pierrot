@@ -1,0 +1,385 @@
+<script>
+    import "./styles.css";
+    import { Hero } from "../../components/hero.pierrot";
+    import { Logo } from "../../components/logo.pierrot";
+    import { configureIdentity, login, signup, sendVerification, confirmEmail, startSession, localeOf, TokenPair } from "../../scripts/logic/identity.ts";
+    import { hasSession, panelPath } from "../../scripts/logic/session.ts";
+    import { isEmail, isPasswordOk, passwordLengthOk, passwordEdgesOk, isCode, digitsOnly, ruleClass, queryParam, safeNext } from "../../scripts/logic/rules.ts";
+
+    // Entrar e criar conta, numa tela só. Quem já tem sessão vai direto para o painel.
+    // Fluxo do cadastro (identity/docs/features/signup.md): POST /signup responde 202 e manda um
+    // código por e-mail; a confirmação leva e-mail + código + senha e devolve a sessão.
+    // Login com e-mail não confirmado (403 rsb-07) cai no mesmo passo do código.
+    set.Title("Murkio");
+
+    configureIdentity(get.Dotenv("IDENTITY_URL"), get.Dotenv("IDENTITY_PK"));
+
+    // "login" | "register" | "verify"
+    let auMode = "login";
+    let auEmail = "";
+    let auPassword = "";
+    let auCode = "";
+    let auShowPw: boolean = false;
+    let auBusy: boolean = false;
+    // chave do erro (auth.errors.* no json de idioma) e detalhes vindos da API
+    let auErr = "";
+    let auDetails: string[] = [];
+    // chave do aviso (auth.verify.* no json de idioma)
+    let auInfo = "";
+    let auNext = "";
+
+    if (typeof window !== "undefined") {
+        if (hasSession()) {
+            client.Redirect(panelPath());
+        }
+        auNext = safeNext(queryParam(location.search, "next"));
+        if (queryParam(location.search, "mode") == "register") {
+            auMode = "register";
+        }
+    }
+
+    function auSetMode(m: string): void {
+        auMode = m;
+        auErr = "";
+        auDetails = [];
+        auInfo = "";
+        auCode = "";
+    }
+
+    function auTogglePw(): void {
+        auShowPw = !auShowPw;
+    }
+
+    function auCodeInput(e: Event): void {
+        const field = e.target as HTMLInputElement;
+        field.value = digitsOnly(field.value);
+        auCode = field.value;
+    }
+
+    function auFail(code: string, details: { code: string, message: string }[]): void {
+        auDetails = [];
+        if (code == "rsb-00") {
+            auErr = "credentials";
+        } else if (code == "rsb-01") {
+            auErr = "tooMany";
+        } else if (code == "rsb-13") {
+            auErr = "banned";
+        } else if (code == "rsb-06") {
+            auErr = "code";
+        } else if (code == "rag-03") {
+            auErr = "email";
+        } else if (code == "rag-06") {
+            auErr = "weak";
+            auDetails = details.map((d) => d.message);
+        } else if (code == "bss-05") {
+            auErr = "disabled";
+        } else if (code == "bss-10") {
+            auErr = "origin";
+        } else if (code == "bss-01" || code == "bss-00" || code == "bss-04") {
+            auErr = "key";
+        } else if (code == "network") {
+            auErr = "network";
+        } else if (code == "config") {
+            auErr = "config";
+        } else {
+            auErr = "unknown";
+        }
+    }
+
+    async function auFinish(pair: TokenPair): Promise<void> {
+        const s = await startSession(pair);
+        if (!s.ok || !s.data) {
+            auFail(s.code, s.details);
+            return;
+        }
+        client.Redirect(auNext != "" ? auNext : "/vault/" + s.data.user_id);
+    }
+
+    async function auSubmitLogin(e: Event): Promise<void> {
+        e.preventDefault();
+        auErr = "";
+        auDetails = [];
+        auInfo = "";
+        if (!isEmail(auEmail)) {
+            auErr = "email";
+            return;
+        }
+        if (auPassword == "") {
+            auErr = "credentials";
+            return;
+        }
+        auBusy = true;
+        const r = await login(auEmail.trim().toLowerCase(), auPassword);
+        if (r.ok && r.data && r.data.access_token) {
+            await auFinish(r.data);
+            auBusy = false;
+            return;
+        }
+        auBusy = false;
+        if (r.ok && r.data && r.data.mfa) {
+            auErr = "mfa";
+            return;
+        }
+        if (r.code == "rsb-07") {
+            // senha certa, e-mail pendente: manda um código novo e segue para a confirmação
+            await sendVerification(auEmail.trim().toLowerCase(), localeOf(document.documentElement.lang));
+            auMode = "verify";
+            auErr = "notVerified";
+            return;
+        }
+        auFail(r.code, r.details);
+    }
+
+    async function auSubmitRegister(e: Event): Promise<void> {
+        e.preventDefault();
+        auErr = "";
+        auDetails = [];
+        auInfo = "";
+        if (!isEmail(auEmail)) {
+            auErr = "email";
+            return;
+        }
+        if (!isPasswordOk(auPassword)) {
+            auErr = "password";
+            return;
+        }
+        auBusy = true;
+        const r = await signup(auEmail.trim().toLowerCase(), auPassword, localeOf(document.documentElement.lang));
+        auBusy = false;
+        if (r.ok) {
+            auMode = "verify";
+            auInfo = "sent";
+            return;
+        }
+        auFail(r.code, r.details);
+    }
+
+    async function auSubmitVerify(e: Event): Promise<void> {
+        e.preventDefault();
+        auErr = "";
+        auDetails = [];
+        auInfo = "";
+        if (!isCode(auCode)) {
+            auErr = "code";
+            return;
+        }
+        if (!isPasswordOk(auPassword)) {
+            // chegou aqui pelo login com uma senha fora da política atual: volta para corrigir
+            auMode = "register";
+            auErr = "password";
+            return;
+        }
+        auBusy = true;
+        const r = await confirmEmail(auEmail.trim().toLowerCase(), auCode.trim(), auPassword);
+        if (r.ok && r.data && r.data.access_token) {
+            await auFinish(r.data);
+            auBusy = false;
+            return;
+        }
+        auBusy = false;
+        if (r.ok && r.data && r.data.mfa) {
+            auErr = "mfa";
+            return;
+        }
+        if (r.ok) {
+            // login_on_verify desligado na aplicação: e-mail confirmado, falta entrar
+            auMode = "login";
+            auCode = "";
+            return;
+        }
+        auFail(r.code, r.details);
+    }
+
+    async function auResend(): Promise<void> {
+        auErr = "";
+        auInfo = "";
+        auBusy = true;
+        const r = await sendVerification(auEmail.trim().toLowerCase(), localeOf(document.documentElement.lang));
+        auBusy = false;
+        if (r.ok) {
+            auInfo = "resent";
+            return;
+        }
+        auFail(r.code, r.details);
+    }
+</script>
+
+<div class="au-wrap">
+<main class="au-hero">
+    <Hero type="lights" />
+    <span class="au-arc au-arc-glow" aria-hidden="true"></span>
+    <span class="au-arc au-arc-line" aria-hidden="true"></span>
+
+    <div class="au-grid">
+        <section class="au-aside">
+            <span class="au-eyebrow"><Logo type="mark" size="22" />${i18n.auth.eyebrow}</span>
+            <h1 class="au-aside-title">${i18n.auth.asideTitle}</h1>
+            <p class="au-aside-text">${i18n.auth.asideText}</p>
+            <ul class="au-points">
+                <li class="au-point"><span class="au-tick" aria-hidden="true"></span>${i18n.auth.p1}</li>
+                <li class="au-point"><span class="au-tick" aria-hidden="true"></span>${i18n.auth.p2}</li>
+                <li class="au-point"><span class="au-tick" aria-hidden="true"></span>${i18n.auth.p3}</li>
+            </ul>
+        </section>
+
+        <section class="au-card" aria-label="${i18n.auth.title}">
+            @if auMode != "verify"
+                <div class="au-tabs" role="tablist">
+                    <button class="au-tab ${auMode == 'login' ? 'au-tab-on' : ''}" type="button" role="tab" aria-selected="${auMode == 'login'}" @click={auSetMode("login")}>${i18n.auth.tabs.login}</button>
+                    <button class="au-tab ${auMode == 'register' ? 'au-tab-on' : ''}" type="button" role="tab" aria-selected="${auMode == 'register'}" @click={auSetMode("register")}>${i18n.auth.tabs.register}</button>
+                </div>
+            @end
+
+            @if auMode == "login"
+                <form class="au-form" novalidate @submit={auSubmitLogin(event)}>
+                    <h2 class="au-title">${i18n.auth.login.title}</h2>
+                    <p class="au-subtitle">${i18n.auth.login.subtitle}</p>
+
+                    <label class="au-label" for="au-email">${i18n.auth.email.label}</label>
+                    <input id="au-email" class="au-input" type="email" name="email" autocomplete="email" spellcheck="false" placeholder="${i18n.auth.email.placeholder}" @bind={auEmail}>
+
+                    <label class="au-label" for="au-password">${i18n.auth.password.label}</label>
+                    <div class="au-pw">
+                        <input id="au-password" class="au-input au-input-pw" type="${auShowPw ? 'text' : 'password'}" name="password" autocomplete="current-password" placeholder="${i18n.auth.password.placeholder}" @bind={auPassword}>
+                        <button class="au-pw-toggle" type="button" @click={auTogglePw}>
+                            @if auShowPw
+                                ${i18n.auth.password.hide}
+                            @else
+                                ${i18n.auth.password.show}
+                            @end
+                        </button>
+                    </div>
+
+                    @if auBusy
+                        <button class="au-btn au-btn-primary" type="submit" disabled>${i18n.auth.login.busy}</button>
+                    @else
+                        <button class="au-btn au-btn-primary" type="submit">${i18n.auth.login.submit}</button>
+                    @end
+
+                    <p class="au-switch">${i18n.auth.login.noAccount} <button class="au-link" type="button" @click={auSetMode("register")}>${i18n.auth.login.go}</button></p>
+                </form>
+            @end
+
+            @if auMode == "register"
+                <form class="au-form" novalidate @submit={auSubmitRegister(event)}>
+                    <h2 class="au-title">${i18n.auth.register.title}</h2>
+                    <p class="au-subtitle">${i18n.auth.register.subtitle}</p>
+
+                    <label class="au-label" for="au-email">${i18n.auth.email.label}</label>
+                    <input id="au-email" class="au-input" type="email" name="email" autocomplete="email" spellcheck="false" placeholder="${i18n.auth.email.placeholder}" @bind={auEmail}>
+
+                    <label class="au-label" for="au-password">${i18n.auth.password.label}</label>
+                    <div class="au-pw">
+                        <input id="au-password" class="au-input au-input-pw" type="${auShowPw ? 'text' : 'password'}" name="password" autocomplete="new-password" placeholder="${i18n.auth.password.placeholder}" @bind={auPassword}>
+                        <button class="au-pw-toggle" type="button" @click={auTogglePw}>
+                            @if auShowPw
+                                ${i18n.auth.password.hide}
+                            @else
+                                ${i18n.auth.password.show}
+                            @end
+                        </button>
+                    </div>
+
+                    <ul class="au-rules">
+                        <li class="${ruleClass(auPassword, passwordLengthOk(auPassword), 'au-rule')}"><span class="au-rule-mark"></span>${i18n.auth.rules.length}</li>
+                        <li class="${ruleClass(auPassword, passwordEdgesOk(auPassword), 'au-rule')}"><span class="au-rule-mark"></span>${i18n.auth.rules.edges}</li>
+                        <li class="au-rule"><span class="au-rule-mark"></span>${i18n.auth.rules.common}</li>
+                    </ul>
+
+                    @if auBusy
+                        <button class="au-btn au-btn-primary" type="submit" disabled>${i18n.auth.register.busy}</button>
+                    @else
+                        <button class="au-btn au-btn-primary" type="submit">${i18n.auth.register.submit}</button>
+                    @end
+
+                    <p class="au-switch">${i18n.auth.register.hasAccount} <button class="au-link" type="button" @click={auSetMode("login")}>${i18n.auth.register.go}</button></p>
+                </form>
+            @end
+
+            @if auMode == "verify"
+                <form class="au-form" novalidate @submit={auSubmitVerify(event)}>
+                    <h2 class="au-title">${i18n.auth.verify.title}</h2>
+                    <p class="au-subtitle">${i18n.auth.verify.text} <strong class="au-email">${auEmail}</strong></p>
+
+                    @if auInfo == "sent"
+                        <p class="au-info" role="status">${i18n.auth.verify.sent}</p>
+                    @end
+                    @if auInfo == "resent"
+                        <p class="au-info" role="status">${i18n.auth.verify.resent}</p>
+                    @end
+
+                    <label class="au-label" for="au-code">${i18n.auth.verify.codeLabel}</label>
+                    <input id="au-code" class="au-input au-input-code" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" spellcheck="false" placeholder="${i18n.auth.verify.codePlaceholder}" @bind={auCode} @input={auCodeInput(event)}>
+                    <p class="au-hint">${i18n.auth.verify.note}</p>
+
+                    @if auBusy
+                        <button class="au-btn au-btn-primary" type="submit" disabled>${i18n.auth.verify.busy}</button>
+                    @else
+                        <button class="au-btn au-btn-primary" type="submit">${i18n.auth.verify.submit}</button>
+                    @end
+
+                    <div class="au-verify-actions">
+                        <button class="au-link" type="button" @click={auResend}>${i18n.auth.verify.resend}</button>
+                        <button class="au-link" type="button" @click={auSetMode("login")}>${i18n.auth.verify.back}</button>
+                    </div>
+                </form>
+            @end
+
+            @if auErr != ""
+                <div class="au-error" role="alert">
+                    @if auErr == "email"
+                        ${i18n.auth.errors.email}
+                    @end
+                    @if auErr == "password"
+                        ${i18n.auth.errors.password}
+                    @end
+                    @if auErr == "credentials"
+                        ${i18n.auth.errors.credentials}
+                    @end
+                    @if auErr == "tooMany"
+                        ${i18n.auth.errors.tooMany}
+                    @end
+                    @if auErr == "notVerified"
+                        ${i18n.auth.errors.notVerified}
+                    @end
+                    @if auErr == "banned"
+                        ${i18n.auth.errors.banned}
+                    @end
+                    @if auErr == "mfa"
+                        ${i18n.auth.errors.mfa}
+                    @end
+                    @if auErr == "disabled"
+                        ${i18n.auth.errors.disabled}
+                    @end
+                    @if auErr == "origin"
+                        ${i18n.auth.errors.origin}
+                    @end
+                    @if auErr == "key"
+                        ${i18n.auth.errors.key}
+                    @end
+                    @if auErr == "network"
+                        ${i18n.auth.errors.network}
+                    @end
+                    @if auErr == "config"
+                        ${i18n.auth.errors.config}
+                    @end
+                    @if auErr == "code"
+                        ${i18n.auth.errors.code}
+                    @end
+                    @if auErr == "weak"
+                        ${i18n.auth.errors.weak}
+                        <ul class="au-error-list">
+                            @for d in auDetails
+                                <li>${d}</li>
+                            @end
+                        </ul>
+                    @end
+                    @if auErr == "unknown"
+                        ${i18n.auth.errors.unknown}
+                    @end
+                </div>
+            @end
+        </section>
+    </div>
+</main>
+</div>

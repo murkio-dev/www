@@ -1,15 +1,25 @@
 <script>
+    let type: string;
     let name: string;
+    let size: string;
+
     function goLogo(url: string): void {
         client.Redirect(url);
     }
 </script>
 
-<button class="logo" @click={goLogo("/")}>
-    <img class="logo-image logo-dark" src="/assets/logo/full.svg" alt="${name}" width="36" height="36">
-    <img class="logo-image logo-light" src="/assets/logo/full-light.svg" alt="${name}" width="36" height="36">
-    <span class="logo-name">${name}</span>
-</button>
+@if type == "mark"
+    <span class="star" aria-hidden="true">
+        <img class="star-dark" src="/assets/logo/mark.svg" alt="" width="${size}" height="${size}">
+        <img class="star-light" src="/assets/logo/mark-light.svg" alt="" width="${size}" height="${size}">
+    </span>
+@else
+    <button class="logo" @click={goLogo("/")}>
+        <img class="logo-image logo-dark" src="/assets/logo/full.svg" alt="${name}" width="36" height="36">
+        <img class="logo-image logo-light" src="/assets/logo/full-light.svg" alt="${name}" width="36" height="36">
+        <span class="logo-name">${name}</span>
+    </button>
+@end
 
 <style>
     .logo {
@@ -48,5 +58,29 @@
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
+    }
+
+    /* tipo "mark": só a estrela, em qualquer tamanho */
+
+    .star {
+        display: inline-flex;
+        flex: none;
+        background: transparent;
+    }
+
+    .star img {
+        display: block;
+    }
+
+    .star .star-light {
+        display: none;
+    }
+
+    :root[data-theme="light"] .star .star-dark {
+        display: none;
+    }
+
+    :root[data-theme="light"] .star .star-light {
+        display: block;
     }
 </style>

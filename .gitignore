@@ -1,0 +1,22 @@
+# Saída do build (é refeita a cada `pierrot build`)
+/build/
+
+# Segredos: nunca vão para o git. Deixe só o .env.example, sem valores reais.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+id_ed25519*
+secrets/
+
+# Lixo de sistema e de editor
+node_modules/
+.DS_Store
+Thumbs.db
+*.swp
+*~

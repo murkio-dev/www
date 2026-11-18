@@ -1,0 +1,456 @@
+<script>
+    import { Logo } from "./logo.pierrot";
+    import { signOut } from "../scripts/logic/identity.ts";
+
+    // Barra lateral das telas de app (Vault, e depois os outros serviços).
+    //   service       nome do serviço, mostrado ao lado da marca
+    //   active        qual botão está selecionado: "1" a "6", ou "settings"
+    //   labelN/iconN/hrefN   até 6 botões do serviço; sem labelN o botão não aparece
+    //   settingsHref  para onde vai o botão de configurações, que é fixo e sempre fica embaixo
+    //   (logo acima dele fica o "Voltar para Murkio", também fixo, que leva para a home do site)
+    //
+    // Desktop: a borda direita é uma alça; arrastar (ou usar as setas do teclado) muda a largura, que fica
+    // guardada no navegador. A largura vai na variável --sb-w, então a página usa
+    // grid-template-columns: var(--sb-w, 240px) minmax(0, 1fr).
+    // Celular (até 820px): a barra fica escondida e um botão de seta no meio da tela abre ela por cima,
+    // com 75% da largura. Aberta, o resto da tela fica escurecido e inerte (foco só nela); fecha com o botão,
+    // tocando no fundo ou com Esc.
+    let service: string;
+    let active: string;
+    let settingsHref: string;
+    let label1: string;
+    let icon1: string;
+    let href1: string;
+    let label2: string;
+    let icon2: string;
+    let href2: string;
+    let label3: string;
+    let icon3: string;
+    let href3: string;
+    let label4: string;
+    let icon4: string;
+    let href4: string;
+    let label5: string;
+    let icon5: string;
+    let href5: string;
+    let label6: string;
+    let icon6: string;
+    let href6: string;
+
+    let open: boolean = false;
+
+    const SB_MIN = 200;
+    const SB_MAX = 420;
+    const SB_STEP = 16;
+    const SB_KEY = "murkio-sidebar-width";
+    const SB_MOBILE = "(max-width: 820px)";
+
+    function sbWidth(): number {
+        const side = document.querySelector(".sb");
+        return side ? side.getBoundingClientRect().width : 240;
+    }
+
+    function sbSetWidth(px: number): number {
+        const w = Math.min(SB_MAX, Math.max(SB_MIN, Math.round(px)));
+        document.documentElement.style.setProperty("--sb-w", w + "px");
+        return w;
+    }
+
+    function sbSave(): void {
+        try {
+            localStorage.setItem(SB_KEY, String(Math.round(sbWidth())));
+        } catch (e) {}
+    }
+
+    // o resto da tela só fica inerte com a barra aberta no celular
+    function sbIsolate(on: boolean): void {
+        const side = document.querySelector(".sb");
+        if (!side || !side.parentElement) {
+            return;
+        }
+        for (const el of Array.from(side.parentElement.children)) {
+            const own = el === side || el.classList.contains("sb-toggle") || el.classList.contains("sb-scrim");
+            if (!own) {
+                (el as HTMLElement).inert = on;
+            }
+        }
+    }
+
+    function closeSidebar(): void {
+        open = false;
+        sbIsolate(false);
+    }
+
+    function toggleSidebar(): void {
+        open = !open;
+        sbIsolate(open);
+        if (open) {
+            setTimeout(() => {
+                const side = document.querySelector(".sb") as HTMLElement;
+                if (side) {
+                    side.focus();
+                }
+            }, 60);
+        }
+    }
+
+    function dragSidebar(e: PointerEvent): void {
+        e.preventDefault();
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "col-resize";
+        const move = (ev: PointerEvent) => {
+            sbSetWidth(ev.clientX);
+        };
+        const stop = () => {
+            document.removeEventListener("pointermove", move);
+            document.removeEventListener("pointerup", stop);
+            document.removeEventListener("pointercancel", stop);
+            document.body.style.userSelect = "";
+            document.body.style.cursor = "";
+            sbSave();
+        };
+        document.addEventListener("pointermove", move);
+        document.addEventListener("pointerup", stop);
+        document.addEventListener("pointercancel", stop);
+    }
+
+    function keySidebar(e: KeyboardEvent): void {
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            sbSetWidth(sbWidth() - SB_STEP);
+            sbSave();
+        } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            sbSetWidth(sbWidth() + SB_STEP);
+            sbSave();
+        }
+    }
+
+    function resetSidebar(): void {
+        document.documentElement.style.removeProperty("--sb-w");
+        try {
+            localStorage.removeItem(SB_KEY);
+        } catch (e) {}
+    }
+
+    function escSidebar(e: KeyboardEvent): void {
+        if (e.key === "Escape" && open) {
+            closeSidebar();
+        }
+    }
+
+    function goSidebar(url: string): void {
+        client.Redirect(url);
+    }
+
+    // Encerra a sessão (no Identity e no navegador) e volta para a home do site.
+    async function logoutSidebar(): Promise<void> {
+        await signOut();
+        client.Redirect("/");
+    }
+
+    if (typeof window !== "undefined") {
+        try {
+            const saved = Number(localStorage.getItem(SB_KEY));
+            if (saved > 0) {
+                sbSetWidth(saved);
+            }
+        } catch (e) {}
+
+        // listeners soltos no document não redesenham a tela (só os eventos do template redesenham):
+        // aqui só o DOM é ajustado. Esc e o resto passam por @keydown/@click no template.
+        window.addEventListener("resize", () => {
+            sbIsolate(open && window.matchMedia(SB_MOBILE).matches);
+        });
+    }
+</script>
+
+<aside class="sb ${open ? 'sb-open' : ''}" tabindex="-1" aria-label="${i18n.sidebar.toggle}" @keydown={escSidebar(event)}>
+    <div class="sb-brand">
+        <Logo type="mark" size="22" />
+        <span class="sb-brand-name">${i18n.brand}</span>
+        @if service
+            <span class="sb-brand-svc">${service}</span>
+        @end
+    </div>
+
+    <nav class="sb-nav" aria-label="${service}">
+            @if label1
+                <button class="sb-item ${active == '1' ? 'sb-item-active' : ''}" @click={goSidebar(href1)}>
+                    <img class="sb-icon" src="${icon1}" alt="" width="16" height="16">
+                    <span class="sb-label">${label1}</span>
+                </button>
+            @end
+            @if label2
+                <button class="sb-item ${active == '2' ? 'sb-item-active' : ''}" @click={goSidebar(href2)}>
+                    <img class="sb-icon" src="${icon2}" alt="" width="16" height="16">
+                    <span class="sb-label">${label2}</span>
+                </button>
+            @end
+            @if label3
+                <button class="sb-item ${active == '3' ? 'sb-item-active' : ''}" @click={goSidebar(href3)}>
+                    <img class="sb-icon" src="${icon3}" alt="" width="16" height="16">
+                    <span class="sb-label">${label3}</span>
+                </button>
+            @end
+            @if label4
+                <button class="sb-item ${active == '4' ? 'sb-item-active' : ''}" @click={goSidebar(href4)}>
+                    <img class="sb-icon" src="${icon4}" alt="" width="16" height="16">
+                    <span class="sb-label">${label4}</span>
+                </button>
+            @end
+            @if label5
+                <button class="sb-item ${active == '5' ? 'sb-item-active' : ''}" @click={goSidebar(href5)}>
+                    <img class="sb-icon" src="${icon5}" alt="" width="16" height="16">
+                    <span class="sb-label">${label5}</span>
+                </button>
+            @end
+            @if label6
+                <button class="sb-item ${active == '6' ? 'sb-item-active' : ''}" @click={goSidebar(href6)}>
+                    <img class="sb-icon" src="${icon6}" alt="" width="16" height="16">
+                    <span class="sb-label">${label6}</span>
+                </button>
+            @end
+    </nav>
+
+    <div class="sb-foot">
+        <button class="sb-item sb-back" @click={goSidebar("/")}>
+            <img class="sb-icon sb-back-icon" src="/assets/icons/ui/chevron.svg" alt="" width="14" height="7">
+            <span class="sb-label">${i18n.sidebar.back}</span>
+        </button>
+        <button class="sb-item sb-settings ${active == 'settings' ? 'sb-item-active' : ''}" @click={goSidebar(settingsHref)}>
+            <img class="sb-icon" src="/assets/icons/ui/sliders.svg" alt="" width="16" height="16">
+            <span class="sb-label">${i18n.sidebar.settings}</span>
+        </button>
+        <button class="sb-item sb-logout" @click={logoutSidebar}>
+            <img class="sb-icon" src="/assets/icons/ui/user.svg" alt="" width="16" height="16">
+            <span class="sb-label">${i18n.sidebar.logout}</span>
+        </button>
+    </div>
+
+    <div class="sb-resize" role="separator" aria-orientation="vertical" aria-label="${i18n.sidebar.resize}" tabindex="0" @pointerdown={dragSidebar(event)} @keydown={keySidebar(event)} @dblclick={resetSidebar}></div>
+</aside>
+
+<div class="sb-scrim ${open ? 'sb-scrim-on' : ''}" @click={closeSidebar}></div>
+
+<button class="sb-toggle ${open ? 'sb-toggle-open' : ''}" aria-label="${i18n.sidebar.toggle}" aria-expanded="${open}" @click={toggleSidebar}>
+    <img class="sb-toggle-icon" src="/assets/icons/ui/chevron.svg" alt="" width="12" height="6">
+</button>
+
+<style>
+    /* telas com barra lateral são telas de app: o header e o footer do site não aparecem */
+    body:has(.sb) {
+        padding-top: 0;
+    }
+
+    body:has(.sb) .header,
+    body:has(.sb) .ft {
+        display: none;
+    }
+
+    .sb {
+        position: sticky;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        box-sizing: border-box;
+        width: var(--sb-w, 240px);
+        height: 100vh;
+        height: 100dvh;
+        padding: 20px 12px;
+        border-right: 1px solid rgb(var(--m-rose) / 0.14);
+        outline: none;
+        background-image: var(--m-noise), linear-gradient(180deg, color-mix(in srgb, #2c1c1f calc(var(--m-dark) * 100%), var(--m-l2)) 0%, color-mix(in srgb, #1a1113 calc(var(--m-dark) * 100%), #ecdcdc) 100%);
+    }
+
+    .sb-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 0 10px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 19px;
+        color: rgb(var(--m-fg));
+    }
+
+    .sb-brand-svc {
+        padding: 2px 8px;
+        border: 1px solid rgb(var(--m-rose) / 0.35);
+        border-radius: 999px;
+        font-size: 12px;
+        color: rgb(var(--m-rose-hi));
+        background-color: rgb(var(--m-rose) / 0.08);
+    }
+
+    .sb-nav {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        gap: 2px;
+        overflow-y: auto;
+    }
+
+    .sb-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 9px 10px;
+        border: 1px solid transparent;
+        border-radius: 10px;
+        cursor: pointer;
+        text-align: left;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .sb-item:hover {
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.05);
+    }
+
+    .sb-item-active {
+        border-color: rgb(var(--m-fg) / 0.1);
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    .sb-icon {
+        flex: none;
+    }
+
+    .sb-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .sb-foot {
+        display: flex;
+        flex: none;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    /* o chevron aponta para baixo: girado, aponta para a esquerda */
+    .sb-back-icon {
+        transform: rotate(90deg);
+    }
+
+    /* alça de redimensionar na borda direita */
+    .sb-resize {
+        position: absolute;
+        top: 0;
+        right: -4px;
+        bottom: 0;
+        z-index: 2;
+        width: 8px;
+        cursor: col-resize;
+        touch-action: none;
+        outline: none;
+    }
+
+    .sb-resize::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 3px;
+        width: 2px;
+        background-color: transparent;
+        transition: background-color 0.15s;
+    }
+
+    .sb-resize:hover::after,
+    .sb-resize:focus-visible::after {
+        background-color: rgb(var(--m-rose) / 0.6);
+    }
+
+    .sb-scrim,
+    .sb-toggle {
+        display: none;
+    }
+
+    @media (max-width: 820px) {
+        .sb {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 60;
+            width: 75vw;
+            transform: translateX(-100%);
+            visibility: hidden;
+            transition: transform 0.28s ease, visibility 0s linear 0.28s;
+        }
+
+        .sb-open {
+            transform: translateX(0);
+            visibility: visible;
+            box-shadow: 24px 0 60px rgba(0, 0, 0, 0.45);
+            transition: transform 0.28s ease, visibility 0s;
+        }
+
+        .sb-resize {
+            display: none;
+        }
+
+        .sb-scrim {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+            background-color: rgb(0 0 0 / 0.55);
+            -webkit-backdrop-filter: blur(3px);
+            backdrop-filter: blur(3px);
+            transition: opacity 0.28s ease;
+        }
+
+        .sb-scrim-on {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sb-toggle {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            z-index: 70;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 60px;
+            padding: 0;
+            border: 1px solid rgb(var(--m-fg) / 0.16);
+            border-left: 0;
+            border-radius: 0 14px 14px 0;
+            cursor: pointer;
+            transform: translateY(-50%);
+            background-color: rgb(var(--m-page-rgb) / 0.85);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            transition: left 0.28s ease;
+        }
+
+        .sb-toggle-open {
+            left: 75vw;
+        }
+
+        /* o chevron aponta para baixo: fechado aponta para a direita, aberto para a esquerda */
+        .sb-toggle-icon {
+            transform: rotate(-90deg);
+            transition: transform 0.28s ease;
+        }
+
+        .sb-toggle-open .sb-toggle-icon {
+            transform: rotate(90deg);
+        }
+    }
+</style>

@@ -43,7 +43,7 @@
         }
     }
 
-    // ---------- Componente: IdnCap ----------
+    // ---------- Componente: Card (type cap) ----------
 
     function ComponentCapabilityCards(target) {
         expect().toHaveCount(9).onClass("idn-cap");
@@ -94,7 +94,7 @@
         expect().toHaveCount(5).onSelector(".idn-mock-social > span");
     }
 
-    // ---------- Componente: IdnSdk / ComingSoonTag ----------
+    // ---------- Componente: Card (type sdk) / etiqueta "em breve" ----------
 
     function ComponentSdkCards(target) {
         expect().toHaveCount(12).onClass("idn-sdk");
@@ -160,7 +160,7 @@
         expect().toHaveCount(5).onClass("plan-cta");
         expect().toHaveText(en.idn.pricing.cta).onSelector(".plan:nth-child(1) .button-primary");
         click().OnSelector(".plan:nth-child(2) .button-primary");
-        expect().toBeOnUrl(/#account$/);
+        expect().toBeOnUrl(/\/authentication\?mode=register$/);
     }
 
     function ComponentCustomPlanLink(target) {
@@ -169,7 +169,7 @@
         expect().toHaveAttribute("href", "/en-us/support").onClass("idn-fine-link");
     }
 
-    // ---------- Componente: IdnFaq ----------
+    // ---------- Componente: Card (type faq) ----------
 
     function ComponentFaqListsEveryQuestion(target) {
         expect().toHaveCount(7).onClass("idn-faq");

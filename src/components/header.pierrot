@@ -1,24 +1,176 @@
 <script>
     import { Logo } from "./logo.pierrot";
-    import { Navbar } from "./navbar.pierrot";
-    import { AccountButton } from "./accountButton.pierrot";
-    import { LoginButton } from "./loginButton.pierrot";
-    import { LangMenu } from "./langMenu.pierrot";
-    import { ThemeToggle } from "./themeToggle.pierrot";
+    import { Button } from "./button.pierrot";
+    import { hasSession, panelPath } from "../scripts/logic/session.ts";
+
+    // Com sessão guardada, o header troca "Entrar"/"Criar conta" por um botão para o painel.
+    let hdLogged: boolean = hasSession();
+
+    // type: "site" (barra fixa do topo), "section" (selo, título e subtítulo de uma seção)
+    // ou "badge" (só o selo). Os tipos "section" e "badge" usam badge, title e subtitle.
+    let type: string;
+    let badge: string;
+    let title: string;
+    let subtitle: string;
+
+    function go(url: string): void {
+        client.Redirect(url);
+    }
+
+    function goLang(lang: string): void {
+        const parts = location.pathname.split("/").filter(Boolean);
+        if (parts.length > 0 && (parts[0] === "pt-br" || parts[0] === "en-us")) {
+            parts.shift();
+        }
+        const rest = parts.length === 0 ? "/" : "";
+        client.Redirect("/" + [lang, ...parts].join("/") + rest + location.hash);
+    }
+
+    function flipTheme(): void {
+        const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("murkio-theme", next);
+    }
 </script>
 
-<header class="header">
-    <div class="header-inner">
-        <div class="header-start"><Logo name={i18n.brand} /></div>
-        <Navbar />
-        <div class="header-end">
-            <LangMenu />
-            <ThemeToggle />
-            <LoginButton href="#login" label={i18n.header.login} />
-            <AccountButton href="#account" label={i18n.header.createAccount} />
+@if type == "site"
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-start"><Logo type="full" name={i18n.brand} /></div>
+            <nav class="navbar" aria-label="${i18n.header.nav.label}">
+                <button class="nav-link" @click={go("/")}>${i18n.header.nav.home}</button>
+                <span class="navbar-divider"></span>
+                <div class="services-menu">
+                    <button class="services-trigger" aria-haspopup="true">
+                        ${i18n.header.nav.services}
+                        <img class="services-chevron" src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
+                    </button>
+
+                    <div class="services-panel">
+                        <div class="services-card">
+                            <div class="services-col">
+                                <p class="services-heading">${i18n.header.services.title}</p>
+                                <button class="service-item" @click={go("/identity")}>
+                                    <span class="service-item-icon"><img src="/assets/icons/services/auth.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.auth.title}</span>
+                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.auth.description}</span>
+                                    </span>
+                                </button>
+                                <button class="service-item" @click={go("/messaging")}>
+                                    <span class="service-item-icon"><img src="/assets/icons/services/messaging.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.messaging.title}</span>
+                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.messaging.description}</span>
+                                    </span>
+                                </button>
+                                <button class="service-item" @click={go("/pay")}>
+                                    <span class="service-item-icon"><img src="/assets/icons/services/payments.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.payments.title}</span>
+                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.payments.description}</span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="services-col">
+                                <p class="services-heading">${i18n.header.services.infraTitle}</p>
+                                <button class="service-item" @click={go("/vault")}>
+                                    <span class="service-item-icon"><img src="/assets/icons/services/vault.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.vault.title}</span>
+                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.vault.description}</span>
+                                    </span>
+                                </button>
+                                <button class="service-item" @click={go("/lambda")}>
+                                    <span class="service-item-icon"><img src="/assets/icons/services/lambda.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.lambda.title}</span>
+                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.lambda.description}</span>
+                                    </span>
+                                </button>
+                                <button class="service-item">
+                                    <span class="service-item-icon"><img src="/assets/icons/services/database.svg" alt="" width="20" height="20"></span>
+                                    <span class="service-item-text">
+                                        <span class="service-item-head">
+                                            <span class="service-item-title">${i18n.header.services.database.title}</span>
+                                            <span class="service-flag service-flag-soon"><span class="service-flag-dot"></span>${i18n.header.services.soon}</span>
+                                        </span>
+                                        <span class="service-item-description">${i18n.header.services.database.description}</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="navbar-divider"></span>
+                <button class="nav-link" @click={go("#pricing")}>${i18n.header.nav.pricing}</button>
+                <span class="navbar-divider"></span>
+                <button class="nav-link" @click={go("#documentation")}>${i18n.header.nav.documentation}</button>
+                <span class="navbar-divider"></span>
+                <button class="nav-link" @click={go("#faq")}>${i18n.header.nav.faq}</button>
+            </nav>
+            <div class="header-end">
+                <div class="lm">
+                    <button class="lm-trigger" aria-haspopup="true" aria-label="${i18n.header.lang.label}">
+                        <img src="/assets/icons/ui/globe.svg" alt="" width="16" height="16">
+                        <span class="lm-current">${i18n.header.lang.current}</span>
+                        <img class="lm-chevron" src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
+                    </button>
+
+                    <div class="lm-panel">
+                        <div class="lm-card">
+                            <button class="lm-item" @click={goLang("pt-br")}>
+                                <span class="lm-mark lm-mark-${i18n.header.lang.ptState}"></span>
+                                <span>${i18n.header.lang.pt}</span>
+                            </button>
+                            <button class="lm-item" @click={goLang("en-us")}>
+                                <span class="lm-mark lm-mark-${i18n.header.lang.enState}"></span>
+                                <span>${i18n.header.lang.en}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="tt" @click={flipTheme} aria-label="${i18n.header.theme}">
+                    <img class="tt-sun" src="/assets/icons/ui/sun.svg" alt="" width="18" height="18">
+                    <img class="tt-moon" src="/assets/icons/ui/moon.svg" alt="" width="18" height="18">
+                </button>
+                <Button href="/authentication" label={i18n.header.login} variant="ghost" />
+                <Button href="/authentication?mode=register" label={i18n.header.createAccount} variant="account" />
+            </div>
         </div>
+    </header>
+@end
+@if type == "section"
+    <div class="sh">
+        <span class="badge">
+            <Logo type="mark" size="20" />
+            <span>${badge}</span>
+        </span>
+        <h2 class="sh-title">${title}</h2>
+        <p class="sh-subtitle">${subtitle}</p>
     </div>
-</header>
+@end
+@if type == "badge"
+    <span class="badge">
+        <Logo type="mark" size="20" />
+        <span>${badge}</span>
+    </span>
+@end
 
 <style>
     :root {
@@ -73,7 +225,7 @@
     }
 
     @media (max-width: 560px) {
-        .header-end .login {
+        .header-end .button-ghost {
             display: none;
         }
     }
@@ -95,5 +247,460 @@
             grid-row: 2;
             justify-self: center;
         }
+    }
+
+    .navbar {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 0 6px;
+        height: 36px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .navbar-divider {
+        width: 1px;
+        height: 18px;
+        background-color: rgb(var(--m-fg) / 0.35);
+    }
+
+    .services-menu {
+        display: flex;
+        height: 100%;
+    }
+
+    .services-trigger {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 100%;
+        padding: 0 22px;
+        border: 0;
+        cursor: pointer;
+        white-space: nowrap;
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .services-trigger::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        height: 20px;
+    }
+
+    .services-chevron {
+        transition: transform 0.2s ease;
+    }
+
+    .services-menu:hover .services-chevron,
+    .services-menu:focus-within .services-chevron {
+        transform: rotate(180deg);
+    }
+
+    .services-panel {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        box-sizing: border-box;
+        padding-top: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .services-menu:hover .services-panel,
+    .services-menu:focus-within .services-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .services-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 18px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.96);
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.08) 10.2%, rgba(113, 113, 113, 0.04) 92.6%);
+    }
+
+    .services-col {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: transparent;
+    }
+
+    .services-heading {
+        padding: 6px 10px 8px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    @media (max-width: 720px) {
+        .services-card {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            max-height: calc(100vh - var(--header-h) - 24px);
+            overflow-y: auto;
+        }
+    }
+
+    .nav-link {
+        border: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 100%;
+        padding: 0 22px;
+        white-space: nowrap;
+        font-family: "Jaldi", sans-serif;
+        font-size: 18px;
+        color: rgb(var(--m-fg));
+        text-decoration: none;
+        background: transparent;
+    }
+
+    .nav-link:hover {
+        opacity: 0.75;
+    }
+
+    .service-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        padding: 10px;
+        border: 0;
+        border-radius: 10px;
+        text-align: left;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .service-item:hover {
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    /* teclado: além do fundo, um contorno, que o fundo sozinho (7%) quase não se vê */
+    .service-item:focus-visible {
+        background-color: rgb(var(--m-fg) / 0.07);
+        outline: 2px solid rgb(var(--m-rose) / 0.9);
+        outline-offset: -2px;
+    }
+
+    .service-item-icon {
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 8px;
+        background-image: linear-gradient(243.8deg, rgb(var(--m-fg) / 0.16) 10.2%, rgba(113, 113, 113, 0.1) 92.6%);
+    }
+
+    .service-item-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: transparent;
+    }
+
+    .service-item-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 4px 8px;
+        background: transparent;
+    }
+
+    .service-flag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 1px 9px 1px 8px;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 13px;
+    }
+
+    .service-flag-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+    }
+
+    .service-flag-active {
+        color: rgb(var(--m-ok));
+        border-color: rgba(74, 222, 128, 0.45);
+        background-color: rgba(74, 222, 128, 0.1);
+    }
+
+    .service-flag-active .service-flag-dot {
+        box-shadow: 0 0 8px rgba(74, 222, 128, 0.9);
+        background-color: #4ade80;
+    }
+
+    .service-flag-soon {
+        color: rgb(var(--m-orange));
+        border-color: rgb(var(--m-orange) / 0.5);
+        background-color: rgb(var(--m-orange) / 0.12);
+    }
+
+    .service-flag-soon .service-flag-dot {
+        box-shadow: 0 0 8px rgb(var(--m-orange) / 0.9);
+        background-color: rgb(var(--m-orange));
+    }
+
+    .service-item-title {
+        font-family: "Jaldi", sans-serif;
+        font-size: 17px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .service-item-description {
+        font-family: "Roboto", sans-serif;
+        font-size: 13px;
+        line-height: 1.35;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .lm {
+        position: relative;
+        display: flex;
+        background: transparent;
+    }
+
+    .lm-trigger {
+        flex: none;
+        white-space: nowrap;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        cursor: pointer;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .lm-trigger::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        height: 14px;
+    }
+
+    .lm-current {
+        background: transparent;
+    }
+
+    .lm-chevron {
+        transition: transform 0.2s ease;
+    }
+
+    .lm:hover .lm-chevron,
+    .lm:focus-within .lm-chevron {
+        transform: rotate(180deg);
+    }
+
+    .lm-panel {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 200;
+        min-width: 170px;
+        padding-top: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .lm:hover .lm-panel,
+    .lm:focus-within .lm-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .lm-card {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 6px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.96);
+        background-image: var(--m-noise);
+    }
+
+    .lm-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 10px;
+        border: 0;
+        border-radius: 9px;
+        cursor: pointer;
+        text-align: left;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .lm-item span {
+        background: transparent;
+    }
+
+    .lm-item:hover {
+        background-color: rgb(var(--m-fg) / 0.07);
+    }
+
+    /* teclado: além do fundo, um contorno, que o fundo sozinho (7%) quase não se vê */
+    .lm-item:focus-visible {
+        background-color: rgb(var(--m-fg) / 0.07);
+        outline: 2px solid rgb(var(--m-rose) / 0.9);
+        outline-offset: -2px;
+    }
+
+    .lm-mark {
+        flex: none;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+    }
+
+    .lm-mark-on {
+        box-shadow: 0 0 8px rgb(var(--m-rose) / 0.9);
+        background-color: rgb(var(--m-rose));
+    }
+
+    .lm-mark-off {
+        background-color: transparent;
+    }
+
+    .tt {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--m-edge);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .tt:hover {
+        border-color: var(--m-edge-hover);
+    }
+
+    .tt-moon {
+        display: none;
+    }
+
+    :root[data-theme="light"] .tt-sun {
+        display: none;
+    }
+
+    :root[data-theme="light"] .tt-moon {
+        display: block;
+    }
+
+    .sh {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 56px;
+        text-align: center;
+        background: transparent;
+    }
+
+    .sh-title {
+        max-width: 780px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 400;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.17;
+        background-image: linear-gradient(110.8deg, #a58a8a 12.6%, rgb(var(--m-fg)) 104.7%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .sh-subtitle {
+        max-width: 660px;
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        line-height: 1.45;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 34px;
+        justify-content: center;
+        padding: 0 16px;
+        border-radius: 17px;
+        font-family: "Jaldi", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg));
+        text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-image: var(--m-noise), linear-gradient(90deg, rgb(var(--m-fg) / 0.38), rgba(153, 153, 153, 0.38));
+    }
+
+    :root[data-theme="light"] .badge {
+        text-shadow: none;
+        background-image: var(--m-noise), linear-gradient(90deg, rgb(var(--m-fg) / 0.08), rgb(var(--m-fg) / 0.16));
     }
 </style>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" fill="none">
+  <defs>
+    <radialGradient id="glow" cx="180" cy="120" r="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e2c8c8" stop-opacity="0.34"/>
+      <stop offset="0.55" stop-color="#8f7272" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#8f7272" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="80" y1="20" x2="280" y2="220" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ecd5d5" stop-opacity="0.85"/>
+      <stop offset="0.5" stop-color="#8f7272" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#ecd5d5" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="pill" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8f7272" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#8f7272" stop-opacity="0.12"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="180" cy="120" rx="170" ry="112" fill="url(#glow)"/>
+
+  <circle cx="180" cy="120" r="102" stroke="url(#ring)" stroke-width="1.5"/>
+  <circle cx="180" cy="120" r="102" stroke="#e2c8c8" stroke-opacity="0.5" stroke-width="7" stroke-dasharray="1.5 9.5"/>
+  <circle cx="180" cy="120" r="78" stroke="url(#ring)" stroke-width="1.5" stroke-opacity="0.8"/>
+  <circle cx="180" cy="120" r="54" stroke="#8f7272" stroke-opacity="0.55" stroke-width="1.5"/>
+  <circle cx="180" cy="120" r="54" stroke="#e2c8c8" stroke-opacity="0.12" stroke-width="22"/>
+
+  <path d="M180 18V42M180 198V222M78 120H102M258 120H282" stroke="#ecd5d5" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round"/>
+
+  <g>
+    <rect x="14" y="70" width="82" height="22" rx="11" fill="url(#pill)" stroke="#e2c8c8" stroke-opacity="0.22"/>
+    <circle cx="28" cy="81" r="2.2" fill="#e2c8c8" fill-opacity="0.7"/>
+    <circle cx="38" cy="81" r="2.2" fill="#e2c8c8" fill-opacity="0.7"/>
+    <circle cx="48" cy="81" r="2.2" fill="#e2c8c8" fill-opacity="0.7"/>
+    <circle cx="58" cy="81" r="2.2" fill="#e2c8c8" fill-opacity="0.45"/>
+    <circle cx="68" cy="81" r="2.2" fill="#e2c8c8" fill-opacity="0.3"/>
+  </g>
+  <g>
+    <rect x="270" y="148" width="76" height="22" rx="11" fill="url(#pill)" stroke="#e2c8c8" stroke-opacity="0.22"/>
+    <circle cx="284" cy="159" r="2.2" fill="#e2c8c8" fill-opacity="0.7"/>
+    <circle cx="294" cy="159" r="2.2" fill="#e2c8c8" fill-opacity="0.7"/>
+    <circle cx="304" cy="159" r="2.2" fill="#e2c8c8" fill-opacity="0.45"/>
+    <circle cx="314" cy="159" r="2.2" fill="#e2c8c8" fill-opacity="0.3"/>
+  </g>
+  <rect x="282" y="52" width="46" height="14" rx="7" fill="url(#pill)" stroke="#e2c8c8" stroke-opacity="0.18"/>
+  <rect x="34" y="166" width="54" height="14" rx="7" fill="url(#pill)" stroke="#e2c8c8" stroke-opacity="0.18"/>
+</svg>
