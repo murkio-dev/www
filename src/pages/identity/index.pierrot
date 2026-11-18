@@ -1,14 +1,12 @@
 <script>
     import "./styles.css";
-    import { HeroGlow } from "../../components/heroGlow.pierrot";
-    import { HeroLights } from "../../components/heroLights.pierrot";
-    import { StarMark } from "../../components/starMark.pierrot";
-    import { SectionHead } from "../../components/sectionHead.pierrot";
+    import { Hero } from "../../components/hero.pierrot";
+    import { Logo } from "../../components/logo.pierrot";
+    import { Header } from "../../components/header.pierrot";
+    import { Card } from "../../components/card.pierrot";
     import { Button } from "../../components/button.pierrot";
-    import { IdnCap } from "../../components/idnCap.pierrot";
-    import { IdnSdk } from "../../components/idnSdk.pierrot";
-    import { IdnFaq } from "../../components/idnFaq.pierrot";
-    import { PlanCards } from "../../components/planCards.pierrot";
+    import { amount, finalPrice } from "../../scripts/logic/price.ts";
+    import { mdBlocks } from "../../scripts/logic/markdown.ts";
 
     set.Title("Murkio Identity");
 
@@ -58,20 +56,20 @@
 </script>
 
 <div class="idn-wrap">
-<HeroGlow />
+<Hero type="glow" />
 
 <main class="idn-hero">
-    <HeroLights />
+    <Hero type="lights" />
     <span class="idn-arc idn-arc-glow" aria-hidden="true"></span>
     <span class="idn-arc idn-arc-line" aria-hidden="true"></span>
 
     <div class="idn-hero-frame">
-        <span class="idn-hero-brand"><StarMark size="36" />${i18n.idn.hero.brand}</span>
+        <span class="idn-hero-brand"><Logo type="mark" size="36" />${i18n.idn.hero.brand}</span>
         <span class="idn-live"><span class="idn-live-dot"></span>${i18n.idn.hero.live}</span>
         <h1 class="idn-hero-title">${i18n.idn.hero.title}</h1>
         <p class="idn-hero-subtitle">${i18n.idn.hero.subtitle}</p>
         <div class="idn-hero-actions">
-            <Button href="#account" label={i18n.idn.hero.primary} variant="primary" />
+            <Button href="/authentication?mode=register" label={i18n.idn.hero.primary} variant="primary" />
             <Button href="#sdks" label={i18n.idn.hero.secondary} variant="secondary" />
         </div>
     </div>
@@ -85,22 +83,22 @@
 </section>
 
 <section class="idn-section" id="features">
-    <SectionHead badge={i18n.idn.caps.badge} title={i18n.idn.caps.title} subtitle={i18n.idn.caps.subtitle} />
+    <Header type="section" badge={i18n.idn.caps.badge} title={i18n.idn.caps.title} subtitle={i18n.idn.caps.subtitle} />
     <div class="idn-grid-3">
-        <IdnCap icon="/assets/icons/services/auth.svg" title={i18n.idn.caps.c1.title} text={i18n.idn.caps.c1.text} t1={i18n.idn.caps.c1.t1} t2={i18n.idn.caps.c1.t2} t3={i18n.idn.caps.c1.t3} />
-        <IdnCap icon="/assets/icons/ui/rotate.svg" title={i18n.idn.caps.c2.title} text={i18n.idn.caps.c2.text} t1={i18n.idn.caps.c2.t1} t2={i18n.idn.caps.c2.t2} t3={i18n.idn.caps.c2.t3} />
-        <IdnCap icon="/assets/icons/ui/globe.svg" title={i18n.idn.caps.c3.title} text={i18n.idn.caps.c3.text} t1={i18n.idn.caps.c3.t1} t2={i18n.idn.caps.c3.t2} t3={i18n.idn.caps.c3.t3} />
-        <IdnCap icon="/assets/icons/ui/clock.svg" title={i18n.idn.caps.c4.title} text={i18n.idn.caps.c4.text} t1={i18n.idn.caps.c4.t1} t2={i18n.idn.caps.c4.t2} t3={i18n.idn.caps.c4.t3} />
-        <IdnCap icon="/assets/icons/services/vault.svg" title={i18n.idn.caps.c5.title} text={i18n.idn.caps.c5.text} t1={i18n.idn.caps.c5.t1} t2={i18n.idn.caps.c5.t2} t3={i18n.idn.caps.c5.t3} />
-        <IdnCap icon="/assets/icons/ui/layers.svg" title={i18n.idn.caps.c6.title} text={i18n.idn.caps.c6.text} t1={i18n.idn.caps.c6.t1} t2={i18n.idn.caps.c6.t2} t3={i18n.idn.caps.c6.t3} />
-        <IdnCap icon="/assets/icons/ui/inbox.svg" title={i18n.idn.caps.c7.title} text={i18n.idn.caps.c7.text} t1={i18n.idn.caps.c7.t1} t2={i18n.idn.caps.c7.t2} t3={i18n.idn.caps.c7.t3} />
-        <IdnCap icon="/assets/icons/ui/search.svg" title={i18n.idn.caps.c8.title} text={i18n.idn.caps.c8.text} t1={i18n.idn.caps.c8.t1} t2={i18n.idn.caps.c8.t2} t3={i18n.idn.caps.c8.t3} />
-        <IdnCap icon="/assets/icons/ui/trash.svg" title={i18n.idn.caps.c9.title} text={i18n.idn.caps.c9.text} t1={i18n.idn.caps.c9.t1} t2={i18n.idn.caps.c9.t2} t3={i18n.idn.caps.c9.t3} />
+        <Card type="cap" icon="/assets/icons/services/auth.svg" title={i18n.idn.caps.c1.title} text={i18n.idn.caps.c1.text} t1={i18n.idn.caps.c1.t1} t2={i18n.idn.caps.c1.t2} t3={i18n.idn.caps.c1.t3} />
+        <Card type="cap" icon="/assets/icons/ui/rotate.svg" title={i18n.idn.caps.c2.title} text={i18n.idn.caps.c2.text} t1={i18n.idn.caps.c2.t1} t2={i18n.idn.caps.c2.t2} t3={i18n.idn.caps.c2.t3} />
+        <Card type="cap" icon="/assets/icons/ui/globe.svg" title={i18n.idn.caps.c3.title} text={i18n.idn.caps.c3.text} t1={i18n.idn.caps.c3.t1} t2={i18n.idn.caps.c3.t2} t3={i18n.idn.caps.c3.t3} />
+        <Card type="cap" icon="/assets/icons/ui/clock.svg" title={i18n.idn.caps.c4.title} text={i18n.idn.caps.c4.text} t1={i18n.idn.caps.c4.t1} t2={i18n.idn.caps.c4.t2} t3={i18n.idn.caps.c4.t3} />
+        <Card type="cap" icon="/assets/icons/services/vault.svg" title={i18n.idn.caps.c5.title} text={i18n.idn.caps.c5.text} t1={i18n.idn.caps.c5.t1} t2={i18n.idn.caps.c5.t2} t3={i18n.idn.caps.c5.t3} />
+        <Card type="cap" icon="/assets/icons/ui/layers.svg" title={i18n.idn.caps.c6.title} text={i18n.idn.caps.c6.text} t1={i18n.idn.caps.c6.t1} t2={i18n.idn.caps.c6.t2} t3={i18n.idn.caps.c6.t3} />
+        <Card type="cap" icon="/assets/icons/ui/inbox.svg" title={i18n.idn.caps.c7.title} text={i18n.idn.caps.c7.text} t1={i18n.idn.caps.c7.t1} t2={i18n.idn.caps.c7.t2} t3={i18n.idn.caps.c7.t3} />
+        <Card type="cap" icon="/assets/icons/ui/search.svg" title={i18n.idn.caps.c8.title} text={i18n.idn.caps.c8.text} t1={i18n.idn.caps.c8.t1} t2={i18n.idn.caps.c8.t2} t3={i18n.idn.caps.c8.t3} />
+        <Card type="cap" icon="/assets/icons/ui/trash.svg" title={i18n.idn.caps.c9.title} text={i18n.idn.caps.c9.text} t1={i18n.idn.caps.c9.t1} t2={i18n.idn.caps.c9.t2} t3={i18n.idn.caps.c9.t3} />
     </div>
 </section>
 
 <section class="idn-section" id="social">
-    <SectionHead badge={i18n.idn.providers.badge} title={i18n.idn.providers.title} subtitle={i18n.idn.providers.subtitle} />
+    <Header type="section" badge={i18n.idn.providers.badge} title={i18n.idn.providers.title} subtitle={i18n.idn.providers.subtitle} />
     <ul class="idn-providers-list">
         <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/google.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p1}</span></li>
         <li class="idn-provider idn-panel"><span class="idn-ico"><img src="/assets/icons/brands/github.svg" alt="" width="20" height="20"></span><span class="idn-provider-name">${i18n.idn.providers.p2}</span></li>
@@ -111,18 +109,18 @@
 </section>
 
 <section class="idn-section" id="how">
-    <SectionHead badge={i18n.idn.how.badge} title={i18n.idn.how.title} subtitle={i18n.idn.how.subtitle} />
+    <Header type="section" badge={i18n.idn.how.badge} title={i18n.idn.how.title} subtitle={i18n.idn.how.subtitle} />
     <div class="idn-how">
         <div class="idn-code" aria-hidden="true">
             <div class="idn-code-bar">
-                <StarMark size="16" />
+                <Logo type="mark" size="16" />
                 <span class="idn-code-file">${i18n.idn.how.file}</span>
                 <span class="idn-code-note">${i18n.idn.how.preview}</span>
             </div>
             <div class="idn-code-body">
                 <div class="idn-line"><span class="idn-kw">import</span><span class="idn-p"> { </span><span class="idn-id">Identity</span><span class="idn-p"> } </span><span class="idn-kw">from</span><span class="idn-p"> </span><span class="idn-str">"@murkio/identity"</span><span class="idn-p">;</span></div>
                 <div class="idn-line idn-blank"></div>
-                <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> identity = </span><span class="idn-kw">new</span><span class="idn-p"> </span><span class="idn-id">Identity</span><span class="idn-p">({ publicKey: </span><span class="idn-str">"pk_…"</span><span class="idn-p"> });</span></div>
+                <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> identity = </span><span class="idn-kw">new</span><span class="idn-p"> </span><span class="idn-id">Identity</span><span class="idn-p">({ publicKey: </span><span class="idn-str">"pk_id_…"</span><span class="idn-p"> });</span></div>
                 <div class="idn-line idn-blank"></div>
                 <div class="idn-line"><span class="idn-kw">const</span><span class="idn-p"> session = </span><span class="idn-kw">await</span><span class="idn-p"> identity.</span><span class="idn-fn">login</span><span class="idn-p">({ email, password });</span></div>
                 <div class="idn-line idn-blank"></div>
@@ -140,7 +138,7 @@
 </section>
 
 <section class="idn-section" id="mcp">
-    <SectionHead badge={i18n.idn.mcp.badge} title={i18n.idn.mcp.title} subtitle={i18n.idn.mcp.subtitle} />
+    <Header type="section" badge={i18n.idn.mcp.badge} title={i18n.idn.mcp.title} subtitle={i18n.idn.mcp.subtitle} />
     <div class="idn-mcp">
         <div class="idn-mcp-card idn-panel">
             <h3 class="idn-mcp-title">${i18n.idn.mcp.promptsTitle}</h3>
@@ -161,7 +159,7 @@
             <p class="idn-mcp-text">${i18n.idn.mcp.connectText}</p>
             <div class="idn-code" aria-hidden="true">
                 <div class="idn-code-bar">
-                    <StarMark size="16" />
+                    <Logo type="mark" size="16" />
                     <span class="idn-code-file">${i18n.idn.mcp.file}</span>
                 </div>
                 <div class="idn-code-body">
@@ -179,7 +177,7 @@
 </section>
 
 <section class="idn-section" id="security">
-    <SectionHead badge={i18n.idn.sec.badge} title={i18n.idn.sec.title} subtitle={i18n.idn.sec.subtitle} />
+    <Header type="section" badge={i18n.idn.sec.badge} title={i18n.idn.sec.title} subtitle={i18n.idn.sec.subtitle} />
     <div class="idn-sec-grid">
         <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/services/auth.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i1Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i1Text}</p></div>
         <div class="idn-sec idn-panel"><span class="idn-ico"><img src="/assets/icons/services/vault.svg" alt="" width="20" height="20"></span><h3 class="idn-sec-title">${i18n.idn.sec.i2Title}</h3><p class="idn-sec-text">${i18n.idn.sec.i2Text}</p></div>
@@ -193,7 +191,7 @@
 <section class="idn-section" id="login-screen">
     <div class="idn-canvas">
         <div class="idn-canvas-text">
-            <SectionHead badge={i18n.idn.canvas.badge} title={i18n.idn.canvas.title} subtitle={i18n.idn.canvas.subtitle} />
+            <Header type="section" badge={i18n.idn.canvas.badge} title={i18n.idn.canvas.title} subtitle={i18n.idn.canvas.subtitle} />
             <ul class="idn-chips">
                 <li class="idn-chip">${i18n.idn.canvas.c1}</li>
                 <li class="idn-chip">${i18n.idn.canvas.c2}</li>
@@ -204,7 +202,7 @@
 
         <div class="idn-mock" aria-hidden="true">
             <div class="idn-mock-card">
-                <span class="idn-mock-brand"><StarMark size="28" />${i18n.brand}</span>
+                <span class="idn-mock-brand"><Logo type="mark" size="28" />${i18n.brand}</span>
                 <span class="idn-mock-title">${i18n.idn.canvas.mockTitle}</span>
                 <span class="idn-mock-field">${i18n.idn.canvas.mockEmail}</span>
                 <span class="idn-mock-field">${i18n.idn.canvas.mockPassword}</span>
@@ -217,40 +215,99 @@
 </section>
 
 <section class="idn-section" id="sdks">
-    <SectionHead badge={i18n.idn.sdks.badge} title={i18n.idn.sdks.title} subtitle={i18n.idn.sdks.subtitle} />
+    <Header type="section" badge={i18n.idn.sdks.badge} title={i18n.idn.sdks.title} subtitle={i18n.idn.sdks.subtitle} />
     <div class="idn-sdk-grid">
-        <IdnSdk logo="/assets/sdk/typescript.svg" name={i18n.sdk.l11} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/javascript.svg" name={i18n.sdk.l12} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/java.svg" name={i18n.sdk.l1} command="dev.murkio:identity" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/go.svg" name={i18n.sdk.l2} command="go get github.com/murkio-dev/identity-go" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/react.svg" name={i18n.sdk.l3} command="npm install @murkio/identity-react" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/svelte.svg" name={i18n.sdk.l4} command="npm install @murkio/identity-svelte" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/kotlin.svg" name={i18n.sdk.l5} command="dev.murkio:identity-kotlin" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/swift.svg" name={i18n.sdk.l6} command="murkio-dev/identity-swift" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/elixir.svg" name={i18n.sdk.l7} command="{:murkio_identity, &quot;~> 0.1&quot;}" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/ruby.svg" name={i18n.sdk.l8} command="gem install murkio-identity" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/php.svg" name={i18n.sdk.l9} command="composer require murkio/identity" soon={i18n.header.services.soon} />
-        <IdnSdk logo="/assets/sdk/csharp.svg" name={i18n.sdk.l10} command="dotnet add package Murkio.Identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/typescript.svg" name={i18n.sdk.l11} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/javascript.svg" name={i18n.sdk.l12} command="npm install @murkio/identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/java.svg" name={i18n.sdk.l1} command="dev.murkio:identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/go.svg" name={i18n.sdk.l2} command="go get github.com/murkio-dev/identity-go" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/react.svg" name={i18n.sdk.l3} command="npm install @murkio/identity-react" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/svelte.svg" name={i18n.sdk.l4} command="npm install @murkio/identity-svelte" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/kotlin.svg" name={i18n.sdk.l5} command="dev.murkio:identity-kotlin" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/swift.svg" name={i18n.sdk.l6} command="murkio-dev/identity-swift" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/elixir.svg" name={i18n.sdk.l7} command="{:murkio_identity, &quot;~> 0.1&quot;}" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/ruby.svg" name={i18n.sdk.l8} command="gem install murkio-identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/php.svg" name={i18n.sdk.l9} command="composer require murkio/identity" soon={i18n.header.services.soon} />
+        <Card type="sdk" logo="/assets/sdk/csharp.svg" name={i18n.sdk.l10} command="dotnet add package Murkio.Identity" soon={i18n.header.services.soon} />
     </div>
     <p class="idn-sdk-note">${i18n.idn.sdks.note}</p>
 </section>
 
 <section class="idn-section" id="pricing">
-    <SectionHead badge={i18n.idn.pricing.badge} title={i18n.idn.pricing.title} subtitle={i18n.idn.pricing.subtitle} />
-    <PlanCards plans={priceMock} currency={i18n.idn.pricing.currency} />
+    <Header type="section" badge={i18n.idn.pricing.badge} title={i18n.idn.pricing.title} subtitle={i18n.idn.pricing.subtitle} />
+    <div class="plans">
+        @for plan in priceMock
+            <article class="plan">
+                <h3 class="plan-name">${plan.name}</h3>
+
+                <div class="plan-price">
+                    @if plan.price == 0
+                        <span class="plan-value">${i18n.idn.pricing.free}</span>
+                    @else
+                        <span class="plan-value">${i18n.idn.pricing.currency} ${amount(finalPrice(plan.price, plan.discount))}</span>
+                        <span class="plan-per">${i18n.idn.pricing.perMonth}</span>
+                    @end
+                    @if plan.discount > 0
+                        <span class="plan-old">${i18n.idn.pricing.currency} ${amount(plan.price)}</span>
+                        <span class="plan-off">-${plan.discount}%</span>
+                    @end
+                </div>
+
+                <div class="md">
+                    @for block in mdBlocks(plan.description)
+                        @if block.type == "h"
+                            <h4 class="md-h">
+                                @for seg in block.segs
+                                <span class="md-${seg.kind}">${seg.text}</span>
+                                @end
+                            </h4>
+                        @end
+                        @if block.type == "p"
+                            <p class="md-p">
+                                @for seg in block.segs
+                                <span class="md-${seg.kind}">${seg.text}</span>
+                                @end
+                            </p>
+                        @end
+                        @if block.type == "ul"
+                            <ul class="md-ul">
+                                @for item in block.items
+                                    <li class="md-li"><span class="md-tick" aria-hidden="true"></span><span class="md-text">
+                                        @for seg in item
+                                        <span class="md-${seg.kind}">${seg.text}</span>
+                                        @end
+                                    </span></li>
+                                @end
+                            </ul>
+                        @end
+                    @end
+                </div>
+
+                <ul class="plan-tags">
+                    @for tag in plan.tags
+                        <li class="plan-tag">${tag}</li>
+                    @end
+                </ul>
+
+                <div class="plan-cta">
+                    <Button href="/authentication?mode=register" label={i18n.idn.pricing.cta} variant="primary" />
+                </div>
+            </article>
+        @end
+    </div>
     <p class="idn-fine">${i18n.idn.pricing.noPlan} <a class="idn-fine-link" href="/support">${i18n.idn.pricing.noPlanLink}</a></p>
 </section>
 
 <section class="idn-section" id="faq">
-    <SectionHead badge={i18n.idn.faq.badge} title={i18n.idn.faq.title} subtitle="" />
+    <Header type="section" badge={i18n.idn.faq.badge} title={i18n.idn.faq.title} subtitle="" />
     <div class="idn-faq-list">
-        <IdnFaq question={i18n.idn.faq.q1} answer={i18n.idn.faq.a1} />
-        <IdnFaq question={i18n.idn.faq.q2} answer={i18n.idn.faq.a2} />
-        <IdnFaq question={i18n.idn.faq.q3} answer={i18n.idn.faq.a3} />
-        <IdnFaq question={i18n.idn.faq.q4} answer={i18n.idn.faq.a4} />
-        <IdnFaq question={i18n.idn.faq.q5} answer={i18n.idn.faq.a5} />
-        <IdnFaq question={i18n.idn.faq.q6} answer={i18n.idn.faq.a6} />
-        <IdnFaq question={i18n.idn.faq.q7} answer={i18n.idn.faq.a7} />
+        <Card type="faq" question={i18n.idn.faq.q1} answer={i18n.idn.faq.a1} />
+        <Card type="faq" question={i18n.idn.faq.q2} answer={i18n.idn.faq.a2} />
+        <Card type="faq" question={i18n.idn.faq.q3} answer={i18n.idn.faq.a3} />
+        <Card type="faq" question={i18n.idn.faq.q4} answer={i18n.idn.faq.a4} />
+        <Card type="faq" question={i18n.idn.faq.q5} answer={i18n.idn.faq.a5} />
+        <Card type="faq" question={i18n.idn.faq.q6} answer={i18n.idn.faq.a6} />
+        <Card type="faq" question={i18n.idn.faq.q7} answer={i18n.idn.faq.a7} />
     </div>
 </section>
 </div>
