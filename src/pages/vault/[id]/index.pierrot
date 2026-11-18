@@ -1,3 +1,650 @@
 <script>
-    import "./styles.css"
+    import "./styles.css";
+    import { Sidebar } from "../../../components/sidebar.pierrot";
+    import { configureIdentity, ensureSession } from "../../../scripts/logic/identity.ts";
+    import { configureVault, listApplications, createApplication, createInvitation, myMembership, acceptInvitation, Application } from "../../../scripts/logic/vault.ts";
+    import { isAppName, isEmail, fmtDate, shortId, queryParam } from "../../../scripts/logic/rules.ts";
+
+    // Rota /vault/:id, onde :id é o id da pessoa logada: as aplicações dela no Vault e o botão de
+    // criar. Sem sessão vai para /authentication; com o id de outra pessoa, vai para o próprio.
+    // Sem header nem footer do site (a Sidebar os esconde enquanto está na tela).
+    set.Title("Murkio Vault");
+
+    configureIdentity(get.Dotenv("IDENTITY_URL"), get.Dotenv("IDENTITY_PK"));
+    configureVault(get.Dotenv("VAULT_URL"));
+
+    type App = { id: string, name: string, created_at: string, role: string };
+    let apps: App[] = [];
+    let uid = get.Param("id");
+
+    // "loading" | "ready" | "error"
+    let vlState = "loading";
+    let filter = "all";
+    let query = "";
+    let copied = "";
+    let notice: boolean = true;
+
+    let drawer: boolean = false;
+    let name = "";
+    let vlCreating: boolean = false;
+    // "" | "invalid" | "conflict" | "generic"
+    let vlCreateErr = "";
+    let vlCreated: Application | null = null;
+    let vlLinks: { email: string, link: string }[] = [];
+    let vlFailed: string[] = [];
+
+    let emails: { email: string, role: string, selected: boolean }[] = [];
+    let email = "";
+    let role = "developer";
+
+    // convite recebido: colado no campo ou vindo de ?invite= no link
+    let vlInvite = "";
+    let vlJoining: boolean = false;
+    // "" | "invalid" | "member" | "done" | "generic"
+    let vlJoinMsg = "";
+
+    function lengthOk(v: string): boolean {
+        return v.length >= 3 && v.length <= 50;
+    }
+
+    function charsOk(v: string): boolean {
+        return /^[a-z0-9-]+$/.test(v);
+    }
+
+    function edgesOk(v: string): boolean {
+        return /^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/.test(v);
+    }
+
+    // vazio: regra neutra; digitado: ok ou bad
+    function rule(v: string, ok: boolean): string {
+        if (v == "") {
+            return "vnw-rule";
+        }
+        return ok ? "vnw-rule vnw-rule-ok" : "vnw-rule vnw-rule-bad";
+    }
+
+    function emailError(v: string, list: { email: string, role: string, selected: boolean }[]): string {
+        const clean = v.trim().toLowerCase();
+        if (clean == "") {
+            return "";
+        }
+        if (!isEmail(clean)) {
+            return "invalid";
+        }
+        if (list.some((item) => item.email == clean)) {
+            return "duplicate";
+        }
+        return "";
+    }
+
+    function canAdd(v: string, list: { email: string, role: string, selected: boolean }[]): boolean {
+        return v.trim() != "" && emailError(v, list) == "";
+    }
+
+    function selectedCount(list: { email: string, role: string, selected: boolean }[]): number {
+        return list.filter((item) => item.selected).length;
+    }
+
+    function allSelected(list: { email: string, role: string, selected: boolean }[]): boolean {
+        return list.length > 0 && list.every((item) => item.selected);
+    }
+
+    function check(on: boolean): string {
+        return on ? "vnw-check vnw-check-on" : "vnw-check";
+    }
+
+    function addEmail(): void {
+        if (!canAdd(email, emails)) {
+            return;
+        }
+        emails = [...emails, { email: email.trim().toLowerCase(), role: role, selected: false }];
+        email = "";
+        const field = document.getElementById("vnw-email") as HTMLInputElement;
+        if (field) {
+            field.value = "";
+            field.focus();
+        }
+    }
+
+    function emailKey(e: KeyboardEvent): void {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            addEmail();
+        }
+    }
+
+    function removeEmail(address: string): void {
+        emails = emails.filter((item) => item.email != address);
+    }
+
+    function toggleEmail(address: string): void {
+        emails = emails.map((item) => item.email == address ? { email: item.email, role: item.role, selected: !item.selected } : item);
+    }
+
+    function toggleAll(): void {
+        const on = !allSelected(emails);
+        emails = emails.map((item) => ({ email: item.email, role: item.role, selected: on }));
+    }
+
+    function removeSelected(): void {
+        emails = emails.filter((item) => !item.selected);
+    }
+
+    function visible(list: App[], q: string, f: string): App[] {
+        const term = q.trim().toLowerCase();
+        return list.filter((a) => (f == "all" || a.role == f) && (term == "" || a.name.includes(term)));
+    }
+
+    function countOf(list: App[], f: string): number {
+        return f == "all" ? list.length : list.filter((a) => a.role == f).length;
+    }
+
+    function tabClass(f: string, current: string): string {
+        return f == current ? "vnw-tab vnw-tab-on" : "vnw-tab";
+    }
+
+    function setFilter(f: string): void {
+        filter = f;
+    }
+
+    function dateOf(iso: string): string {
+        return fmtDate(iso, document.documentElement.lang);
+    }
+
+    function copyText(id: string, text: string): void {
+        try {
+            navigator.clipboard.writeText(text);
+        } catch (e) {}
+        copied = id;
+        time.Sleep(1500).msec();
+        copied = "";
+    }
+
+    function dismissNotice(): void {
+        notice = false;
+    }
+
+    function openApp(id: string): void {
+        client.Redirect("/vault/" + uid + "/" + id);
+    }
+
+    function openDrawer(): void {
+        drawer = true;
+        setTimeout(() => {
+            const field = document.getElementById("vnw-name");
+            if (field) {
+                field.focus();
+            }
+        }, 80);
+    }
+
+    function closeDrawer(): void {
+        if (vlCreating) {
+            return;
+        }
+        const focused = document.activeElement as HTMLElement | null;
+        if (focused && focused.blur) {
+            focused.blur();
+        }
+        drawer = false;
+        name = "";
+        email = "";
+        role = "developer";
+        emails = [];
+        vlCreateErr = "";
+        vlCreated = null;
+        vlLinks = [];
+        vlFailed = [];
+    }
+
+    // Esc fecha o painel mesmo com o foco perdido (ex.: depois de excluir uma linha). Um listener solto
+    // não redesenha a tela, então ele "clica" no fundo escurecido, que passa pelo @click do template.
+    if (typeof window !== "undefined") {
+        document.addEventListener("keydown", (e: KeyboardEvent) => {
+            if (e.key === "Escape" && drawer) {
+                const scrim = document.querySelector(".vnw-scrim") as HTMLElement;
+                if (scrim) {
+                    scrim.click();
+                }
+            }
+        });
+    }
+
+    function toAuth(): void {
+        client.Redirect("/authentication?next=" + encodeURIComponent(location.pathname + location.search));
+    }
+
+    // Link que a pessoa convidada abre: a própria tela, com o token na query. Ao abrir, quem não é o dono
+    // do :id é levado ao próprio id (a query vai junto) e o convite é aceito lá.
+    function inviteLink(token: string): string {
+        return location.origin + location.pathname + "?invite=" + encodeURIComponent(token);
+    }
+
+    // Aceita o token puro ou o link inteiro colado.
+    function inviteToken(v: string): string {
+        const clean = v.trim();
+        if (clean.indexOf("invite=") >= 0) {
+            return queryParam(clean.slice(clean.indexOf("?")), "invite");
+        }
+        return clean;
+    }
+
+    async function vlLoad(): Promise<void> {
+        vlState = "loading";
+        const r = await listApplications();
+        if (!r.ok) {
+            if (r.error == "session") {
+                toAuth();
+                return;
+            }
+            vlState = "error";
+            return;
+        }
+        const list = r.data || [];
+        // o papel não vem na listagem: é o de cada membro, em .../members/me
+        const mine = await Promise.all(list.map((a) => myMembership(a.id)));
+        apps = list.map((a, i) => ({ id: a.id, name: a.name, created_at: a.created_at, role: mine[i].ok && mine[i].data ? mine[i].data.role : "" }));
+        vlState = "ready";
+    }
+
+    async function vlJoin(): Promise<void> {
+        const token = inviteToken(vlInvite);
+        if (token == "") {
+            return;
+        }
+        vlJoining = true;
+        vlJoinMsg = "";
+        const r = await acceptInvitation(token);
+        vlJoining = false;
+        if (r.ok) {
+            vlInvite = "";
+            vlJoinMsg = "done";
+            await vlLoad();
+            return;
+        }
+        if (r.error == "session") {
+            toAuth();
+            return;
+        }
+        if (r.error == "not-found" || r.error == "validation") {
+            vlJoinMsg = "invalid";
+        } else if (r.error == "conflict") {
+            vlJoinMsg = "member";
+        } else {
+            vlJoinMsg = "generic";
+        }
+    }
+
+    async function vlBoot(): Promise<void> {
+        const s = await ensureSession();
+        if (!s) {
+            toAuth();
+            return;
+        }
+        if (uid != s.user_id) {
+            client.Redirect("/vault/" + s.user_id + location.search);
+            return;
+        }
+        const fromLink = queryParam(location.search, "invite");
+        if (fromLink != "") {
+            vlInvite = fromLink;
+            history.replaceState(null, "", location.pathname);
+            await vlJoin();
+            return;
+        }
+        await vlLoad();
+    }
+
+    vlBoot();
+
+    function submitApp(e: Event): void {
+        e.preventDefault();
+        if (isAppName(name) && !vlCreating) {
+            create();
+        }
+    }
+
+    async function create(): Promise<void> {
+        vlCreating = true;
+        vlCreateErr = "";
+        const r = await createApplication(name);
+        if (!r.ok || !r.data) {
+            vlCreating = false;
+            if (r.error == "session") {
+                toAuth();
+                return;
+            }
+            if (r.error == "conflict") {
+                vlCreateErr = "conflict";
+            } else if (r.error == "validation") {
+                vlCreateErr = "invalid";
+            } else {
+                vlCreateErr = "generic";
+            }
+            return;
+        }
+        const app = r.data;
+        const links: { email: string, link: string }[] = [];
+        const failed: string[] = [];
+        for (const item of emails) {
+            const inv = await createInvitation(app.id, item.email, item.role);
+            if (inv.ok && inv.data && inv.data.token) {
+                links.push({ email: item.email, link: inviteLink(inv.data.token) });
+            } else {
+                failed.push(item.email);
+            }
+        }
+        apps = [...apps, { id: app.id, name: app.name, created_at: app.created_at, role: "admin" }];
+        vlLinks = links;
+        vlFailed = failed;
+        vlCreated = app;
+        vlCreating = false;
+    }
 </script>
+
+<div class="vnw">
+    <Sidebar service="Vault" active="1" settingsHref={"/vault/" + uid}
+        label1={i18n.vaultNew.nav.apps} icon1="/assets/icons/ui/layers.svg" href1={"/vault/" + uid}
+        label2={i18n.vaultNew.nav.sdks} icon2="/assets/icons/ui/code.svg" href2="/vault#how"
+        label3={i18n.vaultNew.nav.mcp} icon3="/assets/icons/ui/bolt.svg" href3="/vault#faq" />
+
+    <div class="vnw-right">
+    @if notice
+        <div class="vnw-notice" role="status">
+            <img class="vnw-notice-icon" src="/assets/icons/ui/alert.svg" alt="" width="16" height="16">
+            <span class="vnw-notice-text">${i18n.vaultNew.notice.text}</span>
+            <button class="vnw-notice-x" type="button" aria-label="${i18n.vaultNew.notice.dismiss}" @click={dismissNotice}>
+                <img src="/assets/icons/ui/plus.svg" alt="" width="12" height="12" class="vnw-close-icon">
+            </button>
+        </div>
+    @end
+
+    <main class="vnw-main">
+        <h1 class="vnw-sr">${i18n.vaultNew.nav.apps}</h1>
+
+        <div class="vnw-bar">
+            <nav class="vnw-crumbs" aria-label="breadcrumb"><span class="vnw-crumb">vault</span><span class="vnw-crumb-sep">/</span></nav>
+            <button class="vnw-btn vnw-btn-primary vnw-open" type="button" @click={openDrawer}>
+                <img class="vnw-open-icon" src="/assets/icons/ui/plus.svg" alt="" width="14" height="14">${i18n.vaultNew.create}
+            </button>
+        </div>
+
+        <hr class="vnw-hr">
+
+        @if vlState == "loading"
+            <p class="vnw-loading" role="status">${i18n.vaultNew.loading}</p>
+        @end
+
+        @if vlState == "error"
+            <div class="vnw-fail" role="alert">
+                <span>${i18n.vaultNew.loadError}</span>
+                <button class="vnw-btn vnw-btn-ghost vnw-btn-sm" type="button" @click={vlLoad}>${i18n.vaultNew.retry}</button>
+            </div>
+        @end
+
+        @if vlState == "ready"
+            @if apps.length > 0
+                <div class="vnw-tools">
+                    <div class="vnw-tabs" role="tablist">
+                        <button class="${tabClass('all', filter)}" type="button" role="tab" @click={setFilter("all")}>${i18n.vaultNew.list.all}<span class="vnw-tab-n">${countOf(apps, "all")}</span></button>
+                        <button class="${tabClass('admin', filter)}" type="button" role="tab" @click={setFilter("admin")}>${i18n.vaultNew.invite.roles.admin}<span class="vnw-tab-n">${countOf(apps, "admin")}</span></button>
+                        <button class="${tabClass('developer', filter)}" type="button" role="tab" @click={setFilter("developer")}>${i18n.vaultNew.invite.roles.developer}<span class="vnw-tab-n">${countOf(apps, "developer")}</span></button>
+                    </div>
+                    <input class="vnw-input vnw-search" type="search" autocomplete="off" spellcheck="false" aria-label="${i18n.vaultNew.list.search}" placeholder="${i18n.vaultNew.list.search}" @bind={query}>
+                </div>
+
+                @if visible(apps, query, filter).length > 0
+                    <div class="vnw-apps">
+                        @for app in visible(apps, query, filter)
+                            <article class="vnw-app">
+                                <div class="vnw-app-top">
+                                    <span class="vnw-app-icon"><img src="/assets/icons/services/vault.svg" alt="" width="18" height="18"></span>
+                                    <h2 class="vnw-app-name">${app.name}</h2>
+                                    @if app.role == "admin"
+                                        <span class="vnw-role vnw-role-admin">${i18n.vaultNew.invite.roles.admin}</span>
+                                    @end
+                                    @if app.role == "developer"
+                                        <span class="vnw-role">${i18n.vaultNew.invite.roles.developer}</span>
+                                    @end
+                                </div>
+                                <dl class="vnw-app-meta">
+                                    <div class="vnw-app-row">
+                                        <dt class="vnw-app-key">${i18n.vaultNew.list.id}</dt>
+                                        <dd class="vnw-app-val">
+                                            <button class="vnw-copy" type="button" @click={copyText(app.id, app.id)}>
+                                                <code class="vnw-copy-id">${shortId(app.id)}</code>
+                                                @if copied == app.id
+                                                    <span class="vnw-copy-tag vnw-copy-done">${i18n.vaultNew.list.copied}</span>
+                                                @else
+                                                    <span class="vnw-copy-tag">${i18n.vaultNew.list.copy}</span>
+                                                @end
+                                            </button>
+                                        </dd>
+                                    </div>
+                                    <div class="vnw-app-row">
+                                        <dt class="vnw-app-key">${i18n.vaultNew.list.created}</dt>
+                                        <dd class="vnw-app-val">${dateOf(app.created_at)}</dd>
+                                    </div>
+                                </dl>
+                                <button class="vnw-btn vnw-btn-ghost vnw-btn-sm vnw-app-open" type="button" @click={openApp(app.id)}>${i18n.vaultNew.open}</button>
+                            </article>
+                        @end
+                    </div>
+                @else
+                    <p class="vnw-empty">${i18n.vaultNew.list.noMatch}</p>
+                @end
+            @else
+                <div class="vnw-none">
+                    <div class="vnw-none-art" aria-hidden="true">
+                        <img class="vnw-none-img" src="/assets/backgrounds/vault-empty.svg" alt="">
+                        <span class="vnw-none-icon"><img src="/assets/icons/ui/inbox.svg" alt="" width="22" height="22"></span>
+                    </div>
+                    <h2 class="vnw-none-title">${i18n.vaultNew.none.title}</h2>
+                    <p class="vnw-none-text">${i18n.vaultNew.none.text}</p>
+                </div>
+            @end
+
+            <section class="vnw-join" aria-label="${i18n.vaultNew.accept.title}">
+                <h2 class="vnw-section">${i18n.vaultNew.accept.title}</h2>
+                <p class="vnw-hint vnw-hint-flush">${i18n.vaultNew.accept.text}</p>
+                <div class="vnw-add">
+                    <input class="vnw-input vnw-add-email" type="text" autocomplete="off" spellcheck="false" aria-label="${i18n.vaultNew.accept.title}" placeholder="${i18n.vaultNew.accept.placeholder}" @bind={vlInvite}>
+                    @if vlJoining
+                        <button class="vnw-btn vnw-btn-primary vnw-add-btn" type="button" disabled>${i18n.vaultNew.accept.busy}</button>
+                    @else
+                        @if inviteToken(vlInvite) != ""
+                            <button class="vnw-btn vnw-btn-primary vnw-add-btn" type="button" @click={vlJoin}>${i18n.vaultNew.accept.submit}</button>
+                        @else
+                            <button class="vnw-btn vnw-btn-primary vnw-add-btn" type="button" disabled>${i18n.vaultNew.accept.submit}</button>
+                        @end
+                    @end
+                </div>
+                @if vlJoinMsg == "invalid"
+                    <p class="vnw-error">${i18n.vaultNew.accept.invalid}</p>
+                @end
+                @if vlJoinMsg == "member"
+                    <p class="vnw-error">${i18n.vaultNew.accept.member}</p>
+                @end
+                @if vlJoinMsg == "generic"
+                    <p class="vnw-error">${i18n.vaultNew.errors.generic}</p>
+                @end
+                @if vlJoinMsg == "done"
+                    <p class="vnw-ok">${i18n.vaultNew.accept.done}</p>
+                @end
+            </section>
+        @end
+    </main>
+    </div>
+
+    <div class="vnw-scrim ${drawer ? 'vnw-scrim-on' : ''}" @click={closeDrawer}></div>
+
+    <aside class="vnw-drawer ${drawer ? 'vnw-drawer-open' : ''}" aria-label="${i18n.vaultNew.eyebrow}">
+        <div class="vnw-drawer-head">
+            @if vlCreated
+                <h2 class="vnw-drawer-title">${i18n.vaultNew.created.title}</h2>
+            @else
+                <h2 class="vnw-drawer-title">${i18n.vaultNew.eyebrow}</h2>
+            @end
+            <button class="vnw-close" type="button" aria-label="${i18n.vaultNew.close}" @click={closeDrawer}>
+                <img src="/assets/icons/ui/plus.svg" alt="" width="14" height="14" class="vnw-close-icon">
+            </button>
+        </div>
+
+        @if vlCreated
+            <div class="vnw-form">
+                <div class="vnw-scroll">
+                    <p class="vnw-subtitle">${i18n.vaultNew.created.text}</p>
+                    <div class="vnw-app-top">
+                        <span class="vnw-app-icon"><img src="/assets/icons/services/vault.svg" alt="" width="18" height="18"></span>
+                        <h3 class="vnw-app-name">${vlCreated.name}</h3>
+                        <span class="vnw-role vnw-role-admin">${i18n.vaultNew.invite.roles.admin}</span>
+                    </div>
+
+                    @if vlLinks.length > 0
+                        <hr class="vnw-hr vnw-hr-tight">
+                        <h3 class="vnw-section">${i18n.vaultNew.created.links}</h3>
+                        <ul class="vnw-links">
+                            @for item in vlLinks
+                                <li class="vnw-link-row">
+                                    <span class="vnw-td-email">${item.email}</span>
+                                    <button class="vnw-copy" type="button" @click={copyText(item.email, item.link)}>
+                                        <code class="vnw-copy-id">${shortId(item.link)}</code>
+                                        @if copied == item.email
+                                            <span class="vnw-copy-tag vnw-copy-done">${i18n.vaultNew.list.copied}</span>
+                                        @else
+                                            <span class="vnw-copy-tag">${i18n.vaultNew.list.copy}</span>
+                                        @end
+                                    </button>
+                                </li>
+                            @end
+                        </ul>
+                    @end
+
+                    @if vlFailed.length > 0
+                        <p class="vnw-error">${i18n.vaultNew.created.failed}</p>
+                        <ul class="vnw-links">
+                            @for address in vlFailed
+                                <li class="vnw-link-row"><span class="vnw-td-email">${address}</span></li>
+                            @end
+                        </ul>
+                    @end
+                </div>
+
+                <div class="vnw-actions">
+                    <button class="vnw-btn vnw-btn-ghost" type="button" @click={closeDrawer}>${i18n.vaultNew.close}</button>
+                    <button class="vnw-btn vnw-btn-primary" type="button" @click={openApp(vlCreated.id)}>${i18n.vaultNew.created.open}</button>
+                </div>
+            </div>
+        @else
+        <form class="vnw-form" @submit={submitApp(event)}>
+            <div class="vnw-scroll">
+                <p class="vnw-subtitle">${i18n.vaultNew.subtitle}</p>
+
+                <label class="vnw-label" for="vnw-name">${i18n.vaultNew.name.label}</label>
+                <input id="vnw-name" class="vnw-input" type="text" autocomplete="off" spellcheck="false" maxlength="60" placeholder="${i18n.vaultNew.name.placeholder}" @bind={name}>
+                <p class="vnw-hint">${i18n.vaultNew.name.hint}</p>
+
+                <ul class="vnw-rules">
+                    <li class="${rule(name, lengthOk(name))}"><span class="vnw-rule-mark"></span>${i18n.vaultNew.rules.length}</li>
+                    <li class="${rule(name, charsOk(name))}"><span class="vnw-rule-mark"></span>${i18n.vaultNew.rules.chars}</li>
+                    <li class="${rule(name, edgesOk(name))}"><span class="vnw-rule-mark"></span>${i18n.vaultNew.rules.edges}</li>
+                </ul>
+
+                @if vlCreateErr == "conflict"
+                    <p class="vnw-error">${i18n.vaultNew.errors.conflict}</p>
+                @end
+                @if vlCreateErr == "invalid"
+                    <p class="vnw-error">${i18n.vaultNew.errors.invalid}</p>
+                @end
+                @if vlCreateErr == "generic"
+                    <p class="vnw-error">${i18n.vaultNew.errors.generic}</p>
+                @end
+
+                <hr class="vnw-hr vnw-hr-tight">
+
+                <h3 class="vnw-section">${i18n.vaultNew.invite.title}<span class="vnw-tag">${i18n.vaultNew.invite.optional}</span></h3>
+                <p class="vnw-hint vnw-hint-flush">${i18n.vaultNew.invite.text}</p>
+
+                <div class="vnw-add">
+                    <input id="vnw-email" class="vnw-input vnw-add-email" type="email" autocomplete="off" spellcheck="false" aria-label="${i18n.vaultNew.invite.emailLabel}" placeholder="${i18n.vaultNew.invite.placeholder}" @bind={email} @keydown={emailKey(event)}>
+                    <select id="vnw-role" class="vnw-input vnw-add-role" aria-label="${i18n.vaultNew.invite.roleLabel}" @bind={role}>
+                        <option value="developer">${i18n.vaultNew.invite.roles.developer}</option>
+                        <option value="admin">${i18n.vaultNew.invite.roles.admin}</option>
+                    </select>
+                    @if canAdd(email, emails)
+                        <button class="vnw-btn vnw-btn-primary vnw-add-btn" type="button" @click={addEmail}>${i18n.vaultNew.invite.add}</button>
+                    @else
+                        <button class="vnw-btn vnw-btn-primary vnw-add-btn" type="button" disabled>${i18n.vaultNew.invite.add}</button>
+                    @end
+                </div>
+
+                @if emailError(email, emails) == "invalid"
+                    <p class="vnw-error">${i18n.vaultNew.invite.errors.invalid}</p>
+                @end
+                @if emailError(email, emails) == "duplicate"
+                    <p class="vnw-error">${i18n.vaultNew.invite.errors.duplicate}</p>
+                @end
+
+                @if emails.length > 0
+                    <div class="vnw-bulk">
+                        <span class="vnw-bulk-count">${selectedCount(emails)} ${i18n.vaultNew.invite.selected}</span>
+                        @if selectedCount(emails) > 0
+                            <button class="vnw-link" type="button" @click={removeSelected}>${i18n.vaultNew.invite.removeSelected}</button>
+                        @end
+                    </div>
+
+                    <table class="vnw-table">
+                        <thead>
+                            <tr>
+                                <th class="vnw-th vnw-col-check">
+                                    <button class="${check(allSelected(emails))}" type="button" role="checkbox" aria-checked="${allSelected(emails)}" aria-label="${i18n.vaultNew.invite.selectAll}" @click={toggleAll}></button>
+                                </th>
+                                <th class="vnw-th">${i18n.vaultNew.invite.emailLabel}</th>
+                                <th class="vnw-th">${i18n.vaultNew.invite.roleLabel}</th>
+                                <th class="vnw-th vnw-col-del"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for item in emails
+                                <tr class="vnw-tr">
+                                    <td class="vnw-td vnw-col-check">
+                                        <button class="${check(item.selected)}" type="button" role="checkbox" aria-checked="${item.selected}" aria-label="${i18n.vaultNew.invite.select}" @click={toggleEmail(item.email)}></button>
+                                    </td>
+                                    <td class="vnw-td vnw-td-email">${item.email}</td>
+                                    <td class="vnw-td">
+                                        @if item.role == "admin"
+                                            <span class="vnw-role vnw-role-admin">${i18n.vaultNew.invite.roles.admin}</span>
+                                        @else
+                                            <span class="vnw-role">${i18n.vaultNew.invite.roles.developer}</span>
+                                        @end
+                                    </td>
+                                    <td class="vnw-td vnw-col-del">
+                                        <button class="vnw-del" type="button" aria-label="${i18n.vaultNew.invite.remove}" @click={removeEmail(item.email)}>
+                                            <img src="/assets/icons/ui/trash.svg" alt="" width="15" height="15">
+                                        </button>
+                                    </td>
+                                </tr>
+                            @end
+                        </tbody>
+                    </table>
+                @else
+                    <p class="vnw-empty">${i18n.vaultNew.invite.empty}</p>
+                @end
+            </div>
+
+            <div class="vnw-actions">
+                <button class="vnw-btn vnw-btn-ghost" type="button" @click={closeDrawer}>${i18n.vaultNew.cancel}</button>
+                @if vlCreating
+                    <button class="vnw-btn vnw-btn-primary" type="submit" disabled>${i18n.vaultNew.creating}</button>
+                @else
+                    @if isAppName(name)
+                        <button class="vnw-btn vnw-btn-primary" type="submit">${i18n.vaultNew.create}</button>
+                    @else
+                        <button class="vnw-btn vnw-btn-primary" type="submit" disabled>${i18n.vaultNew.create}</button>
+                    @end
+                @end
+            </div>
+        </form>
+        @end
+    </aside>
+</div>
