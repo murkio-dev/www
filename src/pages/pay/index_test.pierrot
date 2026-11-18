@@ -27,7 +27,7 @@
         target.Goto("/pt-br/pay");
         expect().toBeOnUrl(/\/pt-br\/pay\/?$/);
         expect().toHaveText(pt.header.lang.current).onClass("lm-current");
-        expect().toHaveText(pt.header.login).onClass("login");
+        expect().toHaveText(pt.header.login).onClass("button-ghost");
         expect().toHaveCount(0).onClass("error-title");
     }
 
