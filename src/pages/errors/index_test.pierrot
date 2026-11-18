@@ -5,7 +5,7 @@
     import en from "../../i18n/en-us.json";
     import pt from "../../i18n/pt-br.json";
 
-    // ---------- Componente: ErrorView ----------
+    // ---------- Página de erro ----------
 
     function ComponentNotFoundPage(target) {
         target.Goto("/rota-que-nao-existe");
