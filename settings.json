@@ -13,7 +13,12 @@
         "open": false,
         "host": "localhost",
         "port": "3000",
-        "strictPort": true
+        "strictPort": true,
+        "dotenv": "./.env",
+        "proxy": {
+            "/api/identity": "http://localhost:8080",
+            "/api/vault": "http://localhost:8083"
+        }
     },
     "prd": {
         "build": "./build",
@@ -21,6 +26,10 @@
         "mangleNames": true,
         "selfHostFonts": true,
         "fontSubset": "auto",
-        "csp": "meta"
+        "csp": "meta",
+        "domain": "https://murkio.com",
+        "connectSrc": [
+            "https://api.murkio.com"
+        ]
     }
 }
