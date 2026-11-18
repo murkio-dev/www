@@ -7,7 +7,12 @@
     }
 </script>
 
-<button class="button button-${variant}" @click={goButton(href)}>${label}</button>
+<button class="button button-${variant}" @click={goButton(href)}>
+    @if variant == "account"
+        <img src="/assets/icons/ui/user.svg" alt="" width="16" height="16">
+    @end
+    ${label}
+</button>
 
 <style>
     .button {
@@ -40,5 +45,42 @@
         background-color: transparent;
         border: 1px solid #c9c9c9;
         background-image: var(--m-noise), linear-gradient(180deg, #d9d9d9, #9e9e9e);
+    }
+
+    /* variantes do header: mais baixas e sem largura mínima */
+
+    .button-ghost,
+    .button-account {
+        flex: none;
+        gap: 8px;
+        min-width: 0;
+        height: 36px;
+        white-space: nowrap;
+        color: rgb(var(--m-fg));
+    }
+
+    .button-ghost {
+        padding: 0 8px;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .button-ghost:hover {
+        filter: none;
+        opacity: 0.75;
+    }
+
+    .button-account {
+        padding: 0 18px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .button-account:hover {
+        filter: none;
+        border-color: var(--m-edge-hover);
     }
 </style>
