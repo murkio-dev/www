@@ -1,6 +1,10 @@
 // Preços chegam em centavos (contrato de GET /v1/payments/plans).
+export function amount(cents: number): string {
+    return (cents / 100).toFixed(2).replace(".", ",");
+}
+
 export function money(symbol: string, cents: number): string {
-    return symbol + " " + (cents / 100).toFixed(2).replace(".", ",");
+    return symbol + " " + amount(cents);
 }
 
 // `discount` é uma porcentagem (0 a 100) aplicada sobre `price`, em centavos.
