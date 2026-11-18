@@ -1,3 +1,99 @@
 <script>
-    import "./styles.css"
+    import "./styles.css";
+    import { Logo } from "../../components/logo.pierrot";
+    import { Card } from "../../components/card.pierrot";
+    import { Hero } from "../../components/hero.pierrot";
+    import { Button } from "../../components/button.pierrot";
+    import { Header } from "../../components/header.pierrot";
+
+    set.Title("Murkio Vault");
 </script>
+
+<div class="vlt-wrap">
+<main class="vlt-hero">
+    <div class="vlt-left">
+        <div class="vlt-copy">
+            <span class="vlt-badge"><Logo type="mark" size="18" />${i18n.vaultPage.hero.badge}</span>
+
+            <h1 class="vlt-title">${i18n.vaultPage.hero.title}</h1>
+            <p class="vlt-subtitle">${i18n.vaultPage.hero.subtitle}</p>
+
+            <div class="vlt-actions">
+                <Button href="#how" label={i18n.vaultPage.hero.secondary} variant="secondary" />
+                <Button href="/authentication?mode=register" label={i18n.vaultPage.hero.primary} variant="primary" />
+            </div>
+        </div>
+
+        <div class="vlt-strip">
+            <span class="vlt-strip-label">${i18n.vaultPage.hero.stripLabel}</span>
+            <ul class="vlt-strip-list">
+                <li class="vlt-strip-item">${i18n.vaultPage.hero.t1}</li>
+                <li class="vlt-strip-item">${i18n.vaultPage.hero.t2}</li>
+                <li class="vlt-strip-item">${i18n.vaultPage.hero.t3}</li>
+                <li class="vlt-strip-item">${i18n.vaultPage.hero.t4}</li>
+                <li class="vlt-strip-item">${i18n.vaultPage.hero.t5}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="vlt-right" aria-hidden="true">
+        <Hero type="lights" />
+        <img class="vlt-ribbon" src="/assets/backgrounds/vault-ribbon.svg" alt="">
+
+        <div class="vlt-card">
+            <span class="vlt-card-icon"><img src="/assets/icons/services/vault.svg" alt="" width="22" height="22"></span>
+            <span class="vlt-card-eyebrow">${i18n.vaultPage.hero.cardEyebrow}</span>
+            <h2 class="vlt-card-title">${i18n.vaultPage.hero.cardTitle}</h2>
+            <p class="vlt-card-text">${i18n.vaultPage.hero.cardText}</p>
+            <span class="vlt-card-status"><span class="vlt-card-dot"></span>${i18n.vaultPage.hero.cardStatus}</span>
+        </div>
+    </div>
+</main>
+
+<section class="vlt-section" id="features">
+    <Header type="section" badge={i18n.vaultPage.features.badge} title={i18n.vaultPage.features.title} subtitle={i18n.vaultPage.features.subtitle} />
+    <div class="vlt-grid-3">
+        <Card type="feature" icon="/assets/icons/ui/braces.svg" label={i18n.vault.feat.f1} description={i18n.vault.feat.d1} />
+        <Card type="feature" icon="/assets/icons/ui/rotate.svg" label={i18n.vault.feat.f2} description={i18n.vault.feat.d2} />
+        <Card type="feature" icon="/assets/icons/ui/alert.svg" label={i18n.vault.feat.f3} description={i18n.vault.feat.d3} />
+    </div>
+</section>
+
+<section class="vlt-section" id="how">
+    <Header type="section" badge={i18n.vaultPage.how.badge} title={i18n.vaultPage.how.title} subtitle={i18n.vaultPage.how.subtitle} />
+    <div class="vlt-how">
+        <div class="vlt-term" aria-hidden="true">
+            <div class="vlt-term-bar">
+                <span class="vlt-term-dot"></span>
+                <span class="vlt-term-dot"></span>
+                <span class="vlt-term-dot"></span>
+                <span class="vlt-term-file">${i18n.vaultPage.how.file}</span>
+            </div>
+            <div class="vlt-term-body">
+                <div class="vlt-line vlt-line-rm"><span class="vlt-sign">-</span><span class="vlt-code">${i18n.vault.term.rm1}</span></div>
+                <div class="vlt-line vlt-line-rm"><span class="vlt-sign">-</span><span class="vlt-code">${i18n.vault.term.rm2}</span></div>
+                <div class="vlt-line vlt-line-rm"><span class="vlt-sign">-</span><span class="vlt-code">${i18n.vault.term.rm3}</span></div>
+                <div class="vlt-line vlt-line-add"><span class="vlt-sign">+</span><span class="vlt-code">${i18n.vault.uri}</span></div>
+                <div class="vlt-line vlt-line-add"><span class="vlt-sign">+</span><span class="vlt-code">${i18n.vault.token}</span></div>
+            </div>
+        </div>
+
+        <ol class="vlt-steps">
+            <li class="vlt-step"><span class="vlt-step-n">1</span><div class="vlt-step-text"><h3 class="vlt-step-title">${i18n.vaultPage.how.s1Title}</h3><p class="vlt-step-body">${i18n.vaultPage.how.s1Text}</p></div></li>
+            <li class="vlt-step"><span class="vlt-step-n">2</span><div class="vlt-step-text"><h3 class="vlt-step-title">${i18n.vaultPage.how.s2Title}</h3><p class="vlt-step-body">${i18n.vaultPage.how.s2Text}</p></div></li>
+            <li class="vlt-step"><span class="vlt-step-n">3</span><div class="vlt-step-text"><h3 class="vlt-step-title">${i18n.vaultPage.how.s3Title}</h3><p class="vlt-step-body">${i18n.vaultPage.how.s3Text}</p></div></li>
+        </ol>
+    </div>
+</section>
+
+<section class="vlt-section vlt-section-last" id="faq">
+    <Header type="section" badge={i18n.vaultPage.faq.badge} title={i18n.vaultPage.faq.title} subtitle="" />
+    <div class="vlt-faq-list">
+        <Card type="faq" question={i18n.vaultPage.faq.q1} answer={i18n.vaultPage.faq.a1} />
+        <Card type="faq" question={i18n.vaultPage.faq.q2} answer={i18n.vaultPage.faq.a2} />
+        <Card type="faq" question={i18n.vaultPage.faq.q3} answer={i18n.vaultPage.faq.a3} />
+        <Card type="faq" question={i18n.vaultPage.faq.q4} answer={i18n.vaultPage.faq.a4} />
+        <Card type="faq" question={i18n.vaultPage.faq.q5} answer={i18n.vaultPage.faq.a5} />
+    </div>
+</section>
+</div>
