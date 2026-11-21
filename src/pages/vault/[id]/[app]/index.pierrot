@@ -144,7 +144,7 @@
     }
 
     function vaTokenStatus(t: Token): string {
-        if (t.revoked_at) {
+        if (t.deleted_at) {
             return "revoked";
         }
         if (t.expires_at && new Date(t.expires_at).getTime() < Date.now()) {
@@ -1171,8 +1171,8 @@
 
                         <label class="vnw-label">${i18n.vaultApp.tokens.tokenLabel}</label>
                         <div class="va-secret-box">
-                            <code class="va-value-text">${vaNewToken.token}</code>
-                            <button class="vnw-copy" type="button" @click={vaCopy("token", vaNewToken.token || "")}>
+                            <code class="va-value-text">${vaNewToken.key}</code>
+                            <button class="vnw-copy" type="button" @click={vaCopy("token", vaNewToken.key || "")}>
                                 @if vaCopied == "token"
                                     <span class="vnw-copy-tag vnw-copy-done">${i18n.vaultApp.copied}</span>
                                 @else

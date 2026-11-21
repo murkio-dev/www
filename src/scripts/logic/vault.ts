@@ -72,14 +72,15 @@ export type SecretVersion = { version: number; created_by: string; created_at: s
 export type Token = {
   id: string;
   name: string;
+  type: "publishable" | "secret";
   prefix: string;
   uri_id: string;
   expires_at: string | null;
   last_used_at: string | null;
-  revoked_at: string | null;
+  deleted_at: string | null;
   created_at: string;
   // só na criação
-  token?: string;
+  key?: string;
   uri?: string;
 };
 
@@ -242,18 +243,19 @@ export function secretVersions(app: string, member: string, id: string): Promise
   return req("GET", secretsPath(app, member) + "/" + id + "/versions");
 }
 
-// ---------- tokens ----------
+// ---------- chaves de API ----------
 
-function tokensPath(app: string, member: string): string {
-  return "/applications/" + app + "/members/" + member + "/tokens";
+// A rota de chaves é a mesma dos outros serviços; o dono vai na query.
+function tokensPath(app: string, member: string, sub: string = ""): string {
+  return "/api-keys" + sub + "?application_id=" + encodeURIComponent(app) + "&member_id=" + encodeURIComponent(member);
 }
 
 export function listTokens(app: string, member: string = "me"): Promise<Res<Token[]>> {
-  return req("GET", tokensPath(app, member) + LIST);
+  return req("GET", tokensPath(app, member));
 }
 
 export function createToken(app: string, member: string, name: string, expiresAt: string | null): Promise<Res<Token>> {
-  const body: { name: string; expires_at?: string } = { name: name };
+  const body: { name: string; type: string; expires_at?: string } = { name: name, type: "secret" };
   if (expiresAt) {
     body.expires_at = expiresAt;
   }
@@ -261,5 +263,5 @@ export function createToken(app: string, member: string, name: string, expiresAt
 }
 
 export function revokeToken(app: string, member: string, id: string): Promise<Res<null>> {
-  return req("POST", tokensPath(app, member) + "/" + id + "/revoke");
+  return req("DELETE", tokensPath(app, member, "/" + encodeURIComponent(id)));
 }
