@@ -23,7 +23,7 @@ export type TokenPair = {
   session_id: string;
 };
 
-// POST /v1/login e a confirmação do e-mail respondem o par de tokens achatado; com 2FA
+// POST /v1/identity/login e a confirmação do e-mail respondem o par de tokens achatado; com 2FA
 // obrigatório vem só "mfa".
 export type LoginData = TokenPair & {
   mfa?: { token: string; enrollment_required: boolean; expires_in: number } | null;

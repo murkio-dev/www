@@ -35,7 +35,7 @@ export type UserTermsAcceptance = {
 };
 
 export type User = {
-  // /v1/me
+  // /v1/identity/me
   id: string;
   session_id: string;
   email: string | null;
