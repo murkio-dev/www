@@ -1,2 +1,5 @@
 *.pierrot linguist-language=Svelte
 *.pierrot linguist-detectable=true
+*.pierrot linguist-vendored=false
+*.pierrot linguist-documentation=false
+*.pierrot linguist-generated=false
