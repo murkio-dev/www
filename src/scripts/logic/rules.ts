@@ -1,5 +1,5 @@
 // Validações feitas no navegador antes de chamar as APIs. Espelham as regras do servidor
-// (identity/pkg/validate/password.go, vault/docs/api.md); a palavra final é sempre da API.
+// (identity/pkg/validate/password.go); a palavra final é sempre da API.
 
 export function isEmail(v: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -26,22 +26,6 @@ export function isCode(v: string): boolean {
 
 export function digitsOnly(v: string): string {
   return v.replace(/\D/g, "").slice(0, 6);
-}
-
-// Nome de aplicação do Vault: ^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$
-export function isAppName(v: string): boolean {
-  return /^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$/.test(v);
-}
-
-// Nome de segredo do Vault: ^[A-Z][A-Z0-9_]{0,127}$
-export function isSecretName(v: string): boolean {
-  return /^[A-Z][A-Z0-9_]{0,127}$/.test(v);
-}
-
-// Nome de token do Vault: só não pode ficar vazio nem gigante.
-export function isTokenName(v: string): boolean {
-  const n = v.trim().length;
-  return n >= 1 && n <= 100;
 }
 
 // Classe de uma regra da lista: neutra com o campo vazio, ok ou bad depois de digitar.

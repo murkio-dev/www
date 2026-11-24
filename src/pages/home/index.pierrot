@@ -51,7 +51,6 @@
             <div class="infra-group">
                 <div class="infra-cards">
                     <Card type="infra" icon="/assets/icons/services/auth.svg" title={i18n.header.services.auth.title} />
-                    <Card type="infra" icon="/assets/icons/services/messaging.svg" title={i18n.header.services.messaging.title} />
                     <Card type="infra" icon="/assets/icons/services/payments.svg" title={i18n.header.services.payments.title} />
                 </div>
                 <span class="infra-bracket"></span>
@@ -62,8 +61,6 @@
 
             <div class="infra-group">
                 <div class="infra-cards">
-                    <Card type="infra" icon="/assets/icons/services/vault.svg" title={i18n.header.services.vault.title} />
-                    <Card type="infra" icon="/assets/icons/services/lambda.svg" title={i18n.header.services.lambda.title} />
                     <Card type="infra" icon="/assets/icons/services/database.svg" title={i18n.header.services.database.title} />
                 </div>
                 <span class="infra-bracket"></span>
@@ -119,8 +116,6 @@
                     <span>4</span>
                     <span>5</span>
                     <span>6</span>
-                    <span>7</span>
-                    <span>8</span>
                 </div>
                 <div class="sw-code">
                     <div class="sw-line"><span class="sw-kw">import</span><span class="sw-p"> { </span><span class="sw-id">Murkio</span><span class="sw-p"> } </span><span class="sw-kw">from</span><span class="sw-p"> </span><span class="sw-str">"@murkio/sdk"</span><span class="sw-p">;</span></div>
@@ -128,9 +123,7 @@
                     <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> murkio = </span><span class="sw-kw">new</span><span class="sw-p"> </span><span class="sw-id">Murkio</span><span class="sw-p">({ token: process.env.MURKIO_TOKEN });</span></div>
                     <div class="sw-line sw-blank"></div>
                     <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.identity.</span><span class="sw-fn">login</span><span class="sw-p">({ email, password });</span></div>
-                    <div class="sw-line"><span class="sw-kw">const</span><span class="sw-p"> url = </span><span class="sw-kw">await</span><span class="sw-p"> murkio.vault.</span><span class="sw-fn">get</span><span class="sw-p">(</span><span class="sw-str">"DATABASE_URL"</span><span class="sw-p">);</span></div>
                     <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.payments.</span><span class="sw-fn">charge</span><span class="sw-p">({ amount: 4900 });</span></div>
-                    <div class="sw-line"><span class="sw-kw">await</span><span class="sw-p"> murkio.messaging.</span><span class="sw-fn">send</span><span class="sw-p">({ user, type: </span><span class="sw-str">"welcome"</span><span class="sw-p"> });</span></div>
                 </div>
             </div>
         </div>
@@ -210,23 +203,8 @@
                     <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
                 </li>
                 <li class="ai-mcp-row">
-                    <img src="/assets/icons/services/messaging.svg" alt="" width="18" height="18">
-                    <span class="ai-mcp-name">${i18n.header.services.messaging.title}</span>
-                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
-                </li>
-                <li class="ai-mcp-row">
                     <img src="/assets/icons/services/payments.svg" alt="" width="18" height="18">
                     <span class="ai-mcp-name">${i18n.header.services.payments.title}</span>
-                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
-                </li>
-                <li class="ai-mcp-row">
-                    <img src="/assets/icons/services/vault.svg" alt="" width="18" height="18">
-                    <span class="ai-mcp-name">${i18n.header.services.vault.title}</span>
-                    <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
-                </li>
-                <li class="ai-mcp-row">
-                    <img src="/assets/icons/services/lambda.svg" alt="" width="18" height="18">
-                    <span class="ai-mcp-name">${i18n.header.services.lambda.title}</span>
                     <span class="ai-mcp-tag">${i18n.ai.mcp.tag}</span>
                 </li>
             </ul>
@@ -354,71 +332,6 @@
                 <p class="id-text">${i18n.identity.privacy.description}</p>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="vault" id="vault">
-    <Header type="section" badge={i18n.vault.badge} title={i18n.vault.title} subtitle={i18n.vault.description} />
-
-    <div class="vault-top">
-        <div class="vault-panel vault-panel-text">
-            <h3 class="vault-panel-title">${i18n.vault.panelTitle}</h3>
-            <p class="vault-panel-body">${i18n.vault.panelText}</p>
-
-            <div class="vault-table">
-                <div class="vt" aria-hidden="true">
-                    <div class="vt-row vt-head">
-                        <span>${i18n.vault.table.h1}</span>
-                        <span>${i18n.vault.table.h2}</span>
-                        <span>${i18n.vault.table.h3}</span>
-                    </div>
-                    <div class="vt-row">
-                        <span class="vt-name">${i18n.vault.env.name1}</span>
-                        <span class="vt-value">${i18n.vault.env.value}</span>
-                        <span class="vt-cell"><span class="vt-tag">${i18n.vault.env.rotative}</span></span>
-                    </div>
-                    <div class="vt-row">
-                        <span class="vt-name">${i18n.vault.env.name2}</span>
-                        <span class="vt-value">${i18n.vault.env.value}</span>
-                        <span class="vt-cell"><span class="vt-tag">${i18n.vault.env.rotative}</span></span>
-                    </div>
-                    <div class="vt-row">
-                        <span class="vt-name">${i18n.vault.env.name3}</span>
-                        <span class="vt-value">${i18n.vault.env.value}</span>
-                        <span class="vt-cell"></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="vault-panel vault-panel-visual">
-            <div class="vm" aria-hidden="true">
-                <span class="vm-glow"></span>
-
-                <div class="vm-window">
-                    <div class="vm-bar">
-                        <span class="vm-dot"></span>
-                        <span class="vm-dot"></span>
-                        <span class="vm-dot"></span>
-                        <span class="vm-title">${i18n.vault.term.title}</span>
-                    </div>
-
-                    <div class="vm-body">
-                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm1}</span></div>
-                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm2}</span></div>
-                        <div class="vm-line vm-line-rm"><span class="vm-sign">-</span><span class="vm-code">${i18n.vault.term.rm3}</span></div>
-                        <div class="vm-line vm-line-add"><span class="vm-sign">+</span><span class="vm-code">${i18n.vault.uri}</span></div>
-                        <div class="vm-line vm-line-add"><span class="vm-sign">+</span><span class="vm-code">${i18n.vault.token}</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="vault-bottom">
-        <Card type="feature" icon="/assets/icons/ui/braces.svg" label={i18n.vault.feat.f1} description={i18n.vault.feat.d1} />
-        <Card type="feature" icon="/assets/icons/ui/rotate.svg" label={i18n.vault.feat.f2} description={i18n.vault.feat.d2} />
-        <Card type="feature" icon="/assets/icons/ui/alert.svg" label={i18n.vault.feat.f3} description={i18n.vault.feat.d3} />
     </div>
 </section>
 
@@ -589,258 +502,5 @@
         </div>
 
         <p class="rt-note" role="note"><span class="rt-note-title">${i18n.router.alert.title}.</span> ${i18n.router.alert.description}</p>
-    </div>
-</section>
-
-<section class="msg" id="messaging">
-    <Header type="section" badge={i18n.messaging.badge} title={i18n.messaging.title} subtitle={i18n.messaging.subtitle} />
-
-    <div class="mw">
-        <div class="mw-pane mw-pane-code">
-            <div class="mw-tabs" aria-hidden="true">
-                <span class="mw-tab mw-tab-on">notification.send</span>
-                <span class="mw-tab">email.send</span>
-            </div>
-
-            <div class="mw-editor" aria-hidden="true">
-                <div class="mw-gutter">
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>4</span>
-                    <span>5</span>
-                </div>
-                <div class="mw-code">
-                    <div class="mw-line"><span class="mw-fn">notification</span><span class="mw-p">.</span><span class="mw-fn">send</span><span class="mw-p">({</span></div>
-                    <div class="mw-line mw-in"><span class="mw-key">user_id</span><span class="mw-p">: </span><span class="mw-str">"usr_8f21"</span><span class="mw-p">,</span></div>
-                    <div class="mw-line mw-in"><span class="mw-key">type</span><span class="mw-p">: </span><span class="mw-str">"invoice.paid"</span><span class="mw-p">,</span></div>
-                    <div class="mw-line mw-in"><span class="mw-key">data</span><span class="mw-p">: { </span><span class="mw-key">order_id</span><span class="mw-p">: </span><span class="mw-str">"8412"</span><span class="mw-p"> }</span></div>
-                    <div class="mw-line"><span class="mw-p">})</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mw-pane mw-pane-log">
-            <div class="mw-head">
-                <span class="mw-head-title">${i18n.messaging.code.logTitle}</span>
-            </div>
-
-            <div class="mw-row">
-                <span class="mw-chan">${i18n.messaging.code.c1}</span>
-                <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
-            </div>
-            <div class="mw-row">
-                <span class="mw-chan">${i18n.messaging.code.c3}</span>
-                <span class="mw-status"><span class="mw-ok"></span>${i18n.messaging.code.ok}</span>
-            </div>
-            <div class="mw-row mw-row-off">
-                <span class="mw-chan">${i18n.messaging.code.c2}</span>
-                <span class="mw-status"><span class="mw-skip"></span>${i18n.messaging.code.skipped}</span>
-            </div>
-            <p class="mw-note">${i18n.messaging.code.skippedNote}</p>
-        </div>
-    </div>
-
-    <div class="mc">
-        <div class="mc-col">
-            <span class="mc-icon"><img src="/assets/icons/ui/layers.svg" alt="" width="22" height="22"></span>
-            <h3 class="mc-title">${i18n.messaging.channels.title}</h3>
-            <p class="mc-body">${i18n.messaging.channels.description}</p>
-            <div class="mc-soon">
-                <span class="mc-soon-names">${i18n.messaging.channels.sms} · ${i18n.messaging.channels.whatsapp} · ${i18n.messaging.channels.telegram}</span>
-                <span class="cs"><span class="cs-dot"></span><span>${i18n.messaging.channels.soon}</span></span>
-            </div>
-        </div>
-
-        <div class="mc-col">
-            <span class="mc-icon"><img src="/assets/icons/ui/template.svg" alt="" width="22" height="22"></span>
-            <h3 class="mc-title">${i18n.messaging.templates.title}</h3>
-            <p class="mc-body">${i18n.messaging.templates.description}</p>
-        </div>
-
-        <div class="mc-col">
-            <span class="mc-icon"><img src="/assets/icons/ui/sliders.svg" alt="" width="22" height="22"></span>
-            <h3 class="mc-title">${i18n.messaging.prefs.title}</h3>
-            <p class="mc-body">${i18n.messaging.prefs.description}</p>
-        </div>
-
-        <div class="mc-col">
-            <span class="mc-icon"><img src="/assets/icons/ui/inbox.svg" alt="" width="22" height="22"></span>
-            <h3 class="mc-title">${i18n.messaging.inbox.title}</h3>
-            <p class="mc-body">${i18n.messaging.inbox.description}</p>
-        </div>
-    </div>
-
-</section>
-
-<section class="lam" id="lambda">
-    <Header type="section" badge={i18n.lambda.badge} title={i18n.lambda.title} subtitle={i18n.lambda.subtitle} />
-
-    <div class="lc">
-        <div class="lc-titlebar" aria-hidden="true">
-            <span class="lc-dot"></span>
-            <span class="lc-dot"></span>
-            <span class="lc-dot"></span>
-            <span class="lc-window">${i18n.lambda.console.window}</span>
-        </div>
-
-        <div class="lc-body">
-            <nav class="lc-side" aria-hidden="true">
-                <span class="lc-nav lc-nav-on"><img src="/assets/icons/services/lambda.svg" alt="" width="18" height="18">${i18n.lambda.nav.n1}</span>
-                <span class="lc-nav"><img src="/assets/icons/ui/rotate.svg" alt="" width="18" height="18">${i18n.lambda.nav.n2}</span>
-                <span class="lc-nav"><img src="/assets/icons/ui/template.svg" alt="" width="18" height="18">${i18n.lambda.nav.n3}</span>
-                <span class="lc-nav"><img src="/assets/icons/ui/sliders.svg" alt="" width="18" height="18">${i18n.lambda.nav.n4}</span>
-            </nav>
-
-            <div class="lc-main" aria-hidden="true">
-                <div class="lc-head">
-                    <h3 class="lc-title">${i18n.lambda.console.pageTitle}</h3>
-                    <div class="lc-stats">
-                        <div class="lc-stat">
-                            <span class="lc-stat-label">${i18n.lambda.console.s1Label}</span>
-                            <span class="lc-stat-value">${i18n.lambda.console.s1Value}</span>
-                        </div>
-                        <div class="lc-stat">
-                            <span class="lc-stat-label">${i18n.lambda.console.s2Label}</span>
-                            <span class="lc-stat-value">${i18n.lambda.console.s2Value}</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lc-controls">
-                    <span class="lc-search"><img src="/assets/icons/ui/search.svg" alt="" width="16" height="16">${i18n.lambda.console.search}</span>
-                    <span class="lc-toggle"><span class="lc-switch"></span>${i18n.lambda.console.onlyRunning}</span>
-                    <span class="lc-new"><img src="/assets/icons/ui/plus.svg" alt="" width="16" height="16">${i18n.lambda.console.newWorker}</span>
-                </div>
-
-                <div class="lc-scroll">
-                    <div class="lc-table">
-                        <div class="lc-row lc-row-head">
-                            <span class="lc-check"></span>
-                            <span>${i18n.lambda.console.h1}</span>
-                            <span>${i18n.lambda.console.h2}</span>
-                            <span>${i18n.lambda.console.h3}</span>
-                            <span>${i18n.lambda.console.h4}</span>
-                            <span>${i18n.lambda.console.h5}</span>
-                            <span>${i18n.lambda.console.h6}</span>
-                            <span></span>
-                        </div>
-
-                        <div class="lc-row">
-                            <span class="lc-check"></span>
-                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r1Name}</span><span class="lc-name-id">${i18n.lambda.console.r1Id}</span></span>
-                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
-                            <span class="lc-lang">${i18n.lambda.console.r1Lang}</span>
-                            <span class="lc-mono">${i18n.lambda.console.r1When}</span>
-                            <span class="lc-muted">${i18n.lambda.console.r1Last}</span>
-                            <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
-                            <span class="lc-actions"><img src="/assets/icons/ui/stop.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
-                        </div>
-
-                        <div class="lc-row">
-                            <span class="lc-check"></span>
-                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r2Name}</span><span class="lc-name-id">${i18n.lambda.console.r2Id}</span></span>
-                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
-                            <span class="lc-lang">${i18n.lambda.console.r2Lang}</span>
-                            <span class="lc-mono">${i18n.lambda.console.r2When}</span>
-                            <span class="lc-muted">${i18n.lambda.console.r2Last}</span>
-                            <span class="lc-status lc-status-stop"><span class="lc-status-dot"></span>${i18n.lambda.console.sStopped}</span>
-                            <span class="lc-actions"><img src="/assets/icons/ui/play.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
-                        </div>
-
-                        <div class="lc-row">
-                            <span class="lc-check"></span>
-                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r3Name}</span><span class="lc-name-id">${i18n.lambda.console.r3Id}</span></span>
-                            <span class="lc-type"><img src="/assets/icons/ui/bolt.svg" alt="" width="14" height="14">${i18n.lambda.console.tTrigger}</span>
-                            <span class="lc-lang">${i18n.lambda.console.r3Lang}</span>
-                            <span class="lc-mono">${i18n.lambda.console.r3When}</span>
-                            <span class="lc-muted">${i18n.lambda.console.r3Last}</span>
-                            <span class="lc-status lc-status-run"><span class="lc-status-dot"></span>${i18n.lambda.console.sRunning}</span>
-                            <span class="lc-actions"><img src="/assets/icons/ui/stop.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
-                        </div>
-
-                        <div class="lc-row">
-                            <span class="lc-check"></span>
-                            <span class="lc-name"><span class="lc-name-main">${i18n.lambda.console.r4Name}</span><span class="lc-name-id">${i18n.lambda.console.r4Id}</span></span>
-                            <span class="lc-type"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.console.tTimer}</span>
-                            <span class="lc-lang">${i18n.lambda.console.r4Lang}</span>
-                            <span class="lc-mono">${i18n.lambda.console.r4When}</span>
-                            <span class="lc-muted">${i18n.lambda.console.r4Last}</span>
-                            <span class="lc-status lc-status-fail"><span class="lc-status-dot"></span>${i18n.lambda.console.sFailed}</span>
-                            <span class="lc-actions"><img src="/assets/icons/ui/play.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/more.svg" alt="" width="16" height="16"><img src="/assets/icons/ui/trash.svg" alt="" width="16" height="16"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="lam-how">
-        <ul class="lam-list">
-            <li class="lam-item">
-                <span class="lam-num">01</span>
-                <div class="lam-text">
-                    <h3 class="lam-title">${i18n.lambda.how.b1Title}</h3>
-                    <p class="lam-body">${i18n.lambda.how.b1Text}</p>
-                </div>
-            </li>
-            <li class="lam-item">
-                <span class="lam-num">02</span>
-                <div class="lam-text">
-                    <h3 class="lam-title">${i18n.lambda.how.b2Title}</h3>
-                    <p class="lam-body">${i18n.lambda.how.b2Text}</p>
-                </div>
-            </li>
-            <li class="lam-item">
-                <span class="lam-num">03</span>
-                <div class="lam-text">
-                    <h3 class="lam-title">${i18n.lambda.how.b3Title}</h3>
-                    <p class="lam-body">${i18n.lambda.how.b3Text}</p>
-                </div>
-            </li>
-        </ul>
-
-        <div class="lw">
-            <div class="lw-pane lw-pane-code" aria-hidden="true">
-                <div class="lw-tabs">
-                    <span class="lw-tab">${i18n.lambda.worker.file}</span>
-                </div>
-
-                <div class="lw-editor">
-                    <div class="lw-gutter">
-                        <span>1</span>
-                        <span>2</span>
-                        <span>3</span>
-                    </div>
-                    <div class="lw-code">
-                        <div class="lw-line"><span class="lw-kw">func</span><span class="lw-p"> </span><span class="lw-fn">Worker</span><span class="lw-p">() {</span></div>
-                        <div class="lw-line lw-in"><span class="lw-p">db.</span><span class="lw-fn">Exec</span><span class="lw-p">(</span><span class="lw-str">"DELETE FROM sessions WHERE expires_at &lt; now()"</span><span class="lw-p">)</span></div>
-                        <div class="lw-line"><span class="lw-p">}</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lw-pane lw-pane-form" aria-hidden="true">
-                <div class="lw-head">${i18n.lambda.worker.settings}</div>
-
-                <div class="lw-field">
-                    <span class="lw-label">${i18n.lambda.worker.nameLabel}</span>
-                    <span class="lw-input">${i18n.lambda.worker.nameValue}</span>
-                </div>
-
-                <div class="lw-field">
-                    <span class="lw-label">${i18n.lambda.worker.typeLabel}</span>
-                    <span class="lw-seg">
-                        <span class="lw-seg-opt lw-seg-on"><img src="/assets/icons/ui/clock.svg" alt="" width="14" height="14">${i18n.lambda.worker.timer}</span>
-                        <span class="lw-seg-opt"><img src="/assets/icons/ui/bolt.svg" alt="" width="14" height="14">${i18n.lambda.worker.trigger}</span>
-                    </span>
-                </div>
-
-                <div class="lw-field">
-                    <span class="lw-label">${i18n.lambda.worker.whenLabel}</span>
-                    <span class="lw-input lw-input-mono">${i18n.lambda.worker.whenValue}</span>
-                </div>
-            </div>
-        </div>
     </div>
 </section>

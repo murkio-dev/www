@@ -2,7 +2,7 @@
     import { Logo } from "./logo.pierrot";
     import { signOut } from "../scripts/logic/identity.ts";
 
-    // Barra lateral das telas de app (Vault, e depois os outros serviços).
+    // Barra lateral das telas de app (serviços do Murkio).
     //   service       nome do serviço, mostrado ao lado da marca
     //   active        qual botão está selecionado: "1" a "6", ou "settings"
     //   labelN/iconN/hrefN   até 6 botões do serviço; sem labelN o botão não aparece

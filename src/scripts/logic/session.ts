@@ -8,6 +8,9 @@ export type Session = {
   expires_at: number;
   user_id: string;
   email: string;
+  // "" quando o usuário não preencheu (sessões antigas não têm os campos)
+  first_name?: string;
+  avatar_url?: string;
 };
 
 const KEY = "murkio-session";
@@ -49,8 +52,23 @@ export function accessExpired(s: Session, now: number = Date.now()): boolean {
   return s.expires_at - 30000 <= now;
 }
 
+// Nome mostrado no header: o primeiro nome ou, sem ele, o que vem antes do @.
+export function displayName(s: Session): string {
+  return s.first_name || s.email.split("@")[0];
+}
+
+// Letra do avatar quando não há foto.
+export function initialOf(name: string): string {
+  return name.trim().charAt(0).toUpperCase();
+}
+
+// Caminho do perfil (público) de um usuário.
+export function profilePath(userId: string): string {
+  return "/profile/" + userId;
+}
+
 // Caminho do painel da pessoa logada ("" sem sessão).
 export function panelPath(): string {
   const s = getSession();
-  return s ? "/vault/" + s.user_id : "";
+  return s ? "/profile/" + s.user_id : "";
 }

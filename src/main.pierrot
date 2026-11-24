@@ -9,7 +9,7 @@
 	set.Fallback(Errors);
 	set.Icon("./assets/logo/mark.svg")
     set.Title("Murkio");
-	set.Description("Murkio: Complete developer platform offering Identity, Vault, Payments, Serverless Lambda, and AI infrastructure.");
+	set.Description("Murkio: Complete developer platform offering Identity and Payments.");
 	set.Charset("UTF-8");
 	set.Robots("./assets/robots.txt");
 	set.Sitemap("./assets/sitemap.xml");

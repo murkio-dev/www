@@ -1,10 +1,37 @@
 <script>
     import { Logo } from "./logo.pierrot";
     import { Button } from "./button.pierrot";
-    import { hasSession, panelPath } from "../scripts/logic/session.ts";
+    import { getSession, panelPath, profilePath, displayName, initialOf } from "../scripts/logic/session.ts";
+    import { configureIdentity, signOut } from "../scripts/logic/identity.ts";
 
-    // Com sessão guardada, o header troca "Entrar"/"Criar conta" por um botão para o painel.
-    let hdLogged: boolean = hasSession();
+    // Com sessão guardada, o header troca "Entrar"/"Criar conta" pelo sino de notificações
+    // e pelo menu da conta (avatar e primeiro nome). A sessão só existe no navegador.
+    let hdLogged: boolean = false;
+    let hdName = "";
+    let hdEmail = "";
+    let hdInitial = "";
+    let hdAvatar = "";
+    let hdProfile = "";
+
+    if (typeof window !== "undefined") {
+        const hdSession = getSession();
+        if (hdSession) {
+            hdLogged = true;
+            hdName = displayName(hdSession);
+            hdEmail = hdSession.email;
+            hdInitial = initialOf(hdName);
+            hdAvatar = hdSession.avatar_url || "";
+            hdProfile = profilePath(hdSession.user_id);
+        }
+    }
+
+    // O "Sair" revoga o refresh token no Identity; sem isso a sessão só sumiria deste navegador.
+    configureIdentity(get.Dotenv("IDENTITY_URL"), get.Dotenv("IDENTITY_PK"));
+
+    async function hdSignOut(): Promise<void> {
+        await signOut();
+        client.Redirect("/");
+    }
 
     // type: "site" (barra fixa do topo), "section" (selo, título e subtítulo de uma seção)
     // ou "badge" (só o selo). Os tipos "section" e "badge" usam badge, title e subtitle.
@@ -60,16 +87,6 @@
                                         <span class="service-item-description">${i18n.header.services.auth.description}</span>
                                     </span>
                                 </button>
-                                <button class="service-item" @click={go("/messaging")}>
-                                    <span class="service-item-icon"><img src="/assets/icons/services/messaging.svg" alt="" width="20" height="20"></span>
-                                    <span class="service-item-text">
-                                        <span class="service-item-head">
-                                            <span class="service-item-title">${i18n.header.services.messaging.title}</span>
-                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
-                                        </span>
-                                        <span class="service-item-description">${i18n.header.services.messaging.description}</span>
-                                    </span>
-                                </button>
                                 <button class="service-item" @click={go("/pay")}>
                                     <span class="service-item-icon"><img src="/assets/icons/services/payments.svg" alt="" width="20" height="20"></span>
                                     <span class="service-item-text">
@@ -83,26 +100,6 @@
                             </div>
                             <div class="services-col">
                                 <p class="services-heading">${i18n.header.services.infraTitle}</p>
-                                <button class="service-item" @click={go("/vault")}>
-                                    <span class="service-item-icon"><img src="/assets/icons/services/vault.svg" alt="" width="20" height="20"></span>
-                                    <span class="service-item-text">
-                                        <span class="service-item-head">
-                                            <span class="service-item-title">${i18n.header.services.vault.title}</span>
-                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
-                                        </span>
-                                        <span class="service-item-description">${i18n.header.services.vault.description}</span>
-                                    </span>
-                                </button>
-                                <button class="service-item" @click={go("/lambda")}>
-                                    <span class="service-item-icon"><img src="/assets/icons/services/lambda.svg" alt="" width="20" height="20"></span>
-                                    <span class="service-item-text">
-                                        <span class="service-item-head">
-                                            <span class="service-item-title">${i18n.header.services.lambda.title}</span>
-                                            <span class="service-flag service-flag-active"><span class="service-flag-dot"></span>${i18n.header.services.active}</span>
-                                        </span>
-                                        <span class="service-item-description">${i18n.header.services.lambda.description}</span>
-                                    </span>
-                                </button>
                                 <button class="service-item">
                                     <span class="service-item-icon"><img src="/assets/icons/services/database.svg" alt="" width="20" height="20"></span>
                                     <span class="service-item-text">
@@ -149,8 +146,48 @@
                     <img class="tt-sun" src="/assets/icons/ui/sun.svg" alt="" width="18" height="18">
                     <img class="tt-moon" src="/assets/icons/ui/moon.svg" alt="" width="18" height="18">
                 </button>
-                <Button href="/authentication" label={i18n.header.login} variant="ghost" />
-                <Button href="/authentication?mode=register" label={i18n.header.createAccount} variant="account" />
+                @if hdLogged
+                    <div class="nt">
+                        <button class="nt-trigger" aria-haspopup="true" aria-label="${i18n.header.notifications.label}">
+                            <img src="/assets/icons/ui/bell.svg" alt="" width="18" height="18">
+                        </button>
+                        <div class="nt-panel">
+                            <div class="nt-card">
+                                <p class="nt-title">${i18n.header.notifications.label}</p>
+                                <p class="nt-empty">${i18n.header.notifications.empty}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="me-menu">
+                        <button class="me" aria-haspopup="true" aria-label="${i18n.header.account.label}">
+                            @if hdAvatar != ""
+                                <img class="me-avatar" src="${hdAvatar}" alt="" width="28" height="28" referrerpolicy="no-referrer">
+                            @else
+                                <span class="me-avatar me-initial">${hdInitial}</span>
+                            @end
+                            <span class="me-name">${hdName}</span>
+                            <img class="me-chevron" src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5">
+                        </button>
+                        <div class="me-panel">
+                            <div class="lm-card">
+                                <p class="me-email">${hdEmail}</p>
+                                <button class="lm-item" @click={go(hdProfile)}>
+                                    <span>${i18n.header.account.profile}</span>
+                                </button>
+                                <button class="lm-item" @click={go(panelPath())}>
+                                    <span>${i18n.header.account.panel}</span>
+                                </button>
+                                <span class="me-divider"></span>
+                                <button class="lm-item" @click={hdSignOut}>
+                                    <span>${i18n.header.account.logout}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <Button href="/authentication" label={i18n.header.login} variant="ghost" />
+                    <Button href="/authentication?mode=register" label={i18n.header.createAccount} variant="account" />
+                @end
             </div>
         </div>
     </header>
@@ -651,6 +688,207 @@
 
     :root[data-theme="light"] .tt-moon {
         display: block;
+    }
+
+    .nt {
+        position: relative;
+        display: flex;
+        background: transparent;
+    }
+
+    .nt-trigger {
+        flex: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--m-edge);
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .nt-trigger:hover {
+        border-color: var(--m-edge-hover);
+    }
+
+    .nt-panel {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 200;
+        width: 260px;
+        padding-top: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .nt:hover .nt-panel,
+    .nt:focus-within .nt-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .nt-card {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 12px 14px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 14px;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+        background-color: rgb(var(--m-well) / 0.96);
+        background-image: var(--m-noise);
+    }
+
+    .nt-title {
+        font-family: "Jaldi", sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgb(var(--m-fg) / 0.45);
+        background: transparent;
+    }
+
+    .nt-empty {
+        padding: 10px 0 4px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+
+    .me {
+        flex: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 36px;
+        max-width: 180px;
+        padding: 0 12px 0 4px;
+        border: 1px solid var(--m-edge);
+        border-radius: 29px;
+        cursor: pointer;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        background-color: transparent;
+        background-image: var(--m-noise), linear-gradient(243.8deg, rgb(var(--m-fg) / 0.2) 10.2%, rgba(113, 113, 113, 0.2) 92.6%);
+    }
+
+    .me:hover {
+        border-color: var(--m-edge-hover);
+    }
+
+    .me-menu {
+        position: relative;
+        display: flex;
+        background: transparent;
+    }
+
+    .me-chevron {
+        flex: none;
+        transition: transform 0.2s ease;
+    }
+
+    .me-menu:hover .me-chevron,
+    .me-menu:focus-within .me-chevron {
+        transform: rotate(180deg);
+    }
+
+    .me-panel {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 200;
+        width: 300px;
+        max-width: calc(100vw - 32px);
+        padding-top: 12px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-6px);
+        transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+        background: transparent;
+    }
+
+    .me-menu:hover .me-panel,
+    .me-menu:focus-within .me-panel {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .me-panel .lm-item {
+        justify-content: space-between;
+    }
+
+    .me-panel .lm-item:disabled {
+        cursor: default;
+        color: rgb(var(--m-fg) / 0.45);
+    }
+
+    .me-panel .lm-item:disabled:hover {
+        background-color: transparent;
+    }
+
+    .me-email {
+        overflow: hidden;
+        padding: 6px 10px 8px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: "Roboto", sans-serif;
+        font-size: 13px;
+        color: rgb(var(--m-fg) / 0.5);
+        background: transparent;
+    }
+
+    .me-divider {
+        height: 1px;
+        margin: 4px 6px;
+        background-color: rgb(var(--m-fg) / 0.1);
+    }
+
+    .me-avatar {
+        flex: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .me-initial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Jaldi", sans-serif;
+        font-size: 15px;
+        color: rgb(var(--m-fg));
+        background-color: rgb(var(--m-rose) / 0.35);
+    }
+
+    .me-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-family: "Jaldi", sans-serif;
+        font-size: 16px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    @media (max-width: 560px) {
+        .me-name {
+            display: none;
+        }
+
+        .me {
+            padding: 0 4px;
+        }
     }
 
     .sh {

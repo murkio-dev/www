@@ -16,8 +16,8 @@
         "strictPort": true,
         "dotenv": "./.env",
         "proxy": {
-            "/api/identity": "http://localhost:8080",
-            "/api/vault": "http://localhost:8083"
+            "/identity/v1": "http://localhost:8080/api/v1",
+            "/payments/v1": "http://localhost:8084"
         }
     },
     "prd": {

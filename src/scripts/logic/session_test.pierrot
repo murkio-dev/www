@@ -1,5 +1,5 @@
 <script>
-    import { getSession, saveSession, clearSession, hasSession, accessExpired, panelPath } from "./session.ts";
+    import { getSession, saveSession, clearSession, hasSession, accessExpired, panelPath, profilePath, displayName, initialOf } from "./session.ts";
 
     function _sample() {
         return { access_token: "at", refresh_token: "rt", expires_at: 1900000000000, user_id: "u1", email: "ana@empresa.com" };
@@ -16,7 +16,7 @@
         saveSession(_sample());
         expect(hasSession()).toBeTrue();
         expect(getSession()).toEqual(_sample());
-        expect(panelPath()).toBe("/vault/u1");
+        expect(panelPath()).toBe("/profile/u1");
         clearSession();
         expect(getSession()).toBeNull();
     }
@@ -38,5 +38,24 @@
         expect(accessExpired(s, now)).toBeTrue();
         s.expires_at = now - 1;
         expect(accessExpired(s, now)).toBeTrue();
+    }
+
+    function UnitDisplayNamePrefersFirstName() {
+        const s = _sample();
+        expect(displayName(s)).toBe("ana");
+        s.first_name = "";
+        expect(displayName(s)).toBe("ana");
+        s.first_name = "Ana";
+        expect(displayName(s)).toBe("Ana");
+    }
+
+    function UnitInitialOf() {
+        expect(initialOf("ana")).toBe("A");
+        expect(initialOf("  joão")).toBe("J");
+        expect(initialOf("")).toBe("");
+    }
+
+    function UnitProfilePath() {
+        expect(profilePath("u1")).toBe("/profile/u1");
     }
 </script>

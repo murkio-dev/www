@@ -1,0 +1,305 @@
+<script>
+    import "./styles.css";
+    import { Empty } from "../../../components/empty.pierrot";
+    import { configureIdentity, publicProfile, updateMe, PublicProfile } from "../../../scripts/logic/identity.ts";
+    import { getSession, displayName, initialOf } from "../../../scripts/logic/session.ts";
+    import { fmtDate } from "../../../scripts/logic/rules.ts";
+
+    // Rota /profile/:id. A parte de cima (capa, foto, nome, publicações) é pública: qualquer
+    // visitante vê, com ou sem login. O dono vê também as seções privadas (editar perfil,
+    // assinaturas, uso dos serviços). Cada seção é um bloco independente, para o blog e
+    // os dados de cobrança entrarem depois sem mexer no resto.
+    set.Title("Murkio");
+
+    configureIdentity(get.Dotenv("IDENTITY_URL"), get.Dotenv("IDENTITY_PK"));
+
+    let pfUid = get.Param("id");
+
+    // "loading" | "ready" | "missing" | "error"
+    let pfState = "loading";
+    let pfOwner: boolean = false;
+    let pfName = "";
+    let pfInitial = "";
+    let pfAvatar = "";
+    let pfCover = "";
+    let pfSince = "";
+
+    let pfEditing: boolean = false;
+    let pfSaving: boolean = false;
+    let pfFirstName = "";
+    let pfAvatarUrl = "";
+    let pfCoverUrl = "";
+    // chaves de profile.errors.* por campo, e uma geral
+    let pfErrName = "";
+    let pfErrAvatar = "";
+    let pfErrCover = "";
+    let pfErr = "";
+    let pfSaved: boolean = false;
+
+    function pfShow(p: PublicProfile, fallback: string): void {
+        pfName = p.first_name || fallback;
+        pfInitial = initialOf(pfName || "?");
+        pfAvatar = p.avatar_url || "";
+        pfCover = p.cover_url || "";
+        pfSince = fmtDate(p.created_at, document.documentElement.lang);
+        pfFirstName = p.first_name || "";
+        pfAvatarUrl = pfAvatar;
+        pfCoverUrl = pfCover;
+    }
+
+    async function pfBoot(): Promise<void> {
+        const s = getSession();
+        pfOwner = s !== null && s.user_id == pfUid;
+        const r = await publicProfile(pfUid);
+        if (r.ok && r.data) {
+            // o visitante não sabe o e-mail; o dono sem nome vê o mesmo fallback do header
+            pfShow(r.data, pfOwner && s ? displayName(s) : "");
+            pfState = "ready";
+            return;
+        }
+        pfState = r.status == 404 || r.status == 400 ? "missing" : "error";
+    }
+
+    // Chamada solta no topo: o pierrot a envolve num after() e
+    // redesenha a página quando ela termina. Dentro de um if, a tela não atualizaria.
+    pfBoot();
+
+    function pfOpenEdit(): void {
+        pfEditing = true;
+        pfSaved = false;
+        pfErr = "";
+        pfErrName = "";
+        pfErrAvatar = "";
+        pfErrCover = "";
+    }
+
+    function pfCloseEdit(): void {
+        pfEditing = false;
+    }
+
+    async function pfSave(e: Event): Promise<void> {
+        e.preventDefault();
+        pfErr = "";
+        pfErrName = "";
+        pfErrAvatar = "";
+        pfErrCover = "";
+        pfSaved = false;
+        if (pfFirstName.trim() == "") {
+            pfErrName = "firstName";
+            return;
+        }
+        pfSaving = true;
+        const r = await updateMe({ first_name: pfFirstName.trim(), avatar_url: pfAvatarUrl.trim(), cover_url: pfCoverUrl.trim() });
+        pfSaving = false;
+        if (r.ok && r.data) {
+            pfShow({ id: r.data.id, first_name: r.data.first_name, avatar_url: r.data.avatar_url, cover_url: r.data.cover_url, created_at: r.data.created_at }, "");
+            pfEditing = false;
+            pfSaved = true;
+            return;
+        }
+        const codes = [r.code, ...r.details.map((d) => d.code)];
+        if (codes.includes("rag-28")) {
+            pfErrName = "firstName";
+        }
+        if (codes.includes("rag-29")) {
+            pfErrAvatar = "image";
+        }
+        if (codes.includes("rag-30")) {
+            pfErrCover = "image";
+        }
+        if (pfErrName == "" && pfErrAvatar == "" && pfErrCover == "") {
+            pfErr = r.code == "rsb-05" ? "session" : (r.code == "network" ? "network" : "unknown");
+        }
+    }
+</script>
+
+<main class="pf">
+    @if pfState == "loading"
+        <div class="pf-skeleton" role="status" aria-label="${i18n.profile.loading}">
+            <section class="pf-card">
+                <div class="sk sk-cover"></div>
+                <div class="pf-body">
+                    <div class="pf-ident">
+                        <div class="sk-avatar-ring"><div class="sk sk-avatar"></div></div>
+                        <div class="sk sk-name"></div>
+                        <div class="sk sk-meta"></div>
+                        <div class="sk sk-button"></div>
+                    </div>
+                    <div class="pf-side">
+                        <div class="sk sk-chip"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="pf-section">
+                <div class="sk sk-title"></div>
+                <div class="sk sk-block"></div>
+            </section>
+        </div>
+    @end
+
+    @if pfState == "missing"
+        <Empty emIcon="/assets/icons/ui/user.svg" emTitle={i18n.profile.missing.title} emText={i18n.profile.missing.text} />
+    @end
+
+    @if pfState == "error"
+        <Empty emIcon="/assets/icons/ui/alert.svg" emTitle={i18n.profile.failed.title} emText={i18n.profile.failed.text} />
+    @end
+
+    @if pfState == "ready"
+        <section class="pf-card">
+            <div class="pf-cover">
+                @if pfCover != ""
+                    <img class="pf-cover-img" src="${pfCover}" alt="" referrerpolicy="no-referrer">
+                @end
+                @if pfOwner
+                    <button class="pf-cover-edit" type="button" @click={pfOpenEdit} aria-label="${i18n.profile.edit}">
+                        <img src="/assets/icons/ui/pencil.svg" alt="" width="16" height="16">
+                    </button>
+                @end
+            </div>
+
+            <div class="pf-body">
+                <div class="pf-ident">
+                    <div class="pf-avatar">
+                        @if pfAvatar != ""
+                            <img class="pf-avatar-img" src="${pfAvatar}" alt="" referrerpolicy="no-referrer">
+                        @else
+                            <span class="pf-avatar-initial">${pfInitial}</span>
+                        @end
+                    </div>
+                    <h1 class="pf-name">${pfName}</h1>
+                    <p class="pf-meta">${i18n.profile.memberSince} ${pfSince}</p>
+                    @if pfOwner
+                        <div class="pf-actions">
+                            <button class="pf-btn pf-btn-primary" type="button" @click={pfOpenEdit}>${i18n.profile.edit}</button>
+                        </div>
+                    @end
+                </div>
+                <div class="pf-side">
+                    @if pfOwner
+                        <span class="pf-chip pf-chip-owner">${i18n.profile.you}</span>
+                    @end
+                    <span class="pf-chip">${i18n.profile.publicBadge}</span>
+                </div>
+            </div>
+
+            @if pfOwner
+                <div class="pf-quick">
+                    <a class="pf-quick-item" href="#pf-posts">
+                        <span class="pf-quick-text">
+                            <span class="pf-quick-title">${i18n.profile.posts.title}</span>
+                            <span class="pf-quick-desc">${i18n.profile.quick.posts}</span>
+                        </span>
+                        <img src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5" class="pf-quick-arrow">
+                    </a>
+                    <a class="pf-quick-item" href="#pf-subscriptions">
+                        <span class="pf-quick-text">
+                            <span class="pf-quick-title">${i18n.profile.subscriptions.title}</span>
+                            <span class="pf-quick-desc">${i18n.profile.quick.subscriptions}</span>
+                        </span>
+                        <img src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5" class="pf-quick-arrow">
+                    </a>
+                    <a class="pf-quick-item" href="#pf-usage">
+                        <span class="pf-quick-text">
+                            <span class="pf-quick-title">${i18n.profile.usage.title}</span>
+                            <span class="pf-quick-desc">${i18n.profile.quick.usage}</span>
+                        </span>
+                        <img src="/assets/icons/ui/chevron.svg" alt="" width="10" height="5" class="pf-quick-arrow">
+                    </a>
+                </div>
+            @end
+        </section>
+
+        @if pfSaved
+            <p class="pf-saved" role="status">${i18n.profile.form.saved}</p>
+        @end
+
+        @if pfEditing
+            <form class="pf-section pf-edit" novalidate @submit={pfSave(event)}>
+                <div class="pf-section-head">
+                    <h2 class="pf-section-title">${i18n.profile.edit}</h2>
+                    <span class="pf-private">${i18n.profile.privateBadge}</span>
+                </div>
+
+                <label class="pf-label" for="pf-first-name">${i18n.profile.form.firstName}</label>
+                <input id="pf-first-name" class="pf-input" type="text" autocomplete="given-name" maxlength="50" @bind={pfFirstName}>
+                @if pfErrName != ""
+                    <p class="pf-field-err">${i18n.profile.errors.firstName}</p>
+                @end
+
+                <label class="pf-label" for="pf-avatar-url">${i18n.profile.form.avatar}</label>
+                <input id="pf-avatar-url" class="pf-input" type="url" inputmode="url" spellcheck="false" placeholder="https://" @bind={pfAvatarUrl}>
+                @if pfErrAvatar != ""
+                    <p class="pf-field-err">${i18n.profile.errors.image}</p>
+                @end
+
+                <label class="pf-label" for="pf-cover-url">${i18n.profile.form.cover}</label>
+                <input id="pf-cover-url" class="pf-input" type="url" inputmode="url" spellcheck="false" placeholder="https://" @bind={pfCoverUrl}>
+                @if pfErrCover != ""
+                    <p class="pf-field-err">${i18n.profile.errors.image}</p>
+                @end
+                <p class="pf-hint">${i18n.profile.form.hint}</p>
+
+                @if pfErr == "session"
+                    <p class="pf-field-err">${i18n.profile.errors.session}</p>
+                @end
+                @if pfErr == "network"
+                    <p class="pf-field-err">${i18n.profile.errors.network}</p>
+                @end
+                @if pfErr == "unknown"
+                    <p class="pf-field-err">${i18n.profile.errors.unknown}</p>
+                @end
+
+                <div class="pf-actions">
+                    @if pfSaving
+                        <button class="pf-btn pf-btn-primary" type="submit" disabled>${i18n.profile.form.saving}</button>
+                    @else
+                        <button class="pf-btn pf-btn-primary" type="submit">${i18n.profile.form.save}</button>
+                    @end
+                    <button class="pf-btn" type="button" @click={pfCloseEdit}>${i18n.profile.form.cancel}</button>
+                </div>
+            </form>
+        @end
+
+        <section id="pf-posts" class="pf-section">
+            <div class="pf-section-head">
+                <h2 class="pf-section-title">${i18n.profile.posts.title}</h2>
+            </div>
+            @if pfOwner
+                <Empty emIcon="/assets/icons/ui/template.svg" emTitle={i18n.profile.posts.emptyTitle} emText={i18n.profile.posts.emptyOwner} />
+            @else
+                <Empty emIcon="/assets/icons/ui/template.svg" emTitle={i18n.profile.posts.emptyTitle} emText={i18n.profile.posts.emptyVisitor} />
+            @end
+        </section>
+
+        @if pfOwner
+            <section id="pf-subscriptions" class="pf-section">
+                <div class="pf-section-head">
+                    <h2 class="pf-section-title">${i18n.profile.subscriptions.title}</h2>
+                    <span class="pf-private">${i18n.profile.privateBadge}</span>
+                </div>
+                <Empty emIcon="/assets/icons/ui/layers.svg" emTitle={i18n.profile.subscriptions.emptyTitle} emText={i18n.profile.subscriptions.emptyText} />
+            </section>
+
+            <section id="pf-usage" class="pf-section">
+                <div class="pf-section-head">
+                    <h2 class="pf-section-title">${i18n.profile.usage.title}</h2>
+                    <span class="pf-private">${i18n.profile.privateBadge}</span>
+                </div>
+                <div class="pf-usage">
+                    <div class="pf-usage-item">
+                        <img src="/assets/icons/services/auth.svg" alt="" width="20" height="20">
+                        <span class="pf-usage-name">${i18n.header.services.auth.title}</span>
+                        <span class="pf-usage-none">${i18n.profile.usage.none}</span>
+                    </div>
+                    <div class="pf-usage-item">
+                        <img src="/assets/icons/services/payments.svg" alt="" width="20" height="20">
+                        <span class="pf-usage-name">${i18n.header.services.payments.title}</span>
+                        <span class="pf-usage-none">${i18n.profile.usage.none}</span>
+                    </div>
+                </div>
+                <p class="pf-hint">${i18n.profile.usage.text}</p>
+            </section>
+        @end
+    @end
+</main>

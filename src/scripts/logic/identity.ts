@@ -33,6 +33,9 @@ export type Me = {
   id: string;
   session_id: string;
   email: string | null;
+  first_name: string | null;
+  avatar_url: string | null;
+  cover_url: string | null;
   email_verified: boolean;
   roles: string[];
   mfa_enabled: boolean;
@@ -51,16 +54,25 @@ export function identityConfigured(): boolean {
   return baseUrl !== "" && /^pk_id_/.test(publishableKey);
 }
 
-async function call<T>(path: string, body: unknown): Promise<Result<T>> {
+// O que qualquer visitante vê de um usuário (GET /profiles/{id}).
+export type PublicProfile = {
+  id: string;
+  first_name: string | null;
+  avatar_url: string | null;
+  cover_url: string | null;
+  created_at: string;
+};
+
+async function call<T>(path: string, body: unknown, method: string = "POST"): Promise<Result<T>> {
   if (!identityConfigured()) {
     return { ok: false, status: 0, data: null, code: "config", details: [] };
   }
   let res: Response;
   try {
     res = await fetch(baseUrl + path, {
-      method: "POST",
+      method: method,
       headers: { "Authorization": "Bearer " + publishableKey, "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+      body: method === "GET" ? undefined : JSON.stringify(body),
     });
   } catch (e) {
     return { ok: false, status: 0, data: null, code: "network", details: [] };
@@ -104,8 +116,8 @@ function problemCode(json: any, status: number, details: Detail[]): string {
   return "http-" + status;
 }
 
-export function signup(email: string, password: string, locale: string): Promise<Result<{ message: string }>> {
-  return call("/signup", { email: email, password: password, locale: locale });
+export function signup(email: string, password: string, locale: string, firstName: string): Promise<Result<{ message: string }>> {
+  return call("/signup", { email: email, password: password, locale: locale, first_name: firstName });
 }
 
 export function sendVerification(email: string, locale: string): Promise<Result<null>> {
@@ -124,6 +136,23 @@ export function me(accessToken: string): Promise<Result<Me>> {
   return call("/me", { access_token: accessToken });
 }
 
+export function publicProfile(userId: string): Promise<Result<PublicProfile>> {
+  return call("/profiles/" + encodeURIComponent(userId), null, "GET");
+}
+
+// Campo ausente não muda; "" apaga. Com sucesso, o header passa a mostrar o nome e a foto novos.
+export async function updateMe(fields: { first_name?: string; avatar_url?: string; cover_url?: string }): Promise<Result<Me>> {
+  const s = await ensureSession();
+  if (!s) {
+    return { ok: false, status: 401, data: null, code: "rsb-05", details: [] };
+  }
+  const r = await call<Me>("/me", { access_token: s.access_token, ...fields }, "PATCH");
+  if (r.ok && r.data) {
+    saveSession({ ...s, first_name: r.data.first_name || "", avatar_url: r.data.avatar_url || "" });
+  }
+  return r;
+}
+
 export function refreshTokens(refreshToken: string): Promise<Result<TokenPair>> {
   return call("/token/refresh", { refresh_token: refreshToken });
 }
@@ -132,23 +161,32 @@ export function logout(refreshToken: string): Promise<Result<null>> {
   return call("/logout", { refresh_token: refreshToken });
 }
 
-function sessionFrom(pair: TokenPair, userId: string, email: string): Session {
+type Owner = { user_id: string; email: string; first_name?: string; avatar_url?: string };
+
+function sessionFrom(pair: TokenPair, owner: Owner): Session {
   return {
     access_token: pair.access_token,
     refresh_token: pair.refresh_token,
     expires_at: Date.now() + pair.expires_in * 1000,
-    user_id: userId,
-    email: email,
+    user_id: owner.user_id,
+    email: owner.email,
+    first_name: owner.first_name || "",
+    avatar_url: owner.avatar_url || "",
   };
 }
 
-// Guarda o par de tokens e completa com o /me (id e e-mail). Devolve a sessão, ou o erro do /me.
+// Guarda o par de tokens e completa com o /me (id, e-mail, nome e foto). Devolve a sessão, ou o erro do /me.
 export async function startSession(pair: TokenPair): Promise<Result<Session>> {
   const who = await me(pair.access_token);
   if (!who.ok || !who.data) {
     return { ok: false, status: who.status, data: null, code: who.code, details: who.details };
   }
-  const s = sessionFrom(pair, who.data.id, who.data.email || "");
+  const s = sessionFrom(pair, {
+    user_id: who.data.id,
+    email: who.data.email || "",
+    first_name: who.data.first_name || "",
+    avatar_url: who.data.avatar_url || "",
+  });
   saveSession(s);
   return { ok: true, status: 200, data: s, code: "", details: [] };
 }
@@ -170,7 +208,7 @@ export function ensureSession(force: boolean = false): Promise<Session | null> {
       const r = await refreshTokens(s.refresh_token);
       refreshing = null;
       if (r.ok && r.data) {
-        const next = sessionFrom(r.data, s.user_id, s.email);
+        const next = sessionFrom(r.data, s);
         saveSession(next);
         return next;
       }

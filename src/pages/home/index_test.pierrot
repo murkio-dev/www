@@ -19,7 +19,7 @@
     }
 
     function ComponentHomeHasTheSectionsOfTheSite(target) {
-        for (const id of ["services", "sdks", "ai", "identity", "vault", "payments", "messaging", "lambda"]) {
+        for (const id of ["services", "sdks", "ai", "identity", "payments"]) {
             expect().toExist().onSelector("section#" + id);
         }
     }
@@ -66,9 +66,9 @@
     // ---------- Componentes: SectionHead ----------
 
     function ComponentEverySectionHasAHead(target) {
-        expect().toHaveCount(8).onClass("sh");
-        expect().toHaveCount(8).onClass("sh-title");
-        expect().toHaveCount(8).onClass("sh-subtitle");
+        expect().toHaveCount(5).onClass("sh");
+        expect().toHaveCount(5).onClass("sh-title");
+        expect().toHaveCount(5).onClass("sh-subtitle");
     }
 
     function ComponentSectionHeadTexts(target) {
@@ -76,10 +76,7 @@
         expect().toHaveText(en.infra.subtitle).onSelector("#services .sh-subtitle");
         expect().toHaveText(en.infra.badge).onSelector("#services .badge");
         expect().toHaveText(en.sdks.title).onSelector("#sdks .sh-title");
-        expect().toHaveText(en.vault.title).onSelector("#vault .sh-title");
         expect().toHaveText(en.payments.title).onSelector("#payments .sh-title");
-        expect().toHaveText(en.messaging.title).onSelector("#messaging .sh-title");
-        expect().toHaveText(en.lambda.title).onSelector("#lambda .sh-title");
     }
 
     // ---------- Componentes: InfraCard / diagrama ----------
@@ -90,21 +87,19 @@
         expect().toHaveCount(6).onClass("hub-dot");
     }
 
-    function ComponentInfraCardsListTheSixServices(target) {
-        expect().toHaveCount(6).onClass("infra-card");
-        const first = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title];
-        const second = [en.header.services.vault.title, en.header.services.lambda.title, en.header.services.database.title];
-        for (let i = 0; i < 3; i++) {
-            const n = i + 1;
-            expect().toHaveText(first[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + n + ") .infra-card-title");
-            expect().toHaveText(second[i]).onSelector("#services .infra-group:last-child .infra-card:nth-child(" + n + ") .infra-card-title");
+    function ComponentInfraCardsListTheServices(target) {
+        expect().toHaveCount(3).onClass("infra-card");
+        const first = [en.header.services.auth.title, en.header.services.payments.title];
+        for (let i = 0; i < 2; i++) {
+            expect().toHaveText(first[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + (i + 1) + ") .infra-card-title");
         }
+        expect().toHaveText(en.header.services.database.title).onSelector("#services .infra-group:last-child .infra-card:nth-child(1) .infra-card-title");
     }
 
     function ComponentInfraGroups(target) {
         expect().toHaveCount(2).onClass("infra-group");
-        expect().toHaveCount(3).onSelector(".infra-group:first-child .infra-card");
-        expect().toHaveCount(3).onSelector(".infra-group:last-child .infra-card");
+        expect().toHaveCount(2).onSelector(".infra-group:first-child .infra-card");
+        expect().toHaveCount(1).onSelector(".infra-group:last-child .infra-card");
         expect().toExist().onText(en.infra.groupServices);
         expect().toExist().onText(en.infra.groupInfra);
     }
@@ -127,7 +122,7 @@
         expect().toExist().onClass("sw");
         expect().toHaveAttribute("aria-hidden", "true").onClass("sw");
         expect().toHaveText(en.sdk.l11).onClass("sw-tab-on");
-        expect().toHaveCount(8).onSelector(".sw-gutter span");
+        expect().toHaveCount(6).onSelector(".sw-gutter span");
     }
 
     function ComponentSdkBenefitsList(target) {
@@ -367,29 +362,23 @@
         target.Goto("/pt-br");
         hover().OnClass("services-trigger");
         expect().toHaveText(en.header.services.auth.title).onSelector(".services-col:first-child .service-item:nth-of-type(1) .service-item-title");
-        expect().toHaveText(en.header.services.messaging.title).onSelector(".services-col:first-child .service-item:nth-of-type(2) .service-item-title");
-        expect().toHaveText(en.header.services.payments.title).onSelector(".services-col:first-child .service-item:nth-of-type(3) .service-item-title");
-        expect().toHaveText(en.header.services.vault.title).onSelector(".services-col:last-child .service-item:nth-of-type(1) .service-item-title");
-        expect().toHaveText(en.header.services.lambda.title).onSelector(".services-col:last-child .service-item:nth-of-type(2) .service-item-title");
-        expect().toHaveText(en.header.services.database.title).onSelector(".services-col:last-child .service-item:nth-of-type(3) .service-item-title");
+        expect().toHaveText(en.header.services.payments.title).onSelector(".services-col:first-child .service-item:nth-of-type(2) .service-item-title");
+        expect().toHaveText(en.header.services.database.title).onSelector(".services-col:last-child .service-item:nth-of-type(1) .service-item-title");
     }
 
     function ComponentServiceNamesStayInEnglishOnTheHomeCards(target) {
         target.Goto("/pt-br");
-        const titles = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title];
-        const infra = [en.header.services.vault.title, en.header.services.lambda.title, en.header.services.database.title];
-        for (let i = 0; i < 3; i++) {
-            const n = i + 1;
-            expect().toHaveText(titles[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + n + ") .infra-card-title");
-            expect().toHaveText(infra[i]).onSelector("#services .infra-group:last-child .infra-card:nth-child(" + n + ") .infra-card-title");
+        const titles = [en.header.services.auth.title, en.header.services.payments.title];
+        for (let i = 0; i < 2; i++) {
+            expect().toHaveText(titles[i]).onSelector("#services .infra-group:first-child .infra-card:nth-child(" + (i + 1) + ") .infra-card-title");
         }
+        expect().toHaveText(en.header.services.database.title).onSelector("#services .infra-group:last-child .infra-card:nth-child(1) .infra-card-title");
     }
 
     function ComponentServiceNamesStayInEnglishInTheFooter(target) {
         target.Goto("/pt-br");
         expect().toHaveText(pt.footer.colServices).onSelector(".ft-col:nth-of-type(1) .ft-heading");
-        const names = [en.header.services.auth.title, en.header.services.messaging.title, en.header.services.payments.title,
-            en.header.services.vault.title, en.header.services.lambda.title];
+        const names = [en.header.services.auth.title, en.header.services.payments.title];
         for (let i = 0; i < names.length; i++) {
             expect().toHaveText(names[i]).onSelector(".ft-col:nth-of-type(1) .ft-link:nth-of-type(" + (i + 1) + ")");
         }
@@ -397,10 +386,7 @@
 
     function ComponentSectionHeadsKeepTheServiceNameInPortuguese(target) {
         target.Goto("/pt-br");
-        expect().toHaveText("Messaging").onSelector("#messaging .badge");
         expect().toHaveText("Payments").onSelector("#payments .badge");
-        expect().toHaveText("Vault").onSelector("#vault .badge");
-        expect().toHaveText("Lambda").onSelector("#lambda .badge");
         expect().toHaveText("Identity").onSelector("#identity .badge");
     }
 </script>

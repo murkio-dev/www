@@ -1,5 +1,5 @@
 <script>
-    import { isEmail, isPasswordOk, passwordLengthOk, passwordEdgesOk, isCode, digitsOnly, isAppName, isSecretName, isTokenName, ruleClass, shortId, expiresFrom, queryParam, safeNext } from "./rules.ts";
+    import { isEmail, isPasswordOk, passwordLengthOk, passwordEdgesOk, isCode, digitsOnly, ruleClass, shortId, expiresFrom, queryParam, safeNext } from "./rules.ts";
 
     var appName:regex = "/^[a-z0-9][a-z0-9-]{1,48}[a-z0-9]$/";
     var secretName:regex = "/^[A-Z][A-Z0-9_]{0,40}$/";
@@ -88,7 +88,7 @@
     }
 
     function UnitSafeNextOnlyAcceptsInternalPaths() {
-        expect(safeNext("/vault/42")).toBe("/vault/42");
+        expect(safeNext("/profile/42")).toBe("/profile/42");
         expect(safeNext("//evil.com")).toBe("");
         expect(safeNext("https://evil.com")).toBe("");
         expect(safeNext("")).toBe("");
