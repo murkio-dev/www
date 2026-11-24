@@ -17,6 +17,7 @@
     // "login" | "register" | "verify"
     let auMode = "login";
     let auEmail = "";
+    let auFirstName = "";
     let auPassword = "";
     let auCode = "";
     let auShowPw: boolean = false;
@@ -68,6 +69,8 @@
             auErr = "code";
         } else if (code == "rag-03") {
             auErr = "email";
+        } else if (code == "rag-28") {
+            auErr = "firstName";
         } else if (code == "rag-06") {
             auErr = "weak";
             auDetails = details.map((d) => d.message);
@@ -92,7 +95,7 @@
             auFail(s.code, s.details);
             return;
         }
-        client.Redirect(auNext != "" ? auNext : "/vault/" + s.data.user_id);
+        client.Redirect(auNext != "" ? auNext : "/profile/" + s.data.user_id);
     }
 
     async function auSubmitLogin(e: Event): Promise<void> {
@@ -139,12 +142,16 @@
             auErr = "email";
             return;
         }
+        if (auFirstName.trim() == "") {
+            auErr = "firstName";
+            return;
+        }
         if (!isPasswordOk(auPassword)) {
             auErr = "password";
             return;
         }
         auBusy = true;
-        const r = await signup(auEmail.trim().toLowerCase(), auPassword, localeOf(document.documentElement.lang));
+        const r = await signup(auEmail.trim().toLowerCase(), auPassword, localeOf(document.documentElement.lang), auFirstName.trim());
         auBusy = false;
         if (r.ok) {
             auMode = "verify";
@@ -264,6 +271,9 @@
                 <form class="au-form" novalidate @submit={auSubmitRegister(event)}>
                     <h2 class="au-title">${i18n.auth.register.title}</h2>
                     <p class="au-subtitle">${i18n.auth.register.subtitle}</p>
+
+                    <label class="au-label" for="au-first-name">${i18n.auth.firstName.label}</label>
+                    <input id="au-first-name" class="au-input" type="text" name="given-name" autocomplete="given-name" maxlength="50" placeholder="${i18n.auth.firstName.placeholder}" @bind={auFirstName}>
 
                     <label class="au-label" for="au-email">${i18n.auth.email.label}</label>
                     <input id="au-email" class="au-input" type="email" name="email" autocomplete="email" spellcheck="false" placeholder="${i18n.auth.email.placeholder}" @bind={auEmail}>

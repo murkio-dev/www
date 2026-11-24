@@ -1,6 +1,6 @@
 <script>
     // type: "cap" (recurso com 3 tags), "sdk" (SDK com comando), "faq" (pergunta e resposta),
-    // "infra" (serviço do diagrama), "gateway" (gateway do router) ou "feature" (recurso do Vault).
+    // "infra" (serviço do diagrama), "gateway" (gateway do router) ou "feature" (recurso de um serviço).
     // Cada tipo usa só as props dele.
     let type: string;
     let icon: string;

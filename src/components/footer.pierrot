@@ -46,10 +46,7 @@
             <nav class="ft-col" aria-label="${i18n.footer.colServices}">
                 <h3 class="ft-heading">${i18n.footer.colServices}</h3>
                 <button class="ft-link" @click={goFooter("#identity")}>${i18n.header.services.auth.title}</button>
-                <button class="ft-link" @click={goFooter("#messaging")}>${i18n.header.services.messaging.title}</button>
                 <button class="ft-link" @click={goFooter("#payments")}>${i18n.header.services.payments.title}</button>
-                <button class="ft-link" @click={goFooter("#vault")}>${i18n.header.services.vault.title}</button>
-                <button class="ft-link" @click={goFooter("#lambda")}>${i18n.header.services.lambda.title}</button>
             </nav>
 
             <nav class="ft-col" aria-label="${i18n.footer.colResources}">

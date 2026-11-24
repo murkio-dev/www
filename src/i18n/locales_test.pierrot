@@ -97,8 +97,8 @@
     }
 
     // Nomes de serviço são nomes próprios: não se traduzem. Só o texto em volta é traduzido.
-    const SERVICES = ["auth", "messaging", "payments", "vault", "lambda", "database"];
-    const SERVICE_NAMES = ["Identity", "Messaging", "Payments", "Vault", "Lambda", "Database"];
+    const SERVICES = ["auth", "payments", "database"];
+    const SERVICE_NAMES = ["Identity", "Payments", "Database"];
 
     function UnitI18nServiceNamesAreTheSameInEveryLanguage() {
         for (const key of SERVICES) {
@@ -112,7 +112,7 @@
     }
 
     function UnitI18nSectionBadgesKeepTheServiceName() {
-        for (const [section, name] of [["identity", "Identity"], ["vault", "Vault"], ["lambda", "Lambda"], ["messaging", "Messaging"], ["payments", "Payments"]]) {
+        for (const [section, name] of [["identity", "Identity"], ["payments", "Payments"]]) {
             expect(en[section].badge).toBe(name);
             expect(pt[section].badge).toBe(name);
         }
@@ -136,6 +136,6 @@
                 expect(text).not.toContain(translated);
             }
         }
-        expect(pt.footer.ctaText).toContain("Identity, Vault, Payments, Messaging e Lambda");
+        expect(pt.footer.ctaText).toContain("Identity e Payments");
     }
 </script>

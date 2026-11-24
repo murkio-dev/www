@@ -1,0 +1,55 @@
+<script>
+    // Estado vazio de uma seção: ícone, título e texto. Os nomes têm o prefixo em*
+    // porque os scripts de páginas e componentes dividem o mesmo escopo.
+    let emIcon: string;
+    let emTitle: string;
+    let emText: string;
+</script>
+
+<div class="em">
+    <span class="em-icon"><img src="${emIcon}" alt="" width="20" height="20"></span>
+    <p class="em-title">${emTitle}</p>
+    <p class="em-text">${emText}</p>
+</div>
+
+<style>
+    .em {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        padding: 36px 20px;
+        border: 1px dashed rgb(var(--m-fg) / 0.14);
+        border-radius: 14px;
+        text-align: center;
+        background: transparent;
+    }
+
+    .em-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-bottom: 6px;
+        border: 1px solid rgb(var(--m-fg) / 0.12);
+        border-radius: 10px;
+        background-image: linear-gradient(243.8deg, rgb(var(--m-fg) / 0.16) 10.2%, rgba(113, 113, 113, 0.1) 92.6%);
+    }
+
+    .em-title {
+        font-family: "Jaldi", sans-serif;
+        font-size: 17px;
+        color: rgb(var(--m-fg));
+        background: transparent;
+    }
+
+    .em-text {
+        max-width: 420px;
+        font-family: "Roboto", sans-serif;
+        font-size: 14px;
+        line-height: 1.45;
+        color: rgb(var(--m-fg) / 0.6);
+        background: transparent;
+    }
+</style>
