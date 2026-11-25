@@ -13,9 +13,9 @@
     function UnitConfiguredNeedsUrlAndPublishableKey() {
         configureIdentity("", "");
         expect(identityConfigured()).toBeFalse();
-        configureIdentity("http://localhost:8080/v1", "sk_id_nao_pode");
+        configureIdentity("http://localhost:8080/v1/identity", "sk_id_nao_pode");
         expect(identityConfigured()).toBeFalse();
-        configureIdentity("http://localhost:8080/v1/", "pk_id_ok");
+        configureIdentity("http://localhost:8080/v1/identity/", "pk_id_ok");
         expect(identityConfigured()).toBeTrue();
     }
 
